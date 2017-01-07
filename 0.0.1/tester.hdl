@@ -1,0 +1,38 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+
+entity tester is
+end tester;
+
+
+architecture behaviour of tester is
+    component SimonEncryption_32_64
+    port(
+        keyIn: in std_logic_vector(63 downto 0);
+        messageIn: in std_logic_vector(31 downto 0);
+        messageOut: out std_logic_vector(31 downto 0)
+    );
+    end component;
+    signal tester_keyIn: std_logic_vector(63 downto 0) := "0001100100011000000100010001000000001001000010000000000100000000";
+    signal tester_messageIn: std_logic_vector(31 downto 0) := "01100101011001010110100001110111";
+    signal tester_messageOut: std_logic_vector(31 downto 0);
+    
+    begin
+        uut: SimonEncryption_32_64 port map(
+            keyIn => tester_keyIn,
+            messageIn => tester_messageIn,
+            messageOut => tester_messageOut
+        );  
+        
+        
+     process_1: process begin
+        wait for 10 us;
+        tester_keyIn <= "0000000000000000000000000000000000000000000000000000000000000000";
+        tester_messageIn <= "00000000000000000000000000000000";
+        wait for 10 us;
+        tester_keyIn <= "0001100100011000000100010001000000001001000010000000000100000000";
+        tester_messageIn <= "01100101011001010110100001110111";
+     end process;   
+        
+end behaviour;
