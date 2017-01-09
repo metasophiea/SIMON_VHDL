@@ -1,0 +1,44 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use std.textio.all; 
+
+entity simon_32_64 is
+    port(
+        mode: in std_logic;
+        keyIn: in std_logic_vector(63 downto 0);
+        messageIn: in std_logic_vector(31 downto 0);
+        Z: in std_logic_vector(61 downto 0);
+        messageOut: out std_logic_vector(31 downto 0) := (others => '0')
+    );
+end simon_32_64;
+
+architecture behaviour of simon_32_64 is 
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- printers
+    shared variable consoleBuffer: line;
+    function toString(inputVal: std_logic) 
+    return string is variable returnedString: string(3 downto 1);
+    begin returnedString := std_logic'image(inputVal); return "" & returnedString(2);
+    end function;
+    function toString(inputVal: std_logic_vector)
+    return string is variable returnedString: string(inputVal'length downto 1);
+    begin for a in 1 to returnedString'length loop returnedString(a) := toString(inputVal(a-1))(1); end loop; return returnedString;
+    end function;
+    procedure print(inputVal: string) is begin  write(consoleBuffer,inputVal); end procedure;
+    procedure flush is begin writeline(output,consoleBuffer); end procedure;
+    procedure logicPrint(inputVal: std_logic) is variable l: line;
+    begin print(toString(inputVal));  end procedure;
+    procedure logicPrint(inputVal: std_logic_vector) is variable l: line;
+    begin print(toString(inputVal));  end procedure;
+
+begin   
+    process(mode, keyIn, messageIn, Z)
+    begin
+        print("simon_32_64::Serious math happening"); flush;
+        print("simon_32_64::Key: "); logicPrint(keyIn); flush;
+        print("simon_32_64::Z: "); logicPrint(Z); flush;   
+        print("simon_32_64::Message: "); logicPrint(messageIn); flush;
+        messageOut <= messageIn;
+    end process;
+
+end behaviour;

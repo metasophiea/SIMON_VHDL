@@ -1,0 +1,78 @@
+--try running with ./main --stop-time=10ns
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use std.textio.all; 
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity tester is
+end tester;
+
+architecture behaviour of tester is
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- printers
+    shared variable consoleBuffer: line;
+    function toString(inputVal: std_logic) 
+    return string is variable returnedString: string(3 downto 1);
+    begin returnedString := std_logic'image(inputVal); return "" & returnedString(2);
+    end function;
+    function toString(inputVal: std_logic_vector)
+    return string is variable returnedString: string(inputVal'length downto 1);
+    begin for a in 1 to returnedString'length loop returnedString(a) := toString(inputVal(a-1))(1); end loop; return returnedString;
+    end function;
+    procedure print(inputVal: string) is begin  write(consoleBuffer,inputVal); end procedure;
+    procedure flush is begin writeline(output,consoleBuffer); end procedure;
+    procedure logicPrint(inputVal: std_logic) is variable l: line;
+    begin print(toString(inputVal));  end procedure;
+    procedure logicPrint(inputVal: std_logic_vector) is variable l: line;
+    begin print(toString(inputVal));  end procedure;
+
+    -- declare component
+    component main
+        port(
+            mode: in std_logic;
+            method: in std_logic_vector(0 to 3);
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0)
+        );
+    end component;
+
+    -- internal signals 
+    signal tester_mode: std_logic := '0';
+    signal tester_method: std_logic_vector(0 to 3) := (others => '0');
+    signal tester_keyIn: std_logic_vector(255 downto 0) := (others => '0');
+    signal tester_messageIn: std_logic_vector(127 downto 0) := (others => '0');
+    signal tester_messageOut: std_logic_vector(127 downto 0) := (others => '0');
+
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    begin
+    -- connect component
+        mainComponent: main port map(
+            mode => tester_mode,
+            method => tester_method,
+            keyIn => tester_keyIn,
+            messageIn => tester_messageIn,
+            messageOut => tester_messageOut
+        );
+    -- run tests
+        process begin
+            wait for 10 us;
+            tester_mode <= '0';
+            tester_method <= "0000";
+            tester_keyIn <= "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000";
+            tester_messageIn <= "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000";
+            wait for 10 us;
+            print("tester::Response: "); logicPrint(tester_messageOut); flush; flush;
+
+            wait for 10 us;
+            tester_mode <= '0';
+            tester_method <= "0000";
+            tester_keyIn <= "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0001100100011000000100010001000000001001000010000000000100000000";
+            tester_messageIn <= "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000" & "01100101011001010110100001110111";
+            wait for 10 us;
+            print("tester::Response: "); logicPrint(tester_messageOut); flush; flush;
+        end process;          
+
+end behaviour;
