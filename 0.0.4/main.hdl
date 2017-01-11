@@ -1,0 +1,91 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
+
+entity main is
+    port(
+        mode: in std_logic;
+        method: in std_logic_vector(0 to 3);
+        keyIn: in std_logic_vector(255 downto 0);
+        messageIn: in std_logic_vector(127 downto 0);
+        messageOut: out std_logic_vector(127 downto 0) := (others => '0')
+    );
+end main;
+
+architecture behaviour of main is
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- declare Z's
+    signal Z_0: std_logic_vector(61 downto 0) := "11111010001001010110000111001101111101000100101011000011100110";
+    signal Z_1: std_logic_vector(61 downto 0) := "10001110111110010011000010110101000111011111001001100001011010";
+    signal Z_2: std_logic_vector(61 downto 0) := "10101111011100000011010010011000101000010001111110010110110011";
+    signal Z_3: std_logic_vector(61 downto 0) := "11011011101011000110010111100000010010001010011100110100001111";
+    signal Z_4: std_logic_vector(61 downto 0) := "11010001111001101011011000100000010111000011001010010011101111";
+    signal selectedZ: std_logic_vector(61 downto 0) := "00000000000000000000000000000000000000000000000000000000000000";
+
+    -- declare components
+    component simon_32_64
+        port(
+            mode: in std_logic;
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0);   
+
+            Z: in std_logic_vector(61 downto 0)
+        );
+    end component;
+
+    -- internal signals 
+    signal simon_32_64_output: std_logic_vector(127 downto 0) := (others => '0');
+    signal simon_48_72_output: std_logic_vector(47 downto 0) := (others => '0'); 
+    signal simon_48_96_output: std_logic_vector(47 downto 0) := (others => '0');
+    signal simon_64_96_output: std_logic_vector(63 downto 0) := (others => '0');
+    signal simon_64_128_output: std_logic_vector(63 downto 0) := (others => '0');
+    signal simon_96_96_output: std_logic_vector(95 downto 0) := (others => '0');
+    signal simon_96_144_output: std_logic_vector(95 downto 0) := (others => '0');
+    signal simon_128_128_output: std_logic_vector(127 downto 0) := (others => '0');
+    signal simon_128_192_output: std_logic_vector(127 downto 0) := (others => '0');
+    signal simon_128_256_output: std_logic_vector(127 downto 0) := (others => '0');
+
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    begin
+    -- connect components
+        mainComponent: simon_32_64 port map(
+            mode => mode,
+            keyIn => keyIn,
+            messageIn => messageIn,
+            messageOut => simon_32_64_output,
+
+            Z => selectedZ
+        );
+    -- main process
+        process(method, simon_32_64_output)
+        begin
+            case method is
+                when "0000" => --print("  main::Method 0 Selected"); flush;
+                    selectedZ <= Z_0;
+                    messageOut <= simon_32_64_output;
+                when "0001" => print("  main::Method 1 Selected"); flush;
+                    selectedZ <= Z_0;      
+                when "0010" => print("  main::Method 2 Selected"); flush;
+                    selectedZ <= Z_1; 
+                when "0011" => print("  main::Method 3 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "0100" => print("  main::Method 4 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "0101" => print("  main::Method 5 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "0110" => print("  main::Method 6 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "0111" => print("  main::Method 7 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "1000" => print("  main::Method 8 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "1001" => print("  main::Method 9 Selected"); flush;
+                    selectedZ <= Z_4; 
+                when others => print("  main::error"); flush;
+            end case;
+        end process;
+end behaviour;
