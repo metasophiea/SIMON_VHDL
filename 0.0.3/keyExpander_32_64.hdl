@@ -1,0 +1,56 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use std.textio.all; 
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use work.printerlib.all;
+
+entity keyExpander_32_64 is
+    port(
+        Z: in std_logic_vector(61 downto 0);
+        keyIn_3, keyIn_2, keyIn_1, keyIn_0: in std_logic_vector(15 downto 0);
+        entityNumber: in std_logic_vector(15 downto 0);
+        keyOut: out std_logic_vector(15 downto 0);
+        returnZ: out std_logic_vector(61 downto 0)
+    );
+end keyExpander_32_64;
+
+architecture behaviour of keyExpander_32_64 is 
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- key expansion function
+    function morph_Z(Z: std_logic_vector)
+    return std_logic_vector is
+        variable Z_manipulator: std_logic_vector(61 downto 0) := Z;
+    begin
+        return Z_manipulator(Z_manipulator'length-2 downto 0) & Z_manipulator(Z_manipulator'length-1);
+    end function;
+
+    function getNextKey(keyIn_3, keyIn_2, keyIn_1, keyIn_0, Z: std_logic_vector)
+    return std_logic_vector is
+        variable key_3: std_logic_vector(15 downto 0) := keyIn_3;
+        variable key_2: std_logic_vector(15 downto 0) := keyIn_2;
+        variable key_1: std_logic_vector(15 downto 0) := keyIn_1;
+        variable key_0: std_logic_vector(15 downto 0) := keyIn_0;
+        variable temp: std_logic_vector(15 downto 0);
+        variable Z_manipulator: std_logic_vector(61 downto 0) := Z;
+    begin
+
+        temp := key_0(2 downto 0) & key_0(key_0'length-1 downto 3);
+        temp := temp xor key_2;
+        temp := temp xor (temp(0) & temp(temp'length-1 downto 1));
+        temp := temp xor key_3;
+        temp := temp xor ("000000000000000" & Z_manipulator(Z_manipulator'length-1));
+            Z_manipulator := morph_Z(Z_manipulator);
+        temp := temp xor "1111111111111100";
+
+        return temp;
+    end function;
+
+begin
+    process(keyIn_3, keyIn_2, keyIn_1, keyIn_0, Z, entityNumber)
+    begin
+        keyOut <= getNextKey(keyIn_3, keyIn_2, keyIn_1, keyIn_0, Z);
+        returnZ <= morph_Z(Z);
+    end process;
+
+end behaviour;

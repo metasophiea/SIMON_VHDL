@@ -2,9 +2,10 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use std.textio.all; 
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
 
 entity main is
     port(
@@ -18,23 +19,6 @@ end main;
 
 architecture behaviour of main is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
-    -- printers
-    shared variable consoleBuffer: line;
-    function toString(inputVal: std_logic) 
-    return string is variable returnedString: string(3 downto 1);
-    begin returnedString := std_logic'image(inputVal); return "" & returnedString(2);
-    end function;
-    function toString(inputVal: std_logic_vector)
-    return string is variable returnedString: string(inputVal'length downto 1);
-    begin for a in 1 to returnedString'length loop returnedString(a) := toString(inputVal(a-1))(1); end loop; return returnedString;
-    end function;
-    procedure print(inputVal: string) is begin write(consoleBuffer,inputVal); end procedure;
-    procedure flush is begin writeline(output,consoleBuffer); end procedure;
-    procedure logicPrint(inputVal: std_logic) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
-    procedure logicPrint(inputVal: std_logic_vector) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
-
     -- declare Z's
     signal Z_0: std_logic_vector(61 downto 0) := "11111010001001010110000111001101111101000100101011000011100110";
     signal Z_1: std_logic_vector(61 downto 0) := "10001110111110010011000010110101000111011111001001100001011010";
@@ -56,6 +40,16 @@ architecture behaviour of main is
 
     -- internal signals 
     signal simon_32_64_output: std_logic_vector(31 downto 0) := (others => '0');
+    signal simon_48_72_output: std_logic_vector(47 downto 0) := (others => '0'); 
+    signal simon_48_96_output: std_logic_vector(47 downto 0) := (others => '0');
+    signal simon_64_96_output: std_logic_vector(63 downto 0) := (others => '0');
+    signal simon_64_128_output: std_logic_vector(63 downto 0) := (others => '0');
+    signal simon_96_96_output: std_logic_vector(95 downto 0) := (others => '0');
+    signal simon_96_144_output: std_logic_vector(95 downto 0) := (others => '0');
+    signal simon_128_128_output: std_logic_vector(127 downto 0) := (others => '0');
+    signal simon_128_192_output: std_logic_vector(127 downto 0) := (others => '0');
+    signal simon_128_256_output: std_logic_vector(127 downto 0) := (others => '0');
+
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     begin
     -- connect components
@@ -69,23 +63,29 @@ architecture behaviour of main is
     -- main process
         process(method, simon_32_64_output)
         begin
-            print("main::Key: "); logicPrint(keyIn); flush;
-            print("main::Message: "); logicPrint(messageIn); flush;
-
             case method is
-                when "0000" => print("main::Method 0 Selected"); flush;
+                when "0000" => --print("  main::Method 0 Selected"); flush;
                     selectedZ <= Z_0;
-                    messageOut <= std_logic_vector(resize(signed(simon_32_64_output), messageOut'length));
-                when "0001" => print("Method 1 Selected"); flush;
-                when "0010" => print("Method 2 Selected"); flush;
-                when "0011" => print("Method 3 Selected"); flush;
-                when "0100" => print("Method 4 Selected"); flush;
-                when "0101" => print("Method 5 Selected"); flush;
-                when "0110" => print("Method 6 Selected"); flush;
-                when "0111" => print("Method 7 Selected"); flush;
-                when "1000" => print("Method 8 Selected"); flush;
-                when "1001" => print("Method 9 Selected"); flush;
-                when others => print("error"); flush;
+                    messageOut <= (messageOut'length-1 downto simon_32_64_output'length => '0') & simon_32_64_output;
+                when "0001" => print("  main::Method 1 Selected"); flush;
+                    selectedZ <= Z_0;      
+                when "0010" => print("  main::Method 2 Selected"); flush;
+                    selectedZ <= Z_1; 
+                when "0011" => print("  main::Method 3 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "0100" => print("  main::Method 4 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "0101" => print("  main::Method 5 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "0110" => print("  main::Method 6 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "0111" => print("  main::Method 7 Selected"); flush;
+                    selectedZ <= Z_2; 
+                when "1000" => print("  main::Method 8 Selected"); flush;
+                    selectedZ <= Z_3; 
+                when "1001" => print("  main::Method 9 Selected"); flush;
+                    selectedZ <= Z_4; 
+                when others => print("  main::error"); flush;
             end case;
         end process;
 end behaviour;

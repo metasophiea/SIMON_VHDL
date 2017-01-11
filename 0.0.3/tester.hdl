@@ -1,33 +1,18 @@
 --try running with ./main --stop-time=10ns
+-- with the addition of a custom package, it's suddenly necessary to have some sort of build script..
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use std.textio.all; 
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
 
 entity tester is
 end tester;
 
 architecture behaviour of tester is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
-    -- printers
-    shared variable consoleBuffer: line;
-    function toString(inputVal: std_logic) 
-    return string is variable returnedString: string(3 downto 1);
-    begin returnedString := std_logic'image(inputVal); return "" & returnedString(2);
-    end function;
-    function toString(inputVal: std_logic_vector)
-    return string is variable returnedString: string(inputVal'length downto 1);
-    begin for a in 1 to returnedString'length loop returnedString(a) := toString(inputVal(a-1))(1); end loop; return returnedString;
-    end function;
-    procedure print(inputVal: string) is begin  write(consoleBuffer,inputVal); end procedure;
-    procedure flush is begin writeline(output,consoleBuffer); end procedure;
-    procedure logicPrint(inputVal: std_logic) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
-    procedure logicPrint(inputVal: std_logic_vector) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
-
     -- declare component
     component main
         port(
@@ -56,23 +41,32 @@ architecture behaviour of tester is
             messageIn => tester_messageIn,
             messageOut => tester_messageOut
         );
+
     -- run tests
         process begin
-            wait for 10 us;
-            tester_mode <= '0';
-            tester_method <= "0000";
-            tester_keyIn <= "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000";
-            tester_messageIn <= "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000";
-            wait for 10 us;
-            print("tester::Response: "); logicPrint(tester_messageOut); flush; flush;
 
-            wait for 10 us;
             tester_mode <= '0';
-            tester_method <= "0000";
-            tester_keyIn <= "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0000000000000000000000000000000000000000000000000000000000000000" & "0001100100011000000100010001000000001001000010000000000100000000";
-            tester_messageIn <= "00000000000000000000000000000000" & "00000000000000000000000000000000" & "00000000000000000000000000000000" & "01100101011001010110100001110111";
-            wait for 10 us;
-            print("tester::Response: "); logicPrint(tester_messageOut); flush; flush;
+            tester_method <= x"0";
+            tester_keyIn <= x"0000000000000000000000000000000000000000000000001918111009080100";
+            tester_messageIn <= x"00000000000000000000000065656877";
+            wait for 10 ns;
+            print("tester::mode: "); if(tester_mode = '0') then print("encrypt"); else print("decrypt");end if; flush; 
+            print("tester::Key: "); logicPrint(tester_keyIn); flush; 
+            print("tester::sent: "); logicPrint(tester_messageIn); flush; 
+            print("tester::answer: "); logicPrint(tester_messageOut); flush; flush;
+
+            tester_mode <= '1';
+            tester_method <= x"0";
+            tester_keyIn <= x"0000000000000000000000000000000000000000000000001918111009080100";
+            tester_messageIn <= x"000000000000000000000000c69be9bb";
+            wait for 10 ns;
+            print("tester::mode: "); if(tester_mode = '0') then print("encrypt"); else print("decrypt");end if; flush; 
+            print("tester::key: "); logicPrint(tester_keyIn); flush; 
+            print("tester::sent: "); logicPrint(tester_messageIn); flush; 
+            print("tester::answer: "); logicPrint(tester_messageOut); flush; flush;
+
+            --timeout
+            wait for 1000 ms;    
         end process;          
 
 end behaviour;

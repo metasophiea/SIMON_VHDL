@@ -1,6 +1,9 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 use std.textio.all; 
+use work.printerlib.all;
 
 entity simon_32_64 is
     port(
@@ -14,31 +17,89 @@ end simon_32_64;
 
 architecture behaviour of simon_32_64 is 
 -- //////// //////// //////// //////// //////// //////// //////// ////////
-    -- printers
-    shared variable consoleBuffer: line;
-    function toString(inputVal: std_logic) 
-    return string is variable returnedString: string(3 downto 1);
-    begin returnedString := std_logic'image(inputVal); return "" & returnedString(2);
-    end function;
-    function toString(inputVal: std_logic_vector)
-    return string is variable returnedString: string(inputVal'length downto 1);
-    begin for a in 1 to returnedString'length loop returnedString(a) := toString(inputVal(a-1))(1); end loop; return returnedString;
-    end function;
-    procedure print(inputVal: string) is begin  write(consoleBuffer,inputVal); end procedure;
-    procedure flush is begin writeline(output,consoleBuffer); end procedure;
-    procedure logicPrint(inputVal: std_logic) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
-    procedure logicPrint(inputVal: std_logic_vector) is variable l: line;
-    begin print(toString(inputVal));  end procedure;
+    -- declare components
+    component keyExpander_32_64
+        port(
+            Z: in std_logic_vector(61 downto 0);
+            keyIn_3, keyIn_2, keyIn_1, keyIn_0: in std_logic_vector(15 downto 0);
+            entityNumber: in std_logic_vector(15 downto 0);
+            keyOut: out std_logic_vector(15 downto 0);
+            returnZ: out std_logic_vector(61 downto 0)
+        );
+    end component;
 
-begin   
-    process(mode, keyIn, messageIn, Z)
+    component messageEncrypter_32_64 is
+        port(
+            messageIn: in std_logic_vector(31 downto 0);
+            keyIn: in std_logic_vector(15 downto 0);
+            messageOut: out std_logic_vector(31 downto 0)
+        );
+    end component;
+
+    component messageDecrypter_32_64 is
+        port(
+            messageIn: in std_logic_vector(31 downto 0);
+            keyIn: in std_logic_vector(15 downto 0);
+            messageOut: out std_logic_vector(31 downto 0)
+        );
+    end component;
+
+    -- internal signals 
+    type expandedKey_type is array (0 to 31) of std_logic_vector(15 downto 0);
+    type morphingZ_type is array (0 to 31) of std_logic_vector(61 downto 0);
+    type morphingMessage_type is array (0 to 32) of std_logic_vector(31 downto 0);
+    signal expandedKey: expandedKey_type := ( others => std_logic_vector(to_unsigned(0,16)) );
+    signal morphingZ: morphingZ_type := ( others => std_logic_vector(to_unsigned(0,62)) );
+    signal morphingEncryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,32)) );
+    signal morphingDecryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,32)) );
+
+begin
+    morphingZ(0) <= Z;
+    expandedKey(0) <= keyIn(15 downto 0);
+    expandedKey(1) <= keyIn(31 downto 16);
+    expandedKey(2) <= keyIn(47 downto 32);
+    expandedKey(3) <= keyIn(63 downto 48);
+
+    morphingEncryptMessage(0) <= messageIn;
+    morphingDecryptMessage(0) <= messageIn;
+
+-- connect components
+    keyExpansion_generation:for a in 0 to 27 generate
+        keyExpansion: keyExpander_32_64 port map(
+            Z => morphingZ(a),
+            returnZ => morphingZ(a+1),
+            keyIn_3 => expandedKey(a),
+            keyIn_2 => expandedKey(a+1),
+            keyIn_1 => expandedKey(a+2),
+            keyIn_0 => expandedKey(a+3),
+            entityNumber => std_logic_vector(to_unsigned(a,16)),
+            keyOut => expandedKey(a+4)
+        ); 
+    end generate;
+
+    messageEncrypter_generation:for a in 0 to 31 generate
+        encryptMessage: messageEncrypter_32_64 port map(
+            messageIn => morphingEncryptMessage(a),
+            keyIn => expandedKey(a),
+            messageOut => morphingEncryptMessage(a+1)
+        );
+    end generate;
+
+    messageDecrypter_generation:for a in 0 to 31 generate
+        decryptMessage: messageDecrypter_32_64 port map(
+            messageIn => morphingDecryptMessage(a),
+            keyIn => expandedKey(31-a),
+            messageOut => morphingDecryptMessage(a+1)
+        );
+    end generate;
+
+-- main process
+    process(mode, keyIn, messageIn, Z, expandedKey(31), morphingEncryptMessage(32), morphingDecryptMessage(32))
     begin
-        print("simon_32_64::Serious math happening"); flush;
-        print("simon_32_64::Key: "); logicPrint(keyIn); flush;
-        print("simon_32_64::Z: "); logicPrint(Z); flush;   
-        print("simon_32_64::Message: "); logicPrint(messageIn); flush;
-        messageOut <= messageIn;
+        if(mode = '0') then messageOut <= morphingEncryptMessage(32);
+        else messageOut <= morphingDecryptMessage(32);
+        end if;
+
     end process;
 
 end behaviour;
