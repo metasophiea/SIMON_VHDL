@@ -6,9 +6,9 @@ use std.textio.all;
 use work.printerlib.all;
 
 -- Methods | messageLength/keyLength | keySegmentLength | keySegments | cryptLoopCount | Zselect
--- 0000    | 32/64                   | 16               | 4           | 32             | 0
+-- 0001    | 48/72                   | 24               | 3           | 36             | 0
 
-entity simon_32_64 is
+entity simon_48_72 is
     port(
         mode: in std_logic;
         keyIn: in std_logic_vector(255 downto 0);
@@ -17,10 +17,10 @@ entity simon_32_64 is
 
         Z: in std_logic_vector(61 downto 0)
     );
-end simon_32_64;
+end simon_48_72;
 
-architecture behaviour of simon_32_64 is
-    constant cryptLoopCount : integer := 32; 
+architecture behaviour of simon_48_72 is
+    constant cryptLoopCount : integer := 36;
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     -- declare components
     component keyExpander
@@ -71,7 +71,7 @@ begin
 -- connect components
     keyExpansion_generation:for a in 0 to (cryptLoopCount-2) generate
         keyExpansion: keyExpander port map(
-            method => x"0",        
+            method => x"1",
             Z => morphingZ(a),
             returnZ => morphingZ(a+1),
             keyIn => morphingKey(a),
@@ -81,7 +81,7 @@ begin
 
     messageEncrypter_generation:for a in 0 to (cryptLoopCount-1) generate
         encryptMessage: messageEncrypter port map(
-            method => x"0",  
+            method => x"1",
             keyIn => morphingKey(a),
             messageIn => morphingEncryptMessage(a),
             messageOut => morphingEncryptMessage(a+1)
@@ -90,7 +90,7 @@ begin
 
     messageDecrypter_generation:for a in 0 to (cryptLoopCount-1) generate
         decryptMessage: messageDecrypter port map(
-            method => x"0",
+            method => x"1",  
             keyIn => morphingKey((cryptLoopCount-1)-a),
             messageIn => morphingDecryptMessage(a),
             messageOut => morphingDecryptMessage(a+1)

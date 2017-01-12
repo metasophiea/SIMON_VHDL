@@ -14,7 +14,7 @@ architecture behaviour of tester is
     component main
         port(
             mode: in std_logic;
-            method: in std_logic_vector(0 to 3);
+            method: in std_logic_vector(3 downto 0);
             keyIn: in std_logic_vector(255 downto 0);
             messageIn: in std_logic_vector(127 downto 0);
             messageOut: out std_logic_vector(127 downto 0)
@@ -56,6 +56,26 @@ architecture behaviour of tester is
             tester_method <= x"0";
             tester_keyIn <= x"0000000000000000000000000000000000000000000000001918111009080100";
             tester_messageIn <= x"000000000000000000000000c69be9bb";
+            wait for 10 ns;
+            print("tester::mode: "); if(tester_mode = '0') then print("encrypt"); else print("decrypt");end if; flush; 
+            print("tester::key: "); logicPrint(tester_keyIn); flush; 
+            print("tester::sent: "); logicPrint(tester_messageIn); flush; 
+            print("tester::answer: "); logicPrint(tester_messageOut); flush; flush;
+
+            tester_mode <= '0';
+            tester_method <= x"1";
+            tester_keyIn <= x"00000000000000000000000000000000000000000000001211100a0908020100";
+            tester_messageIn <= x"000000000000000000006120676e696c";
+            wait for 10 ns;
+            print("tester::mode: "); if(tester_mode = '0') then print("encrypt"); else print("decrypt");end if; flush; 
+            print("tester::Key: "); logicPrint(tester_keyIn); flush; 
+            print("tester::sent: "); logicPrint(tester_messageIn); flush; 
+            print("tester::answer: "); logicPrint(tester_messageOut); flush; flush;
+
+            tester_mode <= '1';
+            tester_method <= x"1";
+            tester_keyIn <= x"00000000000000000000000000000000000000000000001211100a0908020100";
+            tester_messageIn <= x"00000000000000000000dae5ac292cac";
             wait for 10 ns;
             print("tester::mode: "); if(tester_mode = '0') then print("encrypt"); else print("decrypt");end if; flush; 
             print("tester::key: "); logicPrint(tester_keyIn); flush; 

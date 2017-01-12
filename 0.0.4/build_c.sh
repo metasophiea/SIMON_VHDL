@@ -4,18 +4,20 @@
 #complete build and run
 
 ghdl -s printerlib.hdl
-ghdl -s keyExpander_32_64.hdl
-ghdl -s messageEncrypter_32_64.hdl
-ghdl -s messageDecrypter_32_64.hdl
+ghdl -s keyExpander.hdl
+ghdl -s messageEncrypter.hdl
+ghdl -s messageDecrypter.hdl
 ghdl -s simon_32_64.hdl
+ghdl -s simon_48_72.hdl
 ghdl -s main.hdl
 ghdl -s tester.hdl
 
 ghdl -a printerlib.hdl
-ghdl -a keyExpander_32_64.hdl
-ghdl -a messageEncrypter_32_64.hdl
-ghdl -a messageDecrypter_32_64.hdl
+ghdl -a keyExpander.hdl
+ghdl -a messageEncrypter.hdl
+ghdl -a messageDecrypter.hdl
 ghdl -a simon_32_64.hdl
+ghdl -a simon_48_72.hdl
 ghdl -a main.hdl
 ghdl -a tester.hdl
 
