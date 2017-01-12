@@ -11,7 +11,7 @@ end tester;
 architecture behaviour of tester is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     -- declare component
-    component main
+    component simon
         port(
             mode: in std_logic;
             method: in std_logic_vector(3 downto 0);
@@ -31,7 +31,7 @@ architecture behaviour of tester is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     begin
     -- connect component
-        mainComponent: main port map(
+        mainComponent: simon port map(
             mode => tester_mode,
             method => tester_method,
             keyIn => tester_keyIn,
