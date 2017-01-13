@@ -1,0 +1,105 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
+
+entity simon_96_96 is
+    port(
+        mode: in std_logic;
+        method: in std_logic_vector(3 downto 0);
+        keyIn: in std_logic_vector(255 downto 0);
+        messageIn: in std_logic_vector(127 downto 0);
+        messageOut: out std_logic_vector(127 downto 0);     
+        Z: in std_logic_vector(61 downto 0)
+    );
+end simon_96_96;
+
+architecture behaviour of simon_96_96 is
+    constant cryptLoopCount : integer := 52;
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- declare components
+    component keyExpander
+        port(
+            method: in std_logic_vector(3 downto 0);
+            Z: in std_logic_vector(61 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            keyOut: out std_logic_vector(255 downto 0);
+            returnZ: out std_logic_vector(61 downto 0)
+        );
+    end component;
+
+    component messageEncrypter is
+        port(
+            method: in std_logic_vector(3 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0)
+        );
+    end component;
+
+    component messageDecrypter is
+        port(
+            method: in std_logic_vector(3 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0)
+        );
+    end component;
+
+    -- internal signals 
+    type morphingZ_type is array (0 to (cryptLoopCount-1)) of std_logic_vector(61 downto 0);
+    signal morphingZ: morphingZ_type := ( others => std_logic_vector(to_unsigned(0,62)) );
+
+    type morphingKey_type is array (0 to (cryptLoopCount-1)) of std_logic_vector(255 downto 0);
+    signal morphingKey: morphingKey_type := ( others => std_logic_vector(to_unsigned(0,256)) );
+
+    type morphingMessage_type is array (0 to cryptLoopCount) of std_logic_vector(127 downto 0); 
+    signal morphingEncryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,128)) );
+    signal morphingDecryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,128)) ); 
+
+begin
+    morphingKey(0) <= keyIn;
+    morphingZ(0) <= Z;
+    morphingEncryptMessage(0) <= messageIn;
+    morphingDecryptMessage(0) <= messageIn;
+
+-- connect components
+    keyExpansion_generation:for a in 0 to (cryptLoopCount-2) generate
+        keyExpansion: keyExpander port map(
+            method => method,
+            Z => morphingZ(a),
+            returnZ => morphingZ(a+1),
+            keyIn => morphingKey(a),
+            keyOut => morphingKey(a+1)
+        ); 
+    end generate;
+
+    messageEncrypter_generation:for a in 0 to (cryptLoopCount-1) generate
+        encryptMessage: messageEncrypter port map(
+            method => method,
+            keyIn => morphingKey(a),
+            messageIn => morphingEncryptMessage(a),
+            messageOut => morphingEncryptMessage(a+1)
+        );
+    end generate;
+
+    messageDecrypter_generation:for a in 0 to (cryptLoopCount-1) generate
+        decryptMessage: messageDecrypter port map(
+            method => method,  
+            keyIn => morphingKey((cryptLoopCount-1)-a),
+            messageIn => morphingDecryptMessage(a),
+            messageOut => morphingDecryptMessage(a+1)
+        );
+    end generate;
+
+-- main process
+    process(mode, morphingEncryptMessage(cryptLoopCount), morphingDecryptMessage(cryptLoopCount))
+    begin
+        if(mode = '0') then messageOut <= morphingEncryptMessage(cryptLoopCount);
+        else messageOut <= morphingDecryptMessage(cryptLoopCount);
+        end if;
+    end process;
+
+end behaviour;
