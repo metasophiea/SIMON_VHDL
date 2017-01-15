@@ -1,0 +1,152 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
+
+-- Methods | messageLength/keyLength | keySegmentLength | keySegments | messageSegments | messageSegmentLength| cryptLoopCount | Zselect
+-- 0000    | 32/64                   | 16               | 4           | 2               | 16                  | 32             | 0
+-- 0001    | 48/72                   | 24               | 3           | 2               | 24                  | 36             | 0
+-- 0010    | 48/96                   | 24               | 4           | 2               | 24                  | 36             | 1
+-- 0011    | 64/96                   | 32               | 3           | 2               | 32                  | 42             | 2
+-- 0100    | 64/128                  | 32               | 4           | 2               | 32                  | 44             | 3
+-- 0101    | 96/96                   | 48               | 2           | 2               | 48                  | 52             | 2
+-- 0110    | 96/144                  | 48               | 3           | 2               | 48                  | 54             | 3
+-- 0111    | 128/128                 | 64               | 2           | 2               | 64                  | 68             | 2
+-- 1000    | 128/192                 | 64               | 3           | 2               | 64                  | 69             | 3
+-- 1001    | 128/256                 | 64               | 4           | 2               | 64                  | 72             | 4
+
+entity simon is
+    port(
+        mode: in std_logic;
+        method: in std_logic_vector(3 downto 0);
+        keyIn: in std_logic_vector(255 downto 0) := (others => '0');
+        messageIn: in std_logic_vector(127 downto 0);
+        messageOut: out std_logic_vector(127 downto 0) := (others => '0')
+    );
+end simon;
+
+architecture behaviour of simon is
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- declare components
+    component keyExpander
+        port(
+            method: in std_logic_vector(3 downto 0);
+            Z: in std_logic_vector(61 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            keyOut: out std_logic_vector(255 downto 0);
+            returnZ: out std_logic_vector(61 downto 0)
+        );
+    end component;
+
+    component messageEncrypter is
+        port(
+            method: in std_logic_vector(3 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0)
+        );
+    end component;
+
+    component messageDecrypter is
+        port(
+            method: in std_logic_vector(3 downto 0);
+            keyIn: in std_logic_vector(255 downto 0);
+            messageIn: in std_logic_vector(127 downto 0);
+            messageOut: out std_logic_vector(127 downto 0)
+        );
+    end component;  
+
+    -- declare Z's
+    signal Z_0: std_logic_vector(61 downto 0) := "11111010001001010110000111001101111101000100101011000011100110";
+    signal Z_1: std_logic_vector(61 downto 0) := "10001110111110010011000010110101000111011111001001100001011010";
+    signal Z_2: std_logic_vector(61 downto 0) := "10101111011100000011010010011000101000010001111110010110110011";
+    signal Z_3: std_logic_vector(61 downto 0) := "11011011101011000110010111100000010010001010011100110100001111";
+    signal Z_4: std_logic_vector(61 downto 0) := "11010001111001101011011000100000010111000011001010010011101111";
+    signal selectedZ: std_logic_vector(61 downto 0) := "00000000000000000000000000000000000000000000000000000000000000";
+
+    -- internal signals
+    constant maxCryptLoopCount : integer := 72;
+    type morphingZ_type is array (0 to (maxCryptLoopCount-1)) of std_logic_vector(61 downto 0);
+    signal morphingZ: morphingZ_type := ( others => std_logic_vector(to_unsigned(0,62)) );
+
+    type morphingKey_type is array (0 to (maxCryptLoopCount-1)) of std_logic_vector(255 downto 0);
+    signal morphingKey: morphingKey_type := ( others => std_logic_vector(to_unsigned(0,256)) );
+
+    type morphingMessage_type is array (0 to maxCryptLoopCount) of std_logic_vector(127 downto 0); 
+    signal morphingEncryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,128)) );
+    signal morphingDecryptMessage: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,128)) ); 
+    signal morphingDecryptMessage_inPorts: morphingMessage_type := ( others => std_logic_vector(to_unsigned(0,128)) );  
+
+begin
+    morphingZ(0) <= selectedZ;
+    morphingKey(0) <= keyIn;
+    morphingEncryptMessage(0) <= messageIn;
+    morphingDecryptMessage(0) <= messageIn;
+
+-- connect components
+    keyExpansion_generation:for a in 0 to (maxCryptLoopCount-2) generate
+        keyExpansion: keyExpander port map(
+            method => method,        
+            Z => morphingZ(a),
+            returnZ => morphingZ(a+1),
+            keyIn => morphingKey(a),
+            keyOut => morphingKey(a+1)
+        ); 
+    end generate; 
+
+    encrypterDecrypter_generation:for a in 0 to (maxCryptLoopCount-1) generate
+        encryptMessage: messageEncrypter port map(
+            method => method,  
+            keyIn => morphingKey(a),
+            messageIn => morphingEncryptMessage(a),
+            messageOut => morphingEncryptMessage(a+1)
+        );
+
+        decryptMessage: messageDecrypter port map(
+            method => method,
+            keyIn => morphingKey((maxCryptLoopCount-1)-a),
+            messageIn => morphingDecryptMessage_inPorts(a),
+            messageOut => morphingDecryptMessage(a+1)
+        );
+    end generate;
+
+-- late message insertion for decryption
+    messageDecrypter_generation_switch_0:for a in 0 to (maxCryptLoopCount-69-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-69) <= messageIn when (mode = '1' and method = "1000") else morphingDecryptMessage(maxCryptLoopCount-69);
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-68) <= messageIn when (mode = '1' and method = "0111") else morphingDecryptMessage(maxCryptLoopCount-68); 
+    messageDecrypter_generation_switch_1:for a in (maxCryptLoopCount-68+1) to (maxCryptLoopCount-54-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-54) <= messageIn when (mode = '1' and method = "0110") else morphingDecryptMessage(maxCryptLoopCount-54);
+    messageDecrypter_generation_switch_2:for a in (maxCryptLoopCount-54+1) to (maxCryptLoopCount-52-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-52) <= messageIn when (mode = '1' and method = "0101") else morphingDecryptMessage(maxCryptLoopCount-52);
+    messageDecrypter_generation_switch_3:for a in (maxCryptLoopCount-52+1) to (maxCryptLoopCount-44-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-44) <= messageIn when (mode = '1' and method = "0100") else morphingDecryptMessage(maxCryptLoopCount-44);
+    messageDecrypter_generation_switch_5:for a in (maxCryptLoopCount-44+1) to (maxCryptLoopCount-42-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-42) <= messageIn when (mode = '1' and method = "0011") else morphingDecryptMessage(maxCryptLoopCount-42);
+    messageDecrypter_generation_switch_6:for a in (maxCryptLoopCount-42+1) to (maxCryptLoopCount-36-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-36) <= messageIn when (mode = '1' and (method = "0001" or method = "0010")) else morphingDecryptMessage(maxCryptLoopCount-36);
+    messageDecrypter_generation_switch_7:for a in (maxCryptLoopCount-36+1) to (maxCryptLoopCount-32-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+        morphingDecryptMessage_inPorts(maxCryptLoopCount-32) <= messageIn when (mode = '1' and method = "0000") else morphingDecryptMessage(maxCryptLoopCount-32);
+    messageDecrypter_generation_switch_8:for a in (maxCryptLoopCount-32+1) to (maxCryptLoopCount-1) generate morphingDecryptMessage_inPorts(a) <= morphingDecryptMessage(a); end generate;
+
+-- main process
+    process(mode,method,morphingEncryptMessage(maxCryptLoopCount),morphingDecryptMessage(maxCryptLoopCount))
+    begin
+        if(mode = '1') then messageOut <= morphingDecryptMessage(72); end if;
+
+        case method is
+            when "0000" => selectedZ <= Z_0; if(mode = '0') then messageOut <= morphingEncryptMessage(32); end if;
+            when "0001" => selectedZ <= Z_0; if(mode = '0') then messageOut <= morphingEncryptMessage(36); end if;
+            when "0010" => selectedZ <= Z_1; if(mode = '0') then messageOut <= morphingEncryptMessage(36); end if;
+            when "0011" => selectedZ <= Z_2; if(mode = '0') then messageOut <= morphingEncryptMessage(42); end if;
+            when "0100" => selectedZ <= Z_3; if(mode = '0') then messageOut <= morphingEncryptMessage(44); end if;
+            when "0101" => selectedZ <= Z_2; if(mode = '0') then messageOut <= morphingEncryptMessage(52); end if;
+            when "0110" => selectedZ <= Z_3; if(mode = '0') then messageOut <= morphingEncryptMessage(54); end if;
+            when "0111" => selectedZ <= Z_2; if(mode = '0') then messageOut <= morphingEncryptMessage(68); end if;
+            when "1000" => selectedZ <= Z_3; if(mode = '0') then messageOut <= morphingEncryptMessage(69); end if;
+            when "1001" => selectedZ <= Z_4; if(mode = '0') then messageOut <= morphingEncryptMessage(72); end if;
+            when others => print("main::error"); flush;
+        end case;
+    end process;
+end behaviour;

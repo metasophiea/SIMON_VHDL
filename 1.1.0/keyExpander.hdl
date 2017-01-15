@@ -90,15 +90,7 @@ begin
     process(keyIn, Z, method)
         variable test_keyOut: std_logic_vector(255 downto 0) := (others => '0');
     begin
-        --print("    keyExpander::method: "); logicPrint(method); flush;
-        -- print("    keyExpander::keyIn:      "); logicPrint(keyIn); flush;
         keyOut <= getNextKey(keyIn,Z,method);
-
-        -- case (method) is
-        --     when "0000" => test_keyOut := getNextKey(keyIn,Z,method); print("    keyExpander::getNextKey: "); logicPrint(test_keyOut); flush;
-        --     when "0001" => test_keyOut := getNextKey(keyIn,Z,method); print("    keyExpander::getNextKey: "); logicPrint(test_keyOut); flush;
-        --     when others => print("      keyExpander::error"); flush;
-        -- end case;
         returnZ <= morph_Z(Z);
     end process;
 
