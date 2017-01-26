@@ -5,17 +5,17 @@ use IEEE.numeric_std.all;
 use std.textio.all; 
 use work.printerlib.all;
 
--- Methods | messageLength/keyLength | keySegmentLength | keySegments | messageSegments | messageSegmentLength| cryptLoopCount | Zselect
--- 0000    | 32/64                   | 16               | 4           | 2               | 16                  | 32             | 0
--- 0001    | 48/72                   | 24               | 3           | 2               | 24                  | 36             | 0
--- 0010    | 48/96                   | 24               | 4           | 2               | 24                  | 36             | 1
--- 0011    | 64/96                   | 32               | 3           | 2               | 32                  | 42             | 2
--- 0100    | 64/128                  | 32               | 4           | 2               | 32                  | 44             | 3
--- 0101    | 96/96                   | 48               | 2           | 2               | 48                  | 52             | 2
--- 0110    | 96/144                  | 48               | 3           | 2               | 48                  | 54             | 3
--- 0111    | 128/128                 | 64               | 2           | 2               | 64                  | 68             | 2
--- 1000    | 128/192                 | 64               | 3           | 2               | 64                  | 69             | 3
--- 1001    | 128/256                 | 64               | 4           | 2               | 64                  | 72             | 4
+-- Methods | messageLength/keyLength | keySegmentLength | keySegments | messageSegments | messageSegmentLength | cryptLoopCount | Zselect
+-- 0000    | 32/64                   | 16               | 4           | 2               | 16                   | 32             | 0
+-- 0001    | 48/72                   | 24               | 3           | 2               | 24                   | 36             | 0
+-- 0010    | 48/96                   | 24               | 4           | 2               | 24                   | 36             | 1
+-- 0011    | 64/96                   | 32               | 3           | 2               | 32                   | 42             | 2
+-- 0100    | 64/128                  | 32               | 4           | 2               | 32                   | 44             | 3
+-- 0101    | 96/96                   | 48               | 2           | 2               | 48                   | 52             | 2
+-- 0110    | 96/144                  | 48               | 3           | 2               | 48                   | 54             | 3
+-- 0111    | 128/128                 | 64               | 2           | 2               | 64                   | 68             | 2
+-- 1000    | 128/192                 | 64               | 3           | 2               | 64                   | 69             | 3
+-- 1001    | 128/256                 | 64               | 4           | 2               | 64                   | 72             | 4
 
 entity simon is
     port(
@@ -29,6 +29,9 @@ end simon;
 
 architecture behaviour of simon is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
+    -- declare constants
+    constant maxCryptLoopCount : integer := 72;
+
     -- declare components
     component keyExpander
         port(
@@ -68,7 +71,6 @@ architecture behaviour of simon is
     signal Z_4: std_logic_vector(61 downto 0) := "11010001111001101011011000100000010111000011001010010011101111";
 
     -- internal signals
-    constant maxCryptLoopCount : integer := 72;
     type morphingZ_type is array (0 to (maxCryptLoopCount-1)) of std_logic_vector(61 downto 0);
     signal morphingZ: morphingZ_type := ( others => std_logic_vector(to_unsigned(0,62)) );
 
@@ -81,17 +83,18 @@ architecture behaviour of simon is
 
 begin
     -- connect inputs
+    morphingKey(0) <= keyIn;
+    morphingEncryptMessage(0) <= messageIn;
+    morphingDecryptMessage(0) <= messageIn;
+
+    -- select Z baised on selected method
     morphingZ(0) <= Z_0 when (method = "0000" or method = "0001") else
                     Z_1 when (method = "0010") else
                     Z_2 when (method = "0011" or method = "0101" or method = "0111") else
                     Z_3 when (method = "0100" or method = "0110" or method = "1000") else
                     Z_4; 
 
-    morphingKey(0) <= keyIn;
-    morphingEncryptMessage(0) <= messageIn;
-    morphingDecryptMessage(0) <= messageIn;
-
--- connect components
+-- generate and connect components
     keyExpansion_generation:for a in 0 to (maxCryptLoopCount-2) generate
         keyExpansion: keyExpander port map(
             method => method,        
@@ -120,6 +123,6 @@ begin
         );
     end generate;
 
-    -- connect outputs
+    -- connect output
     messageOut <= morphingEncryptMessage(72) when mode = '0' else morphingDecryptMessage(72);
 end behaviour;
