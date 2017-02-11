@@ -1,0 +1,19 @@
+- 3 High-speed Pmods on the board, have 12 pins each, 8 usable for data
+    JB
+        3v | gnd | jb_n(1) | jb_p(1) | jb_n(0) | jb_p(0)
+        3v | gnd | jb_n(3) | jb_p(3) | jb_n(2) | jb_p(2)
+    JC
+        3v | gnd | jc_n(1) | jc_p(1) | jc_n(0) | jc_p(0)
+        3v | gnd | jc_n(3) | jc_p(3) | jc_n(2) | jc_p(2)
+    JD
+        3v | gnd | jd_n(1) | jd_p(1) | jd_n(0) | jd_p(0)
+        3v | gnd | jd_n(3) | jd_p(3) | jd_n(2) | jd_p(2)
+
+- Raspberry PI has 26 GPIO pins
+
+Simon has 517 inputs and outputs, this packager reduces the interface to 24 pins
+- 8 Control pins
+- 8 Input pins
+- 8 Output pins
+
+Using three of the Zybo's High-speed Pmods ports, we can connect to 24 of the Raspberry PI's GPIO pins

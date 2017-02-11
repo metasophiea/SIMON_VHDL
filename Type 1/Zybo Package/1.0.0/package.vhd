@@ -2,14 +2,6 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
--- Control              | 
--- 00000000             | Access mode and method
--- 00000001 -> 00010000 | Access input and output
--- 00010001 -> 00110000 | Access key
--- 'Access' runs from right to left in chunks of 8 bits
--- eg. "access 0010010" is in the key: ~~ 0000000000000000|00000000|00000000
--- selecting input message chunks, output chunks will by outputted
-
 entity simon_package is
     port(
         control, input: in std_logic_vector(7 downto 0) := (others => '0');
