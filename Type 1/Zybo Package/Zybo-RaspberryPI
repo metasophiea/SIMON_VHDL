@@ -10,6 +10,9 @@
         3v | gnd | jd_n(3) | jd_p(3) | jd_n(2) | jd_p(2)
 
 - Raspberry PI has 26 GPIO pins
+    | 2  3  4  5  6  7  8  9  | 10 11 12 13 14 15 16 17 | 18 19 20 21 22 23 24 25 |
+
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
 Simon has 517 inputs and outputs, this packager reduces the interface to 24 pins
 - 8 Control pins
@@ -17,3 +20,29 @@ Simon has 517 inputs and outputs, this packager reduces the interface to 24 pins
 - 8 Output pins
 
 Using three of the Zybo's High-speed Pmods ports, we can connect to 24 of the Raspberry PI's GPIO pins
+
+- connections
+    JB
+        empty | empty | 5  | 4  | 3  | 2
+        empty | empty | 9  | 8  | 7  | 6
+    JC
+        empty | empty | 13 | 12 | 11 | 10
+        empty | empty | 17 | 16 | 15 | 14
+    JD
+        empty | empty | 21 | 20 | 19 | 18
+        empty | empty | 25 | 24 | 23 | 22
+
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+
+example linux bash commands for basic accessing of the pins
+
+echo 18 > /sys/class/gpio/export
+echo 19 > /sys/class/gpio/export
+
+echo out > /sys/class/gpio/gpio18/direction
+echo in > /sys/class/gpio/gpio19/direction
+
+echo 1 > /sys/class/gpio/gpio18/value
+echo 0 > /sys/class/gpio/gpio18/value
+
+head /sys/class/gpio/gpio19/value
