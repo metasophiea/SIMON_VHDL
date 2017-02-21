@@ -1,6 +1,7 @@
 - create other fragmented versions of type_1
-- create c++ program for unified type_1
 - create packages for fragmented versions of type_1
+- create c++ program for unified type_1
+  processMessage function could split into fragmented sub functions, thus easing the progress into the fragmented versions of the program
 - create c++ programs for each type of fragmented type_1
 
 - reorganise type_2 into unified folder
