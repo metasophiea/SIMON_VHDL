@@ -1,0 +1,99 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity SimonEncryption_32_64 is
+    port(
+        keyIn: in std_logic_vector(63 downto 0);
+        messageIn: in std_logic_vector(31 downto 0);
+        messageOut: out std_logic_vector(31 downto 0)
+    );
+end SimonEncryption_32_64;
+
+architecture behaviour of SimonEncryption_32_64 is 
+begin   
+    process_1: process(keyIn,messageIn)        
+        variable Z: std_logic_vector(61 downto 0);
+        variable Z_manipulator: std_logic_vector(61 downto 0);
+        
+        variable loopCounter: std_logic_vector(15 downto 0);
+        
+        variable pre_1, pre_2, pre_3, pre_4: std_logic_vector(15 downto 0); 
+        variable keyExpansion_Temp: std_logic_vector(15 downto 0);        
+        variable workingMessage_x, workingMessage_y, encryptionHolder, encryptionTemp: std_logic_vector(15 downto 0);    
+    begin
+        Z := "11111010001001010110000111001101111101000100101011000011100110";
+        Z_manipulator := Z;
+        loopCounter := "0000000000000000";
+        
+        pre_4 := keyIn(15 downto 0);  
+        pre_3 := keyIn(31 downto 16);  
+        pre_2 := keyIn(47 downto 32);   
+        pre_1 := keyIn(63 downto 48);
+        workingMessage_y := messageIn(15 downto 0);                         
+        workingMessage_x := messageIn(31 downto 16); 
+        
+--Loop 1/32
+        encryptionHolder := workingMessage_x;
+        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+        encryptionTemp := encryptionTemp xor workingMessage_y;
+        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+        encryptionTemp := encryptionTemp xor pre_4;
+        workingMessage_x := encryptionTemp;
+        workingMessage_y := encryptionHolder; 
+        
+--Loop 2/32
+        encryptionHolder := workingMessage_x;
+        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+        encryptionTemp := encryptionTemp xor workingMessage_y;
+        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+        encryptionTemp := encryptionTemp xor pre_3;
+        workingMessage_x := encryptionTemp;
+        workingMessage_y := encryptionHolder; 
+             
+--Loop 3/32
+        encryptionHolder := workingMessage_x;
+        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+        encryptionTemp := encryptionTemp xor workingMessage_y;
+        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+        encryptionTemp := encryptionTemp xor pre_2;
+        workingMessage_x := encryptionTemp;
+        workingMessage_y := encryptionHolder; 
+                    
+--Loop 4/32
+        encryptionHolder := workingMessage_x;
+        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+        encryptionTemp := encryptionTemp xor workingMessage_y;
+        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+        encryptionTemp := encryptionTemp xor pre_1;
+        workingMessage_x := encryptionTemp;
+        workingMessage_y := encryptionHolder;                    
+
+        for loopCounter in 0 to 27 loop
+        -- key generation
+            keyExpansion_Temp := pre_1(2 downto 0) & pre_1(pre_1'length-1 downto 3);
+            keyExpansion_Temp := keyExpansion_Temp xor pre_3;
+            keyExpansion_Temp := keyExpansion_Temp xor (keyExpansion_Temp(0) & keyExpansion_Temp(keyExpansion_Temp'length-1 downto 1));
+            keyExpansion_Temp := keyExpansion_Temp xor pre_4;
+            keyExpansion_Temp := keyExpansion_Temp xor ("000000000000000" & Z_manipulator(Z_manipulator'length-1));
+                Z_manipulator := Z_manipulator(Z_manipulator'length-2 downto 0) & Z_manipulator(Z_manipulator'length-1);
+            keyExpansion_Temp := keyExpansion_Temp xor "1111111111111100";
+            
+            pre_4 := pre_3;
+            pre_3 := pre_2;
+            pre_2 := pre_1;
+            pre_1 := keyExpansion_Temp;
+        -- encryption
+            encryptionHolder := workingMessage_x;
+            encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+            encryptionTemp := encryptionTemp xor workingMessage_y;
+            encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+            encryptionTemp := encryptionTemp xor pre_1;
+            workingMessage_x := encryptionTemp;
+            workingMessage_y := encryptionHolder; 
+        end loop;
+
+        messageOut <= workingMessage_x & workingMessage_y;
+    end process;
+
+end behaviour;

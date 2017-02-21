@@ -1,0 +1,43 @@
+--try running with ./main --stop-time=10ns
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use std.textio.all; 
+use work.printerlib.all;
+
+entity messageEncrypter_32_64 is
+    port(
+        messageIn: in std_logic_vector(31 downto 0);
+        keyIn: in std_logic_vector(15 downto 0);
+        messageOut: out std_logic_vector(31 downto 0)
+    );
+end messageEncrypter_32_64;
+
+architecture behaviour of messageEncrypter_32_64 is
+    function encrypt(messageIn, keyIn: std_logic_vector)
+    return std_logic_vector is
+        variable x: std_logic_vector(15 downto 0) := messageIn(31 downto 16);
+        variable y: std_logic_vector(15 downto 0) := messageIn(15 downto 0);
+        variable holder, temp: std_logic_vector(15 downto 0);
+        variable key: std_logic_vector(15 downto 0) := keyIn;
+    begin
+    
+        holder := x;
+        temp := (x(x'length-2 downto 0) & x(x'length-1)) and (x(x'length-9 downto 0) & x(x'length-1 downto x'length-8)); 
+        temp := temp xor y;
+        temp := temp xor (x(x'length-3 downto 0) & x(x'length-1 downto x'length-2));
+        temp := temp xor key;
+        x := temp;
+        y := holder; 
+
+        return (x & y);
+    end function;
+
+begin
+    process(messageIn, keyIn) 
+    begin 
+        messageOut <= encrypt(messageIn,keyIn);
+    end process;
+end behaviour;

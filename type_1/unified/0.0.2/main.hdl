@@ -1,0 +1,222 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity SimonEncryption is
+    port(
+        methodSelect: in std_logic_vector(3 downto 0);
+            -- 0 - key bits: 16, segments: 4
+            -- 1 - key bits: 24, segments: 3
+            -- 2 - key bits: 24, segments: 4
+            -- 3 - key bits: 32, segments: 3
+            -- 4 - key bits: 32, segments: 4
+            -- 5 - key bits: 48, segments: 2
+            -- 6 - key bits: 48, segments: 3
+            -- 7 - key bits: 64, segments: 2
+            -- 8 - key bits: 64, segments: 3
+            -- 9 - key bits: 64, segments: 4
+        keyIn_0,keyIn_1,keyIn_2,keyIn_3: in std_logic_vector(63 downto 0);
+        messageIn_0, messageIn_1: in std_logic_vector(63 downto 0);
+        messageOut_0, messageOut_1: out std_logic_vector(63 downto 0)
+    );
+end SimonEncryption;
+
+architecture behaviour of SimonEncryption is 
+begin   
+    main_process: process(methodSelect,keyIn_0,keyIn_1,keyIn_2,keyIn_3,messageIn_0,messageIn_1)
+        function rightRotate(input: std_logic_vector; virtSize: natural) return std_logic_vector is
+            variable loopCounter: std_logic_vector(7 downto 0);
+        begin
+            return input(virtSize-2 downto 0) & input(virtSize-1);
+        end rightRotate;
+    
+        variable key_bits: unsigned(7 downto 0) := to_unsigned(0,8);
+        variable key_segments: unsigned(3 downto 0) := to_unsigned(0,4);
+        variable loopLimit: unsigned(15 downto 0) := to_unsigned(0,16);
+        variable Z_select: unsigned(3 downto 0) := to_unsigned(0,4); 
+        
+        variable Z_0,Z_1,Z_2,Z_3,Z_4: std_logic_vector(61 downto 0);
+        variable Z_manipulator: std_logic_vector(61 downto 0);
+        
+        variable loopCounter: std_logic_vector(7 downto 0);
+        
+        variable pre_1, pre_2, pre_3, pre_4: std_logic_vector(63 downto 0); 
+        variable workingMessage_x, workingMessage_y, keyExpansion_Temp, encryptionHolder, encryptionTemp: std_logic_vector(63 downto 0);   
+    begin
+        Z_0 := "11111010001001010110000111001101111101000100101011000011100110";
+        Z_1 := "10001110111110010011000010110101000111011111001001100001011010";
+        Z_2 := "10101111011100000011010010011000101000010001111110010110110011";
+        Z_3 := "11011011101011000110010111100000010010001010011100110100001111";
+        Z_4 := "11010001111001101011011000100000010111000011001010010011101111";
+        loopCounter := "00000000";
+        workingMessage_y := messageIn_0; workingMessage_x := messageIn_1;      
+        
+        workingMessage_x := rightRotate(workingMessage_x,16);
+        messageOut_0 <= workingMessage_x;
+        
+--        case methodSelect is
+--            when "0000" => 
+--                key_bits := to_unsigned(16,8);
+--                key_segments := to_unsigned(4,4);
+--                loopLimit := to_unsigned(32,16);
+--                Z_select := to_unsigned(0,4); 
+--            when "0001" => 
+--                key_bits := to_unsigned(24,8);
+--                key_segments := to_unsigned(3,4);
+--                loopLimit := to_unsigned(36,16);
+--                Z_select := to_unsigned(0,4); 
+--            when "0010" => 
+--                key_bits := to_unsigned(24,8);
+--                key_segments := to_unsigned(4,4);
+--                loopLimit := to_unsigned(36,16);
+--                Z_select := to_unsigned(1,4);   
+--            when "0011" => 
+--                key_bits := to_unsigned(32,8);
+--                key_segments := to_unsigned(3,4);
+--                loopLimit := to_unsigned(42,16);
+--                Z_select := to_unsigned(2,4); 
+--            when "0100" => 
+--                key_bits := to_unsigned(32,8);
+--                key_segments := to_unsigned(4,4);
+--                loopLimit := to_unsigned(44,16);
+--                Z_select := to_unsigned(3,4); 
+--            when "0101" => 
+--                key_bits := to_unsigned(48,8);
+--                key_segments := to_unsigned(2,4);
+--                loopLimit := to_unsigned(52,16);
+--                Z_select := to_unsigned(2,4); 
+--            when "0110" => 
+--                key_bits := to_unsigned(48,8);
+--                key_segments := to_unsigned(3,4);
+--                loopLimit := to_unsigned(54,16);
+--                Z_select := to_unsigned(3,4); 
+--            when "0111" => 
+--                key_bits := to_unsigned(64,8);
+--                key_segments := to_unsigned(2,4);
+--                loopLimit := to_unsigned(68,16);
+--                Z_select := to_unsigned(2,4); 
+--            when "1000" => 
+--                key_bits := to_unsigned(64,8);
+--                key_segments := to_unsigned(3,4);
+--                loopLimit := to_unsigned(69,16);
+--                Z_select := to_unsigned(3,4); 
+--            when "1001" => 
+--                key_bits := to_unsigned(64,8);
+--                key_segments := to_unsigned(4,4);
+--                loopLimit := to_unsigned(72,16);
+--                Z_select := to_unsigned(4,4); 
+--            when others =>
+--        end case;
+            
+--        case Z_select is 
+--            when "0000" => Z_manipulator := Z_0;
+--            when "0001" => Z_manipulator := Z_1; 
+--            when "0010" => Z_manipulator := Z_2;   
+--            when "0011" => Z_manipulator := Z_3;
+--            when "0100" => Z_manipulator := Z_4;       
+--            when others =>
+--        end case; 
+        
+--        case key_segments is 
+--            when "0010" =>
+--                pre_4 := "0000000000000000000000000000000000000000000000000000000000000000"; 
+--                pre_3 := "0000000000000000000000000000000000000000000000000000000000000000";  
+--                pre_2 := keyIn_0;   
+--                pre_1 := keyIn_1;   
+--                --Loop 1/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_2;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                                    
+--                --Loop 2/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_1;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+--            when "0011" =>
+--                pre_4 := "0000000000000000000000000000000000000000000000000000000000000000"; 
+--                pre_3 := keyIn_0;
+--                pre_2 := keyIn_1;   
+--                pre_1 := keyIn_2;    
+--                --Loop 1/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_3;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                             
+--                --Loop 2/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_2;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                                    
+--                --Loop 3/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_1;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+--            when "0100" =>
+--                pre_4 := keyIn_0;  
+--                pre_3 := keyIn_1;  
+--                pre_2 := keyIn_2;   
+--                pre_1 := keyIn_3; 
+--                --Loop 1/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_4;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                        
+--                --Loop 2/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_3;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                             
+--                --Loop 3/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_2;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder; 
+                                    
+--                --Loop 4/loopLimit
+--                        encryptionHolder := workingMessage_x;
+--                        encryptionTemp := (workingMessage_x(workingMessage_x'length-2 downto 0) & workingMessage_x(workingMessage_x'length-1)) and (workingMessage_x(workingMessage_x'length-9 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-8)); 
+--                        encryptionTemp := encryptionTemp xor workingMessage_y;
+--                        encryptionTemp := encryptionTemp xor (workingMessage_x(workingMessage_x'length-3 downto 0) & workingMessage_x(workingMessage_x'length-1 downto workingMessage_x'length-2));
+--                        encryptionTemp := encryptionTemp xor pre_1;
+--                        workingMessage_x := encryptionTemp;
+--                        workingMessage_y := encryptionHolder;  
+--            when others =>
+--        end case;     
+
+        
+
+
+        
+    end process;
+end behaviour;
