@@ -1,5 +1,5 @@
 - Pin Count
-			| method	| keyIn	| messageIn	| messageOut	| Total
+		| method		| keyIn	| messageIn	| messageOut		| Total
 
 - 32_64		| 1			| 64	| 32		| 32			| 129
 
