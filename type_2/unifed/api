@@ -29,7 +29,7 @@
             16 | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1
 
         - x1000000  ->  x"40"  ->  edit system's method and mode
-            unused | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
+            clock | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
 
         - x1000001  ->  x"41"  ->  edit 'messageIn' segment 1
         - x1000010  ->  x"42"  ->  edit 'messageIn' segment 2
