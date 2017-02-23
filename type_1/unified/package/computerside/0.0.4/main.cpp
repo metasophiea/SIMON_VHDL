@@ -6,7 +6,13 @@
 	unsigned int inputPins[] = {10,11,12,13,14,15,16,17};
 	unsigned int outputPins[] = {18,19,20,21,22,23,24,25};
 	
-
+	//control messages
+	std::string readInputCommands[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10"};
+	std::string modeMethodCommand = "40";
+	std::string writeInputCommands[] = {"41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50"};
+	std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
+	
+	
 //GPIO utility functions
 	#define IN  0
 	#define OUT 1
@@ -15,11 +21,11 @@
 	#define HIGH 1
 
 	//dev functions
-	bool GPIO_export(int pinNumber){return true;}
-	bool GPIO_unexport(int pinNumber){return true;}
-	bool GPIO_direction(int pinNumber, int direction){return true;}
-	static int GPIO_read(int pinNumber){return 0;}
-	bool GPIO_write(int pinNumber, int value){return true;}
+	bool GPIO_export(int pinNumber){/*std::cout << "exporting pin: " << pinNumber << std::endl;*/ return true;}
+	bool GPIO_unexport(int pinNumber){/*std::cout << "unexporting pin: " << pinNumber << std::endl;*/ return true;}
+	bool GPIO_direction(int pinNumber, int direction){/*std::cout << "setting pin direction: " << pinNumber << " to " << direction << std::endl;*/ return true;}
+	static int GPIO_read(int pinNumber){/*std::cout << "reading pin: " << pinNumber << std::endl;*/ return 0;}
+	bool GPIO_write(int pinNumber, int value){/*std::cout << "writing " << value << " to pin " << pinNumber << std::endl;*/ return true;}
 	
 /*
 	#include <sys/stat.h>
@@ -241,13 +247,142 @@ std::string HEXtoBIN(std::string hexIn){
 	return returnBin;
 }
 
+bool setControl(std::string data){
+	std::string binData = HEXtoBIN(data);
+	
+	unsigned int values[] = {0,0,0,0,0,0,0,0};
+	for(unsigned int a = 0; a < binData.length(); a++){
+		if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
+	}
+	
+	for(unsigned int a = 0; a < (sizeof(controlPins)/sizeof(*controlPins)); a++){
+		if( !GPIO_write( controlPins[a], values[a] ) ){
+			std::cout << "- error:setControl: failed on pin: " << a << std::endl;
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+bool setInput(std::string data){	
+	std::string binData = HEXtoBIN(data);
+	
+	unsigned int values[] = {0,0,0,0,0,0,0,0};
+	for(unsigned int a = 0; a < binData.length(); a++){
+		if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
+	}
+	
+	for(unsigned int a = 0; a < (sizeof(inputPins)/sizeof(*inputPins)); a++){
+		if( !GPIO_write( inputPins[a], values[a] ) ){
+			std::cout << "- error:setInput: failed on pin: " << a << std::endl;
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+std::string readOutput(){ 
+	std::string data;
+	for(unsigned int a = 0; a < (sizeof(outputPins)/sizeof(*outputPins)); a++){ 
+		if( GPIO_read(outputPins[a]) == 0){ data += '0'; }else{ data += '1'; }
+	}
+	
+	return BINtoHEX(data);
+}
+
+bool writeModeAndMethod(bool mode, unsigned int method){
+	if(!setControl("40")){std::cout << "- error:writeModeAndMethod: could not set control" << std::endl; return false;}
+	
+	std::string data = "000";
+	switch(method){
+		case 0: data += "0000"; break;
+		case 1: data += "0001"; break;
+		case 2: data += "0010"; break;
+		case 3: data += "0011"; break;
+		case 4: data += "0100"; break;
+		case 5: data += "0101"; break;
+		case 6: data += "0110"; break;
+		case 7: data += "0111"; break;
+		case 8: data += "1000"; break;
+		case 9: data += "1001"; break;
+		default: data += "0000"; break;
+	}
+	
+	if(!mode){data += '0';}else{data += '1';}
+	
+	return setInput(BINtoHEX(data));
+}
+
+bool writeMessage(unsigned int segmentCount, std::string message){
+	//pad message out
+	while(message.length()/4 < segmentCount){ message = "00" + message; }
+	
+	std::string temp;
+	
+	for(unsigned int a = 0; a < segmentCount*4; a+=2){
+		setControl(writeInputCommands[a/2]);
+		temp = ""; 
+		temp += message[message.length()- (a+2) ];
+		temp += message[message.length()- (a+1) ]; 
+		setInput( temp );
+	}
+
+	return true;
+}
+
+bool writeKey(unsigned int segmentCount, std::string key){
+	//pad key out
+	while(key.length()/4 < segmentCount){ key = "00" + key; }
+	
+	std::string temp;
+	
+	for(unsigned int a = 0; a < segmentCount*4; a+=2){
+		setControl(writeKeyCommands[a/2]);
+		temp = ""; 
+		temp += key[key.length()- (a+2) ];
+		temp += key[key.length()- (a+1) ]; 
+		setInput( temp );		
+	}
+	
+	return true;
+}
+std::string readMessage(unsigned int segmentCount){
+	std::string response;
+	
+	for(unsigned int a = 0; a < segmentCount; a++){
+		setControl(readInputCommands[a]);
+		response += readOutput();
+	}
+	
+	return response;
+}
+
 std::string processMessage(bool mode, unsigned int method, std::string key, std::string message){
 	setUpPins();
 	
+	unsigned int messageSegmentCount, keySegmentCount;
+	switch(method){
+		case 0: messageSegmentCount = 8;  keySegmentCount = 16; break;
+		case 1: messageSegmentCount = 12; keySegmentCount = 18; break;
+		case 2: messageSegmentCount = 12; keySegmentCount = 24; break;
+		case 3: messageSegmentCount = 16; keySegmentCount = 24; break;
+		case 4: messageSegmentCount = 16; keySegmentCount = 32; break;
+		case 5: messageSegmentCount = 24; keySegmentCount = 24; break;
+		case 6: messageSegmentCount = 24; keySegmentCount = 36; break;
+		case 7: messageSegmentCount = 32; keySegmentCount = 32; break;
+		case 8: messageSegmentCount = 32; keySegmentCount = 48; break;
+		case 9: messageSegmentCount = 32; keySegmentCount = 64; break;
+	}		
 	
-	
+	writeModeAndMethod(mode,method);
+	writeMessage(messageSegmentCount,message);
+	writeKey(keySegmentCount,key);
+	std::string response = readMessage(messageSegmentCount);
+
 	shutDownPins();
-	return "response";
+	return response;
 }
 
 int main(){
@@ -318,6 +453,8 @@ int main(){
 		std::string returnedMessage = processMessage(mode,method,key,message);
 	
 		std::cout << std::endl;
+		std::cout << "Sent Message:     " << message << std::endl;
+		std::cout << "Key:              " << key << std::endl;
 		std::cout << "Returned Message: " << returnedMessage << std::endl;
 	
 	return 0;
