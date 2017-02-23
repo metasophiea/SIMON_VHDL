@@ -8,7 +8,7 @@
         segments from 'messageOut' are shown through here
 
     Control Pins
-		- 0xxxxxxx -> clock input
+	- Cxxxxxxx -> clock input
 	
         - x0000001  ->  x"01"  ->  display 'messageOut' segment 1
         - x0000010  ->  x"02"  ->  display 'messageOut' segment 2
