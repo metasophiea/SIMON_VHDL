@@ -29,7 +29,9 @@ end simon;
 architecture behaviour of simon is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     -- declare constants
-    constant maxCryptLoopCount : integer := 72;
+    constant messageLength: integer := 128;
+    constant keyLength: integer := 256;
+    constant maxCryptLoopCount: integer := 72;
 	
     -- declare Z's
     signal Z_0: std_logic_vector(61 downto 0) := "11111010001001010110000111001101111101000100101011000011100110";
@@ -43,8 +45,8 @@ architecture behaviour of simon is
         port(
             method: in std_logic_vector(3 downto 0);
             Z: in std_logic_vector(61 downto 0);
-            keyIn: in std_logic_vector(255 downto 0);
-            keysOut: out std_logic_vector(18431 downto 0)
+            keyIn: in std_logic_vector((keyLength-1) downto 0);
+            keysOut: out std_logic_vector((keyLength*maxCryptLoopCount-1) downto 0)
         );
     end component;
     
@@ -52,9 +54,9 @@ architecture behaviour of simon is
         port(
             instance: in std_logic_vector(7 downto 0);
             method: in std_logic_vector(3 downto 0);
-            keyIn: in std_logic_vector(255 downto 0);
-            messageIn: in std_logic_vector(127 downto 0);
-            messageOut: out std_logic_vector(127 downto 0)
+            keyIn: in std_logic_vector((keyLength-1) downto 0);
+            messageIn: in std_logic_vector((messageLength-1) downto 0);
+            messageOut: out std_logic_vector((messageLength-1) downto 0)
         );
     end component;
     
@@ -62,9 +64,9 @@ architecture behaviour of simon is
         port(
             instance: in std_logic_vector(7 downto 0);
             method: in std_logic_vector(3 downto 0);
-            keyIn: in std_logic_vector(255 downto 0);
-            messageIn: in std_logic_vector(127 downto 0);
-            messageOut: out std_logic_vector(127 downto 0)
+            keyIn: in std_logic_vector((keyLength-1) downto 0);
+            messageIn: in std_logic_vector((messageLength-1) downto 0);
+            messageOut: out std_logic_vector((messageLength-1) downto 0)
         );
     end component; 
     
@@ -72,16 +74,16 @@ architecture behaviour of simon is
         port(
             -- mode(1) | method(4) | encrypt message(128) | decrypt message(128) | keys(18432) = 18693
             clock: in std_logic := '0';
-            input: in std_logic_vector(18692 downto 0);
-            output: out std_logic_vector(18692 downto 0) := (others => '0')
+            input: in std_logic_vector((1+4+messageLength*2+keyLength*maxCryptLoopCount-1) downto 0); 
+            output: out std_logic_vector((1+4+messageLength*2+keyLength*maxCryptLoopCount-1) downto 0) := (others => '0')
         );
     end component;
     
     -- internal latches
     type latchAttachments_mode_type     is array (0 to maxCryptLoopCount) of std_logic;  
     type latchAttachments_method_type   is array (0 to maxCryptLoopCount) of std_logic_vector(3 downto 0);   
-    type latchAttachments_message_type  is array (0 to maxCryptLoopCount) of std_logic_vector(127 downto 0);
-    type latchAttachments_keys_type     is array (0 to maxCryptLoopCount) of std_logic_vector(18431 downto 0);
+    type latchAttachments_message_type  is array (0 to maxCryptLoopCount) of std_logic_vector((messageLength-1) downto 0);
+    type latchAttachments_keys_type     is array (0 to maxCryptLoopCount) of std_logic_vector((keyLength*maxCryptLoopCount-1) downto 0);
     
     signal latchAttachments_mode_toLatch, latchAttachments_mode_fromLatch: latchAttachments_mode_type := ( others => '0' );
     signal latchAttachments_method_toLatch, latchAttachments_method_fromLatch: latchAttachments_method_type := ( others => (others => '0') ); 
@@ -117,17 +119,17 @@ begin
         latches: latcher port map(
             clock => clock,
             -- mode(1) | method(4) | message(128) | keys(18432)
-            input(0) =>                 latchAttachments_mode_toLatch(a),
-            input(4 downto 1) =>        latchAttachments_method_toLatch(a),   
-            input(132 downto 5) =>      latchAttachments_encryptMessage_toLatch(a),
-            input(260 downto 133) =>    latchAttachments_decryptMessage_toLatch(a),        
-            input(18692 downto 261) =>  latchAttachments_keys_toLatch(a),
+            input(0)                                                                                    => latchAttachments_mode_toLatch(a),
+            input(4                                                    downto 1)                        => latchAttachments_method_toLatch(a),   
+            input((1+4+messageLength-1)                                downto 4+1)                      => latchAttachments_encryptMessage_toLatch(a),
+            input((1+4+messageLength*2-1)                              downto (1+4+messageLength))      => latchAttachments_decryptMessage_toLatch(a),  
+            input((1+4+messageLength*2+keyLength*maxCryptLoopCount-1)  downto (1+4+messageLength*2))    => latchAttachments_keys_toLatch(a),         
             
-            output(0) =>                latchAttachments_mode_fromLatch(a),
-            output(4 downto 1) =>       latchAttachments_method_fromLatch(a),   
-            output(132 downto 5) =>     latchAttachments_encryptMessage_fromLatch(a),
-            output(260 downto 133) =>   latchAttachments_decryptMessage_fromLatch(a),  
-            output(18692 downto 261) => latchAttachments_keys_fromLatch(a)
+            output(0)                                                                                   => latchAttachments_mode_fromLatch(a),
+            output(4                                                    downto 1)                       => latchAttachments_method_fromLatch(a),   
+            output((1+4+messageLength-1)                                downto 4+1)                     => latchAttachments_encryptMessage_fromLatch(a),
+            output((1+4+messageLength*2-1)                              downto (1+4+messageLength))     => latchAttachments_decryptMessage_fromLatch(a),  
+            output((1+4+messageLength*2+keyLength*maxCryptLoopCount-1)  downto (1+4+messageLength*2))   => latchAttachments_keys_fromLatch(a)
         );
     end generate;
     
@@ -139,7 +141,7 @@ begin
         encryptMessage: messageEncrypter port map(
             instance => std_logic_vector(to_unsigned(a,8)),
             method => latchAttachments_method_fromLatch(a),  
-            keyIn => latchAttachments_keys_fromLatch(a)( (a*256 + 255) downto (a*256) ),  
+            keyIn => latchAttachments_keys_fromLatch(a)( (a*keyLength + (keyLength-1)) downto (a*keyLength) ),  
             messageIn => latchAttachments_encryptMessage_fromLatch(a),
             messageOut => latchAttachments_encryptMessage_toLatch(a+1)
         );
@@ -147,7 +149,7 @@ begin
         decryptMessage: messageDecrypter port map(
             instance => std_logic_vector(to_unsigned(a,8)),
             method => latchAttachments_method_fromLatch(a),  
-            keyIn => latchAttachments_keys_fromLatch(a)( ((maxCryptLoopCount-1-a)*256 + 255) downto ((maxCryptLoopCount-1-a)*256) ),  
+            keyIn => latchAttachments_keys_fromLatch(a)( ((maxCryptLoopCount-1-a)*keyLength + (keyLength-1)) downto ((maxCryptLoopCount-1-a)*keyLength) ),  
             messageIn => latchAttachments_decryptMessage_fromLatch(a),
             messageOut => latchAttachments_decryptMessage_toLatch(a+1)
         );
