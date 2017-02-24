@@ -117,21 +117,24 @@ static int GPIO_write(int pinNumber, int value){
 }
 
 int main(int argc, char *argv[]){
+	int pin3 = 17, pin2 = 16, pin1 = 15, pin0 = 14;
+
+
     //export pins
     if(
-        -1 == GPIO_export(2) ||
-        -1 == GPIO_export(3) ||
-        -1 == GPIO_export(4) ||
-        -1 == GPIO_export(5) 
+        -1 == GPIO_export(pin0) ||
+        -1 == GPIO_export(pin1) ||
+        -1 == GPIO_export(pin2) ||
+        -1 == GPIO_export(pin3) 
 
     ){return 1;}
 
     //set directions
     if(
-        -1 == GPIO_direction(2,OUT) ||
-        -1 == GPIO_direction(3,OUT) ||
-        -1 == GPIO_direction(4,OUT) ||
-        -1 == GPIO_direction(5,OUT)
+        -1 == GPIO_direction(pin0,OUT) ||
+        -1 == GPIO_direction(pin1,OUT) ||
+        -1 == GPIO_direction(pin2,OUT) ||
+        -1 == GPIO_direction(pin3,OUT)
     ){return 2;}
 
 
@@ -140,10 +143,10 @@ int main(int argc, char *argv[]){
 	int repeat = 10;
 	do {
         if(
-            -1 == GPIO_write(2,repeat%2) ||
-            -1 == GPIO_write(3,repeat%2) ||
-            -1 == GPIO_write(4,repeat%2) ||
-            -1 == GPIO_write(5,repeat%2)
+            -1 == GPIO_write(pin0,repeat%2) ||
+            -1 == GPIO_write(pin1,repeat%2) ||
+            -1 == GPIO_write(pin2,repeat%2) ||
+            -1 == GPIO_write(pin3,repeat%2)
         ){return 3;}
 
 		usleep(500 * 1000);

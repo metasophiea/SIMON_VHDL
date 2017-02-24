@@ -231,21 +231,21 @@ int main(int argc, char *argv[]){
 
 
         //fill messageIn with data
-            GPIO_API_writeByte(0, 0,1,0,0,0,0,0,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,0,1,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,0,1,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,1,0,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,1,0,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,1,1,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,0,1,1,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,0,0,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,0,1,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,0,1,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,1,0,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,1,0,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,1,1,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,0,1,1,1,1); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
-            GPIO_API_writeByte(0, 0,1,0,1,0,0,0,0); GPIO_API_writeByte(1, 0,0,0,0,1,1,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,0,0,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,0,1,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,0,1,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,1,0,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,1,0,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,1,1,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,0,1,1,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,0,0,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,0,1,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,0,1,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,1,0,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,1,0,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,1,1,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,0,1,1,1,1); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
+            GPIO_API_writeByte(0, 0,1,0,1,0,0,0,0); GPIO_API_writeByte(1, 1,1,1,1,1,0,1,1); usleep(1000);
 
             usleep(1000 * 1000);
 

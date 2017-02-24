@@ -2,15 +2,15 @@
 #include <string>
 //API define
 	//used PI pins
-	unsigned int controlPins[] = {2,3,4,5,6,7,8,9};
-	unsigned int inputPins[] = {10,11,12,13,14,15,16,17};
-	unsigned int outputPins[] = {18,19,20,21,22,23,24,25};
+	unsigned int controlPins[] = {9,8,7,6,5,4,3,2};
+	unsigned int inputPins[] = {17,16,15,14,13,12,11,10};
+	unsigned int outputPins[] = {25,24,23,22,21,20,19,18};
 	
 	//control messages
 	std::string readInputCommands[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10"};
 	std::string modeMethodCommand = "40";
 	std::string writeInputCommands[] = {"41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50"};
-	std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
+	std::string writeKeyCommands[] = {"81", "82", "83", "84", "85", "86", "87", "88", "89", "8a", "8b", "8c", "8d", "8e", "8f", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "9a", "9b", "9c", "9d", "9e", "9f", "a0"};
 	
 	
 //GPIO utility functions
@@ -113,7 +113,6 @@
 		}
 	 
 		close(fd);
-	 
 		return(atoi(value_str));
 	}
 
@@ -154,7 +153,7 @@ bool setUpPins(){
     //export and set direction of output pins
 		for(unsigned int a = 0; a < (sizeof(outputPins)/sizeof(*outputPins)); a++){
 			if( !GPIO_export(outputPins[a]) ){std::cout << "- error: could not export output pin: " << a << std::endl; return false;}
-			if( !GPIO_direction(outputPins[a],OUT) ){ std::cout << "- error: could not set direction of output pin: " << a << std::endl; return false; }
+			if( !GPIO_direction(outputPins[a],IN) ){ std::cout << "- error: could not set direction of output pin: " << a << std::endl; return false; }
 		}
 		
 	return true;
@@ -261,7 +260,7 @@ bool setControl(std::string data){
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 
@@ -272,7 +271,7 @@ bool setInput(std::string data){
 	for(unsigned int a = 0; a < binData.length(); a++){
 		if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
 	}
-	
+
 	for(unsigned int a = 0; a < (sizeof(inputPins)/sizeof(*inputPins)); a++){
 		if( !GPIO_write( inputPins[a], values[a] ) ){
 			std::cout << "- error:setInput: failed on pin: " << a << std::endl;
@@ -322,13 +321,14 @@ bool writeMessage(unsigned int segmentCount, std::string message){
 	std::string temp;
 	
 	for(unsigned int a = 0; a < segmentCount; a+=2){
-		setControl(writeInputCommands[a/2]);
+		if(!setControl(writeInputCommands[a/2])){std::cout << "- error:writeMessage: failed to set control pins" << std::endl; return false;};
 		temp = ""; 
 		temp += message[message.length()- (a+2) ];
 		temp += message[message.length()- (a+1) ]; 
-		setInput( temp );
+		if(!setInput( temp )){std::cout << "- error:writeMessage: failed to set input pins" << std::endl; return false;};
 	}
 
+	std::cout << std::endl;
 	return true;
 }
 
@@ -346,15 +346,15 @@ bool writeKey(unsigned int segmentCount, std::string key){
 		setInput( temp );		
 	}
 	
+	std::cout << std::endl;
 	return true;
 }
 std::string readMessage(unsigned int segmentCount){
 	std::string response;
 	
 	for(unsigned int a = 0; a < segmentCount/2; a++){
-		std::cout << "sending command: " << readInputCommands[a] << std::endl;
 		setControl(readInputCommands[a]);
-		response += readOutput(); std::cout << "response: " << readOutput() << std::endl;
+		response = readOutput() + response; 
 	}
 	
 	return response;
@@ -452,7 +452,7 @@ int main(){
 */		
 		
 		bool mode = false; unsigned int method = 9; std::string key = "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "74206e69206d6f6f6d69732061207369";
-	//process
+//process
 		std::string returnedMessage = processMessage(mode,method,key,message);
 	
 		std::cout << std::endl;
