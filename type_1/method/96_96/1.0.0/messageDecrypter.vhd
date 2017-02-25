@@ -4,16 +4,15 @@ use IEEE.numeric_std.all;
 use std.textio.all; 
 use work.printerlib.all;
 
-entity keyExpander is
+entity messageDecrypter is
     port(
-        Z: in std_logic_vector(61 downto 0);
         keyIn: in std_logic_vector(95 downto 0);
-        keyOut: out std_logic_vector(95 downto 0) := (others => '0');
-        returnZ: out std_logic_vector(61 downto 0) := (others => '0')
+        messageIn: in std_logic_vector(95 downto 0);
+        messageOut: out std_logic_vector(95 downto 0)
     );
-end keyExpander;
+end messageDecrypter;
 
-architecture behaviour of keyExpander is 
+architecture behaviour of messageDecrypter is
 -- //////// //////// //////// //////// //////// //////// //////// ////////
     -- declare constants
     constant messageLength: integer := 96;
@@ -39,51 +38,43 @@ architecture behaviour of keyExpander is
         for a in 0 to amount-1 loop  temp := temp(temp'length-2 downto 0) & temp(temp'length-1); end loop;
         return temp;
     end function;
-    
-    -- key expander work function
-    function getNextKey_workFunction(keyIn, Z: std_logic_vector; keySegments, keyLength, keySegmentLength: integer)
+
+    -- main decryptor work function
+    function decryptor_workFunction(messageIn, keyIn: std_logic_vector; keySegments, keyLength, segmentLength: integer)
     return std_logic_vector is
-            type key_type is array (0 to 3) of std_logic_vector(63 downto 0);
-            variable key: key_type := (others => (others => '0') );
-            
-            variable temp, Z_padder: std_logic_vector((keyLength-1) downto 0) := (others => '0');
-            variable subThree: std_logic_vector((keyLength-1) downto 0) := (1 => '0', 0 => '0', others => '1');   
+        variable combiner: std_logic_vector((messageLength-1) downto 0) := (others => '0');
+        variable x, y, holder, temp, key: std_logic_vector((keyLength-1) downto 0) := (others => '0');
     begin
-        -- split up key into segments
-            for a in 0 to keySegments-1 loop
-                key(a)(keySegmentLength-1 downto 0) := keyIn(keyLength-1-(keySegmentLength*a) downto keyLength-keySegmentLength-(keySegmentLength*a));
-            end loop;
+        -- aquire parts
+        x(segmentLength-1 downto 0) := messageIn((2*segmentLength)-1 downto segmentLength);
+        y(segmentLength-1 downto 0) := messageIn(segmentLength-1 downto 0);
+        key(segmentLength-1 downto 0) := keyIn(keyLength-1-(segmentLength*(keySegments-1)) downto keyLength-segmentLength-(segmentLength*(keySegments-1)));
     
-            -- key generation
-            temp(keySegmentLength-1 downto 0) := rightRotate(key(0)(keySegmentLength-1 downto 0),3);
-            if(keySegments = 4) then temp(keySegmentLength-1 downto 0) := temp(keySegmentLength-1 downto 0) xor key(2)(keySegmentLength-1 downto 0); end if;
-            temp(keySegmentLength-1 downto 0) := temp(keySegmentLength-1 downto 0) xor rightRotate(temp(keySegmentLength-1 downto 0),1);
-            temp(keySegmentLength-1 downto 0) := temp(keySegmentLength-1 downto 0) xor key(keySegments-1)(keySegmentLength-1 downto 0);
-            temp(keySegmentLength-1 downto 0) := temp(keySegmentLength-1 downto 0) xor (Z_padder(keySegmentLength-1 downto 1) & Z(Z'length-1));
-            temp(keySegmentLength-1 downto 0) := temp(keySegmentLength-1 downto 0) xor subThree(keySegmentLength-1 downto 0);
+        -- decryption
+        holder := y;
+        temp(segmentLength-1 downto 0) := leftRotate(y(segmentLength-1 downto 0),1) and leftRotate(y(segmentLength-1 downto 0),8);
+        temp(segmentLength-1 downto 0) := temp(segmentLength-1 downto 0) xor x(segmentLength-1 downto 0);
+        temp(segmentLength-1 downto 0) := temp(segmentLength-1 downto 0) xor leftRotate(y(segmentLength-1 downto 0),2);
+        temp(segmentLength-1 downto 0) := temp(segmentLength-1 downto 0) xor key(segmentLength-1 downto 0);
+        y := temp; x := holder;  
     
-            -- assemble output
-            temp(keyLength-1 downto keyLength-keySegmentLength) := temp(keySegmentLength-1 downto 0);
-            for a in 1 to keySegments-1 loop
-                temp(keyLength-1-(keySegmentLength*a) downto keyLength-keySegmentLength-(keySegmentLength*a)) := key(a-1)(keySegmentLength-1 downto 0);
-            end loop; 
-            
-            return temp;
+        -- recombination
+        combiner((2*segmentLength)-1 downto segmentLength) := x(segmentLength-1 downto 0);
+        combiner(segmentLength-1 downto 0) := y(segmentLength-1 downto 0); 
+        return combiner;
     end function; 
 
-    -- main key expander
-    function getNextKey(keyIn, Z: std_logic_vector)
+    -- main decryptor
+    function decrypt(messageIn, keyIn: std_logic_vector)
     return std_logic_vector is
     begin
-		return getNextKey_workFunction(keyIn, Z, keySegments, keyLength, keyLength/keySegments);
+		return decryptor_workFunction(messageIn, keyIn, keySegments, keyLength, keyLength/keySegments);
     end function;
 
 begin
-
-    process(keyIn, Z)
+-- //////// //////// //////// //////// //////// //////// //////// ////////
+    process(messageIn, keyIn)
     begin
-        keyOut <= getNextKey(keyIn,Z);
-        returnZ <= morph_Z(Z);
+        messageOut <= decrypt(messageIn,keyIn);
     end process;
-
 end behaviour;
