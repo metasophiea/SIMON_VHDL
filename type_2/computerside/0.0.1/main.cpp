@@ -71,7 +71,7 @@ int main(){
 
 //test inputs
 	//32_64  
-		//bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
+		bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
 		//bool mode = true; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "c69be9bb";
 	//48_72  
 		//bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";

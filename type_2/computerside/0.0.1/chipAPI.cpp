@@ -2,14 +2,15 @@
     std::string readInputCommands[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10"};
     std::string modeMethodCommand = "40";
     std::string writeInputCommands[] = {"41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50"};
-    std::string writeKeyCommands[] = {"81", "82", "83", "84", "85", "86", "87", "88", "89", "8a", "8b", "8c", "8d", "8e", "8f", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "9a", "9b", "9c", "9d", "9e", "9f", "a0"};
+    std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
 
 //chip port control 
     bool setClock(bool value){
-            if( !GPIO_write( controlPins[7], values ) ){
-                std::cout << "- error:setClock: failed on clock pin" << std::endl;
-                return false;
-            }
+        if( !GPIO_write( controlPins[0], value ) ){
+            std::cout << "- error:setClock: failed on clock pin" << std::endl;
+            return false;
+        }
+
         return true;
     }
 
@@ -21,7 +22,7 @@
             if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
         }
         
-        for(unsigned int a = 0; a < (sizeof(controlPins)/sizeof(*controlPins))-1; a++){
+        for(unsigned int a = 1; a < (sizeof(controlPins)/sizeof(*controlPins)); a++){
             if( !GPIO_write( controlPins[a], values[a] ) ){
                 std::cout << "- error:setControl: failed on pin: " << a << std::endl;
                 return false;
