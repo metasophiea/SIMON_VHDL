@@ -19,7 +19,6 @@ architecture behaviour of simon_package is
     component simon
         port(
             mode, clock: in std_logic := '0';
-            method: in std_logic_vector(3 downto 0) := (others => '0');
             keyIn: in std_logic_vector((keyLength-1) downto 0) := (others => '0');
             messageIn: in std_logic_vector((messageLength-1) downto 0) := (others => '0');
             messageOut: out std_logic_vector((messageLength-1) downto 0) := (others => '0')
@@ -28,7 +27,6 @@ architecture behaviour of simon_package is
     
     -- internal signals
         signal mode_buffer, clock_buffer: std_logic := '0';
-        signal method_buffer: std_logic_vector(3 downto 0) := (others => '0');
         signal keyIn_buffer: std_logic_vector((keyLength-1) downto 0) := (others => '0');
         signal messageIn_buffer, messageOut_connections: std_logic_vector((messageLength-1) downto 0) := (others => '0');
         
@@ -37,7 +35,6 @@ begin
         mainComponent: simon port map(
             mode => mode_buffer,
             clock => clock_buffer,
-            method => method_buffer,
             keyIn => keyIn_buffer,
             messageIn => messageIn_buffer,
             messageOut => messageOut_connections
@@ -67,7 +64,6 @@ begin
         
     -- method mode controls
         mode_buffer <= input(0) when control(6 downto 0) = "1000000";
-        method_buffer <= input(4 downto 1) when control(6 downto 0) = "1000000";
 
     -- generate buffer-switch for input
         messageIn_buffer(7   downto 0  ) <= input when control(6 downto 0) = "1000001";
