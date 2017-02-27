@@ -1,2 +1,4 @@
 add line to Zybo config file to override clock warning;
   set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets jb_n_IBUF[3]] 
+
+method versions 128_192+ unproducable due to LUT and LUTRAM requirements
