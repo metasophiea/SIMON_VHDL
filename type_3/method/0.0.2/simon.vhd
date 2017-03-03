@@ -51,7 +51,7 @@ architecture behaviour of simon is
         shared variable inverse_processCount: integer := 0;
 
 begin
-
+-- //////// //////// //////// //////// //////// //////// //////// ////////
 	-- connect components
         completekeyExpansion: completeKeyExpander port map(
             Z => selectedZ,
