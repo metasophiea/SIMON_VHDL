@@ -1,4 +1,7 @@
-- start on type_3
+- test type_2 and type_3
+- test file encryptor/decryptor
 
-- expand c++ program to encrypt and decrypt files
-- reduce type_2 methods' sizes further
+- create mode versions of types (encryption will be much smaller and faster than decryption)
+
+- write implimentation paper
+- write report
