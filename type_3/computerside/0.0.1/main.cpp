@@ -5,7 +5,6 @@
 #include "./utilityFunctions.cpp"
 #include "./chipAPI.cpp"
 #include "./messageProcessing.cpp"
-#include "./fileProcessing.cpp"
 
 int main(){
 	std::cout << "Hello" << std::endl;
@@ -75,7 +74,7 @@ int main(){
 		//bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
 		//bool mode = true; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "c69be9bb";
 	//48_72  
-		//bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";
+		bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";
 		//bool mode = true; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "dae5ac292cac";
 	//48_96  
 		//bool mode = false; unsigned int method = 2; std::string key = "1a19181211100a0908020100"; std::string message = "72696320646e";
@@ -108,9 +107,6 @@ int main(){
 		std::cout << "Sent Message:     " << message << std::endl;
 		std::cout << "Key:              " << key << std::endl;
 		std::cout << "Returned Message: " << returnedMessage << std::endl;
-		
-	//process file
-		//processFile(mode,method,key,"message.txt");
 	
 	return 0;
 }

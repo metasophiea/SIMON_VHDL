@@ -4,7 +4,7 @@
 --   /____   / /  / /  / |  | /  / |  | |  |  /  / /  / |  | /  / 
 --  _____/  / /  / /  /  |  |/  /  |  | |  |_/  / /  /  |  |/  /   
 -- /_______/ /__/ /__/   |_____/   |__| |______/ /__/   |_____/ 
---						VHDL - Brandon Walsh
+--						                    VHDL - Brandon Walsh
 
 library IEEE;
 use IEEE.std_logic_1164.all;
