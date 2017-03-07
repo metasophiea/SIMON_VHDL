@@ -32,7 +32,7 @@
         return true;
     }
 
-    bool setInput(std::string data){	
+    bool setInput(std::string data){
         std::string binData = HEXtoBIN(data);
         
         unsigned int values[] = {0,0,0,0,0,0,0,0};
