@@ -1,0 +1,86 @@
+---- ---- ---- ---- ---- ---- ---- ---- Control ---- ---- ---- ---- ---- ---- ---- ----
+    Input Pins
+        8 consuming pins to connect to the producing pins of an external device
+        any edits to 'messageIn' or 'keyIn' segments are done through here
+
+    Output Pins
+        8 producing pins to connect to the consuming pins of an external device
+        segments from 'messageOut' are shown through here
+
+    Control Pins
+	- Cxxxxxxx -> clock input
+	
+        - x0000001  ->  x"01"  ->  display 'messageOut' segment 1
+        - x0000010  ->  x"02"  ->  display 'messageOut' segment 2
+        - x0000011  ->  x"03"  ->  display 'messageOut' segment 3
+        - x0000100  ->  x"04"  ->  display 'messageOut' segment 4
+        - x0000101  ->  x"05"  ->  display 'messageOut' segment 5
+        - x0000110  ->  x"06"  ->  display 'messageOut' segment 6
+        - x0000111  ->  x"07"  ->  display 'messageOut' segment 7
+        - x0001000  ->  x"08"  ->  display 'messageOut' segment 8
+        - x0001001  ->  x"09"  ->  display 'messageOut' segment 9
+        - x0001010  ->  x"0a"  ->  display 'messageOut' segment 10
+        - x0001011  ->  x"0b"  ->  display 'messageOut' segment 11
+        - x0001100  ->  x"0c"  ->  display 'messageOut' segment 12
+        - x0001101  ->  x"0d"  ->  display 'messageOut' segment 13
+        - x0001110  ->  x"0e"  ->  display 'messageOut' segment 14
+        - x0001111  ->  x"0f"  ->  display 'messageOut' segment 15
+        - x0010000  ->  x"10"  ->  display 'messageOut' segment 16
+            16 | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1
+
+        - x1000000  ->  x"40"  ->  edit system's and mode
+            clock | unused | unused | unused | unused | unused | unused | mode
+
+        - x1000001  ->  x"41"  ->  edit 'messageIn' segment 1
+        - x1000010  ->  x"42"  ->  edit 'messageIn' segment 2
+        - x1000011  ->  x"43"  ->  edit 'messageIn' segment 3
+        - x1000100  ->  x"44"  ->  edit 'messageIn' segment 4
+        - x1000101  ->  x"45"  ->  edit 'messageIn' segment 5
+        - x1000110  ->  x"46"  ->  edit 'messageIn' segment 6
+        - x1000111  ->  x"47"  ->  edit 'messageIn' segment 7
+        - x1001000  ->  x"48"  ->  edit 'messageIn' segment 8
+        - x1001001  ->  x"49"  ->  edit 'messageIn' segment 9
+        - x1001010  ->  x"4a"  ->  edit 'messageIn' segment 10
+        - x1001011  ->  x"4b"  ->  edit 'messageIn' segment 11
+        - x1001100  ->  x"4c"  ->  edit 'messageIn' segment 12
+        - x1001101  ->  x"4d"  ->  edit 'messageIn' segment 13
+        - x1001110  ->  x"4e"  ->  edit 'messageIn' segment 14
+        - x1001111  ->  x"4f"  ->  edit 'messageIn' segment 15
+        - x1010000  ->  x"50"  ->  edit 'messageIn' segment 16
+            16 | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1
+
+        - x1010001  ->  x"51"  ->  edit 'keyIn' segment 1
+        - x1010010  ->  x"52"  ->  edit 'keyIn' segment 2
+        - x1010011  ->  x"53"  ->  edit 'keyIn' segment 3
+        - x1010100  ->  x"54"  ->  edit 'keyIn' segment 4
+        - x1010101  ->  x"55"  ->  edit 'keyIn' segment 5
+        - x1010110  ->  x"56"  ->  edit 'keyIn' segment 6
+        - x1010111  ->  x"57"  ->  edit 'keyIn' segment 7
+        - x1011000  ->  x"58"  ->  edit 'keyIn' segment 8
+        - x1011001  ->  x"59"  ->  edit 'keyIn' segment 9
+        - x1011010  ->  x"5a"  ->  edit 'keyIn' segment 10
+        - x1011011  ->  x"5b"  ->  edit 'keyIn' segment 11
+        - x1011100  ->  x"5c"  ->  edit 'keyIn' segment 12
+        - x1011101  ->  x"5d"  ->  edit 'keyIn' segment 13
+        - x1011110  ->  x"5e"  ->  edit 'keyIn' segment 14
+        - x1011111  ->  x"5f"  ->  edit 'keyIn' segment 15
+        - x1100000  ->  x"60"  ->  edit 'keyIn' segment 16
+        - x1100001  ->  x"61"  ->  edit 'keyIn' segment 17
+        - x1100010  ->  x"62"  ->  edit 'keyIn' segment 18
+        - x1100011  ->  x"63"  ->  edit 'keyIn' segment 19
+        - x1100100  ->  x"64"  ->  edit 'keyIn' segment 20
+        - x1100101  ->  x"65"  ->  edit 'keyIn' segment 21
+        - x1100110  ->  x"66"  ->  edit 'keyIn' segment 22
+        - x1100111  ->  x"67"  ->  edit 'keyIn' segment 23
+        - x1101000  ->  x"68"  ->  edit 'keyIn' segment 24
+        - x1101001  ->  x"69"  ->  edit 'keyIn' segment 25
+        - x1101010  ->  x"6a"  ->  edit 'keyIn' segment 26
+        - x1101011  ->  x"6b"  ->  edit 'keyIn' segment 27
+        - x1101100  ->  x"6c"  ->  edit 'keyIn' segment 28
+        - x1101101  ->  x"6d"  ->  edit 'keyIn' segment 29
+        - x1101110  ->  x"6e"  ->  edit 'keyIn' segment 30
+        - x1101111  ->  x"6f"  ->  edit 'keyIn' segment 31
+        - x1110000  ->  x"70"  ->  edit 'keyIn' segment 32
+            32 | 31 | 30 | 29 | 28 | 27 | 26 | 25 | 24 | 23 | 22 | 21 | 20 | 19 | 18 | 17 | 16 | 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1
+
+---- ---- ---- ---- ---- ---- ---- ---- ------- ---- ---- ---- ---- ---- ---- ---- ----
