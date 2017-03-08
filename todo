@@ -1,5 +1,4 @@
-- create nicer method versions
-- test type_2 and type_3
+- test type_1, type_2 and type_3
 - test file encryptor/decryptor
 
 - create mode versions of types (encryption will be much smaller and faster than decryption)
