@@ -53,7 +53,7 @@ architecture behaviour of packageTester is
         -- wait 
             wait for 10 ns;
             
-        -- set mode and load           
+        -- set mode           
             control <= "11000000";
                 input(0) <= mode; wait for 1 ns;   
                 input(0) <= mode; wait for 1 ns;   

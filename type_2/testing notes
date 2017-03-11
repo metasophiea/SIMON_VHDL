@@ -1,6 +1,6 @@
 unified
     - 32_64 
-        - size -- IO: 24 -- LUT: 99436 -- Reg: 531 -- BUFG: 0
+        - size -- IO: 24 -- LUT: 111581 -- Reg: 28978 -- BUFG: 0
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? X
