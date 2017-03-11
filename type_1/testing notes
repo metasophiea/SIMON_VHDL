@@ -1,0 +1,79 @@
+unified
+    - 32_64 
+        - size -- IO: 24 -- LUT: 99436 -- Reg: 531 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? X
+        - successful hardware decryption? X
+
+method
+    - 32_64 
+        - size -- IO: 24 -- LUT: 1560 -- Reg: 97 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+
+    - 48/72
+        - size -- IO: 24 -- LUT: 2336 -- Reg: 121 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+
+    - 48/96
+        - size -- IO: 24 -- LUT: 2567 -- Reg: 145 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 64/96
+        - size -- IO: 24 -- LUT: 3377 -- Reg: 161 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 64/128
+        - size -- IO: 24 -- LUT: 4168 -- Reg: 193 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 96/96
+        - size -- IO: 24 -- LUT: 6338 -- Reg: 193 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 96/144
+        - size -- IO: 24 -- LUT: 6532 -- Reg: 241 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 128/128
+        - size -- IO: 24 -- LUT: 11004 -- Reg: 257 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 128/192
+        - size -- IO: 24 -- LUT: 11133 -- Reg: 321 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        
+    - 128/256
+        - size -- IO: 24 -- LUT: 13759 -- Reg: 385 -- BUFG: 0
+        - successful simulated encryption? _/
+        - successful simulated decryption? _/
+        - successful hardware encryption? _/
+        - successful hardware decryption? _/
+        

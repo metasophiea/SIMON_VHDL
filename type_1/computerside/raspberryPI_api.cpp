@@ -9,13 +9,14 @@
 #define LOW  0
 #define HIGH 1
 
-//dev functions
-	bool GPIO_export(int pinNumber){/*std::cout << "exporting pin: " << pinNumber << std::endl;*/ return true;}
-	bool GPIO_unexport(int pinNumber){/*std::cout << "unexporting pin: " << pinNumber << std::endl;*/ return true;}
-	bool GPIO_direction(int pinNumber, int direction){/*std::cout << "setting pin direction: " << pinNumber << " to " << direction << std::endl;*/ return true;}
-	static int GPIO_read(int pinNumber){/*std::cout << "reading pin: " << pinNumber << std::endl;*/ return 0;}
-	bool GPIO_write(int pinNumber, int value){/*std::cout << "writing " << value << " to pin " << pinNumber << std::endl;*/ return true;}
-/*
+//dev function
+//	bool GPIO_export(int pinNumber){/*std::cout << "exporting pin: " << pinNumber << std::endl;*/ return true;}
+//	bool GPIO_unexport(int pinNumber){/*std::cout << "unexporting pin: " << pinNumber << std::endl;*/ return true;}
+//	bool GPIO_direction(int pinNumber, int direction){/*std::cout << "setting pin direction: " << pinNumber << " to " << direction << std::endl;*/ return true;}
+//	static int GPIO_read(int pinNumber){/*std::cout << "reading pin: " << pinNumber << std::endl;*/ return 0;}
+//	bool GPIO_write(int pinNumber, int value){/*std::cout << "writing " << value << " to pin " << pinNumber << std::endl;*/ return true;}
+
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -125,7 +126,7 @@ bool GPIO_write(int pinNumber, int value){
 	close(fd);
 	return true;
 }
-*/
+
 bool setUpPins(){
 //export and set direction of control pins
 	for(unsigned int a = 0; a < (sizeof(controlPins)/sizeof(*controlPins)); a++){

@@ -1,3 +1,5 @@
+//version 1.0.0
+
 #include <iostream>
 #include <string>
 
@@ -72,7 +74,7 @@ int main(){
 
 //test inputs
 	//32_64  
-		//bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
+		bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
 		//bool mode = true; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "c69be9bb";
 	//48_72  
 		//bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";
@@ -103,14 +105,14 @@ int main(){
 		//bool mode = true; unsigned int method = 9; std::string key = "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "8d2b5579afc8a3a03bf72a87efe7b868";
 
 	//process message
-		//std::string returnedMessage = processMessage(mode,method,key,message);
-		//std::cout << std::endl;
-		//std::cout << "Sent Message:     " << message << std::endl;
-		//std::cout << "Key:              " << key << std::endl;
-		//std::cout << "Returned Message: " << returnedMessage << std::endl;
+		std::string returnedMessage = processMessage(mode,method,key,message);
+		std::cout << std::endl;
+		std::cout << "Sent Message:     " << message << std::endl;
+		std::cout << "Key:              " << key << std::endl;
+		std::cout << "Returned Message: " << returnedMessage << std::endl;
 		
 	//process file
-		processFile(mode,method,key,"message.txt");
+		//processFile(mode,method,key,"message.txt");
 	
 	return 0;
 }
