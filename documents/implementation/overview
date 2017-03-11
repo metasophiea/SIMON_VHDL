@@ -1,0 +1,29 @@
+- the system
+	- what is simon 
+	- key expander _/
+	- message encryption _/
+	- message decryption _/
+	- layout
+		- basic
+			- benefits/disadvantages 
+			- hardware footprint for each type
+		- registered
+			- benefits/disadvantages 
+			- hardware footprint for each type
+		- processor
+			- benefits/disadvantages 
+			- hardware footprint for each type
+
+- advised usage layout _/
+	- for spider layout _/
+		- type_3_modeAndMethod_encryptor with type_2_method(doing decryption only)
+	- for mesh layout _/
+		- type_2, or type_3 if hardware constrained
+	
+- samples
+	- for each encryption type
+		- 10 single expanded keys _/
+		- 10 single encrypted messages _/
+		- 10 single decrypted messages _/
+		- 10 encryption samples _/
+		- 10 decryption samples _/

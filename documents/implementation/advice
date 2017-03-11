@@ -1,0 +1,32 @@
+- for spider layout
+
+		It is my opinion, that for device network layouts consisting of many satellite 
+	devices and a central communication node; one should fit the satellite devices
+	with a simon encryption module of type 3 encryption only. Then use simon encryption 
+	module type 2 for the central node, running decryption only.
+		The encryption only version of type 3 has by far the smallest footprint of any 
+	of the designs, and in turn the lowest power consumption. Though one must accept a 
+	delay in the encryption time; I believe in this layout of many devices communicating
+	with a central node allows for the satellite devices' encryption time to be slightly
+	slower.
+		Type 2 has a much larger footprint, but would allow the system to decrypt batches 
+	of messages faster (allowing for the initial key expansion processing time)
+	
+		In action, the satellite devices would encrypt any message they wanted to send 
+	to the central node, where it would be decrypted. For returned messages; the central
+	node would decrypt any message it wanted to send to a satellite, where the satellite 
+	can then encrypt it, and in effect decrypt the message.
+		In this way, two way communication can be achieved for the lowest hardware costs
+	on the satellite, and with a fixed key; the highest throughput for the central node.
+	Also using a fixed key for all devices, would allow the central node to both 'encrypt'
+	messages to send to satellite devices while decrypting received messages. 
+		A disadvantage of this design is that no two satellites could communicate with 
+	each other. 
+	
+- for mesh layout
+	
+		For a mesh layout, where all nodes are of a similar size and must communicate 
+	with each other; I would recommend type 2, and then type 3 for very size constrained
+	devices. Both types have the key expansion delay, though for long messages between
+	nodes, this becomes negligible with type 2. Type 3's lead advantage is it's hardware 
+	size, so it is recommended to use type 2 here if possible.
