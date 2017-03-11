@@ -7,7 +7,7 @@
         8 producing pins to connect to the consuming pins of an external device
         segments from 'messageOut' are shown through here
 
-    Contol Pins
+    Control Pins
         - 00000001  ->  x"01"  ->  display 'messageOut' segment 1
         - 00000010  ->  x"02"  ->  display 'messageOut' segment 2
         - 00000011  ->  x"03"  ->  display 'messageOut' segment 3

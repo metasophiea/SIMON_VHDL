@@ -40,7 +40,7 @@ architecture behaviour of messageEncrypter is
         variable combiner: std_logic_vector(127 downto 0) := (others => '0');
         variable x, y, holder, temp, key: std_logic_vector(63 downto 0) := (others => '0');
     begin
-        -- aquire parts
+        -- acquire parts
         x(segmentLength-1 downto 0) := messageIn((2*segmentLength)-1 downto segmentLength);
         y(segmentLength-1 downto 0) := messageIn(segmentLength-1 downto 0);
         key(segmentLength-1 downto 0) := keyIn(keyLength-1-(segmentLength*(keySegments-1)) downto keyLength-segmentLength-(segmentLength*(keySegments-1)));
