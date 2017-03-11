@@ -1,5 +1,8 @@
-- test type_1, type_2 and type_3
+- test 	type_1 - methods
+		type_2 - methods
+		type_3 - methods - modeAndMethods encryptor
+
 - test file encryptor/decryptor
 
-- write implimentation paper
+- write implementation paper
 - write report
