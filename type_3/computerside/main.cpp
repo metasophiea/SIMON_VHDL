@@ -74,7 +74,7 @@ int main(){
 		//bool mode = false; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "65656877";
 		//bool mode = true; unsigned int method = 0; std::string key = "1918111009080100"; std::string message = "c69be9bb";
 	//48_72  
-		bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";
+		//bool mode = false; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "6120676e696c";
 		//bool mode = true; unsigned int method = 1; std::string key = "1211100a0908020100"; std::string message = "dae5ac292cac";
 	//48_96  
 		//bool mode = false; unsigned int method = 2; std::string key = "1a19181211100a0908020100"; std::string message = "72696320646e";
@@ -98,7 +98,7 @@ int main(){
 		//bool mode = false; unsigned int method = 8; std::string key = "17161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "206572656874206e6568772065626972";
 		//bool mode = true; unsigned int method = 8; std::string key = "17161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "c4ac61effcdc0d4f6c9c8d6e2597b85b";
 	//128_256
-		//bool mode = false; unsigned int method = 9; std::string key = "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "74206e69206d6f6f6d69732061207369";
+		bool mode = false; unsigned int method = 9; std::string key = "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "74206e69206d6f6f6d69732061207369";
 		//bool mode = true; unsigned int method = 9; std::string key = "1f1e1d1c1b1a191817161514131211100f0e0d0c0b0a09080706050403020100"; std::string message = "8d2b5579afc8a3a03bf72a87efe7b868";
 
 	//process

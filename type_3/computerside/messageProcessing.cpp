@@ -3,16 +3,16 @@ std::string processMessage(bool mode, unsigned int method, std::string key, std:
 	
 	unsigned int messageSegmentCount, keySegmentCount, registerCount;
 	switch(method){
-		case 0: messageSegmentCount = 8;  keySegmentCount = 16; registerCount = 32; break;
-		case 1: messageSegmentCount = 12; keySegmentCount = 18; registerCount = 36; break;
-		case 2: messageSegmentCount = 12; keySegmentCount = 24; registerCount = 36; break;
-		case 3: messageSegmentCount = 16; keySegmentCount = 24; registerCount = 42; break;
-		case 4: messageSegmentCount = 16; keySegmentCount = 32; registerCount = 44; break;
-		case 5: messageSegmentCount = 24; keySegmentCount = 24; registerCount = 52; break;
-		case 6: messageSegmentCount = 24; keySegmentCount = 36; registerCount = 54; break;
-		case 7: messageSegmentCount = 32; keySegmentCount = 32; registerCount = 68; break;
-		case 8: messageSegmentCount = 32; keySegmentCount = 48; registerCount = 69; break;
-		case 9: messageSegmentCount = 32; keySegmentCount = 64; registerCount = 72; break;
+		case 0: messageSegmentCount = 8;  keySegmentCount = 16; registerCount = 32; break; // 32/64  
+		case 1: messageSegmentCount = 12; keySegmentCount = 18; registerCount = 36; break; // 48/72  
+		case 2: messageSegmentCount = 12; keySegmentCount = 24; registerCount = 36; break; // 48/96  
+		case 3: messageSegmentCount = 16; keySegmentCount = 24; registerCount = 42; break; // 64/96  
+		case 4: messageSegmentCount = 16; keySegmentCount = 32; registerCount = 44; break; // 64/128 
+		case 5: messageSegmentCount = 24; keySegmentCount = 24; registerCount = 52; break; // 96/96  
+		case 6: messageSegmentCount = 24; keySegmentCount = 36; registerCount = 54; break; // 96/144 
+		case 7: messageSegmentCount = 32; keySegmentCount = 32; registerCount = 68; break; // 128/128
+		case 8: messageSegmentCount = 32; keySegmentCount = 48; registerCount = 69; break; // 128/192
+		case 9: messageSegmentCount = 32; keySegmentCount = 64; registerCount = 72; break; // 128/256
 	}		
 	
 	if(!writeMessage(messageSegmentCount,message)){std::cout << "- error:processMessage: failed to write message" << std::endl; return "process failure";}

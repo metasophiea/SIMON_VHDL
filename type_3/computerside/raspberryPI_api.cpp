@@ -134,11 +134,13 @@ bool setUpPins(){
 	for(unsigned int a = 0; a < (sizeof(controlPins)/sizeof(*controlPins)); a++){
 		if( !GPIO_export(controlPins[a]) ){std::cout << "- error: could not export control pin: " << a << std::endl; return false;}
 		if( !GPIO_direction(controlPins[a],OUT) ){ std::cout << "- error: could not set direction of control pin: " << a << std::endl; return false; }
+		if( !GPIO_write(controlPins[a],0) ){ std::cout << "- error: could not write to control pin: " << a << std::endl; return false; }
 	}
 //export and set direction of input pins
 	for(unsigned int a = 0; a < (sizeof(inputPins)/sizeof(*inputPins)); a++){
 		if( !GPIO_export(inputPins[a]) ){std::cout << "- error: could not export input pin: " << a << std::endl; return false;}
 		if( !GPIO_direction(inputPins[a],OUT) ){ std::cout << "- error: could not set direction of input pin: " << a << std::endl; return false; }
+		if( !GPIO_write(inputPins[a],0) ){ std::cout << "- error: could not write to input pin: " << a << std::endl; return false; }
 	}
 //export and set direction of output pins
 	for(unsigned int a = 0; a < (sizeof(outputPins)/sizeof(*outputPins)); a++){
