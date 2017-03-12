@@ -7,72 +7,73 @@ unified
         - successful hardware decryption? X
 
 method
-    - 32_64-
-        - size -- IO: 24 -- LUT: 1560 -- Reg: 97 -- BUFG: 0
+    - 32_64
+        - size -- IO: 24 -- LUT: 2835 -- Reg: 3234 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
 
-    - 48/72-
-        - size -- IO: 24 -- LUT: 2336 -- Reg: 121 -- BUFG: 0
+    - 48/72
+        - size -- IO: 24 -- LUT: 4513 -- Reg: 5402 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
 
-    - 48/96-
-        - size -- IO: 24 -- LUT: 2567 -- Reg: 145 -- BUFG: 0
+    - 48/96
+        - size -- IO: 24 -- LUT: 3641 -- Reg: 5426 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
         
-    - 64/96-
-        - size -- IO: 24 -- LUT: 3377 -- Reg: 161 -- BUFG: 0
+    - 64/96
+        - size -- IO: 24 -- LUT: 5721 -- Reg: 8354 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
         
-    - 64/128-
-        - size -- IO: 24 -- LUT: 4168 -- Reg: 193 -- BUFG: 0
+    - 64/128
+        - size -- IO: 24 -- LUT: 6394 -- Reg: 8770 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
         
-    - 96/96-
-        - size -- IO: 24 -- LUT: 6338 -- Reg: 193 -- BUFG: 0
+    - 96/96
+        - size -- IO: 24 -- LUT: 11567 -- Reg: 15362 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
         
-    - 96/144-
-        - size -- IO: 24 -- LUT: 6532 -- Reg: 241 -- BUFG: 0
+    - 96/144
+        - size -- IO: 24 -- LUT: 12976 -- Reg: 15896 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
-        - successful hardware encryption? _/
-        - successful hardware decryption? _/
+        - successful hardware encryption? X
+        - successful hardware decryption? X
+    though the synthesised design should theoretically fit, the software was unable to produce a design that could
         
-    - 128/128-
-        - size -- IO: 24 -- LUT: 11004 -- Reg: 257 -- BUFG: 0
+    - 128/128
+        - size -- IO: 24 -- LUT: 23129 -- Reg: 26626 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
-        - successful hardware encryption? _/
-        - successful hardware decryption? _/
+        - successful hardware encryption? X (design too large for development equipment)
+        - successful hardware decryption? X (design too large for development equipment)
         
-    - 128/192-
-        - size -- IO: 24 -- LUT: 11133 -- Reg: 321 -- BUFG: 0
+    - 128/192
+        - size -- IO: 24 -- LUT: 23266 -- Reg: 27238 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
-        - successful hardware encryption? _/
-        - successful hardware decryption? _/
+        - successful hardware encryption? X (design too large for development equipment)
+        - successful hardware decryption? X (design too large for development equipment)
         
-    - 128/256-
-        - size -- IO: 24 -- LUT: 13759 -- Reg: 385 -- BUFG: 0
+    - 128/256
+        - size -- IO: 24 -- LUT: 25770 -- Reg: 28290 -- BUFG: 1
         - successful simulated encryption? _/
         - successful simulated decryption? _/
-        - successful hardware encryption? _/
-        - successful hardware decryption? _/
+        - successful hardware encryption? X (design too large for development equipment)
+        - successful hardware decryption? X (design too large for development equipment)

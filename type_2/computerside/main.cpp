@@ -1,3 +1,5 @@
+//version 0.0.2
+
 #include <iostream>
 #include <string>
 
@@ -91,7 +93,7 @@ int main(){
 		//bool mode = true; unsigned int method = 5; std::string key = "0d0c0b0a0908050403020100"; std::string message = "602807a462b469063d8ff082";
 	//96_144
 		//bool mode = false; unsigned int method = 6; std::string key = "1514131211100d0c0b0a0908050403020100"; std::string message = "74616874207473756420666f";
-		//bool mode = true; unsigned int method = 6; std::string key = "1514131211100d0c0b0a0908050403020100"; std::string message = "ecad1c6c451e3f59c5db1ae9";
+		bool mode = true; unsigned int method = 6; std::string key = "1514131211100d0c0b0a0908050403020100"; std::string message = "ecad1c6c451e3f59c5db1ae9";
 	//128_128
 		//bool mode = false; unsigned int method = 7; std::string key = "f0e0d0c0b0a09080706050403020100"; std::string message = "63736564207372656c6c657661727420";
 		//bool mode = true; unsigned int method = 7; std::string key = "f0e0d0c0b0a09080706050403020100"; std::string message = "49681b1e1e54fe3f65aa832af84e0bbc";
