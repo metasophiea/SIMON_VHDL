@@ -1,0 +1,36 @@
+unified
+    - size -- IO:  -- LUT:  -- Reg:  -- BUFG: 
+    - successful simulated encryption? _/
+    - successful simulated decryption? _/
+    - successful hardware encryption? 
+    - successful hardware decryption?  
+
+method
+    - 32/64
+        - size -- IO:  -- LUT:  -- Reg:  -- BUFG: 
+        - successful simulated encryption? 
+        - successful simulated decryption? 
+        - successful hardware encryption? 
+        - successful hardware decryption?  
+
+    - 48/72   
+    - 48/96   
+    - 64/96   
+    - 64/128  
+    - 96/96   
+    - 96/144  
+    - 128/128 
+    - 128/192 
+    - 128/256 
+
+modeAndMethod
+    - 32/64   
+    - 48/72   
+    - 48/96   
+    - 64/96   
+    - 64/128  
+    - 96/96   
+    - 96/144  
+    - 128/128 
+    - 128/192 
+    - 128/256 

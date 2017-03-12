@@ -138,7 +138,7 @@ begin
                     when others => processLimit := 72;
                 end case;
             else
-                if(processStage = processLimit)then
+                if(processStage >= processLimit)then
                     if(internal_mode = '0')then
                         messageOut <= internal_messageOut_encrypt;
                     else
