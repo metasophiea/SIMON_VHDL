@@ -1,0 +1,289 @@
+	For this paper, I have developed three different designs for the simon cipher; Flow 
+Basic, Registered Logic and the Simon Processor. Each type is split into sub groups; 
+unified, methods (and in type 3, modeAndMethods) These different subtypes split out the 
+functionality of the cipher, allowing a designer the ability to choose the level of 
+encryption complexity they want, or the range of encryption functions available.
+
+ -- Subtypes -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+| - unified 																		  	  |
+|		these designs allow the system to encrypt or decrypt with any of the methods	  |
+| 																		  				  |
+| - methods 																		  	  |
+|		these are a collection of designs that specialize in one particular method, 	  |
+|		though allow encryption or decryption. These designs are much smaller than 		  |
+|		the unified	version 															  |
+| 																		  				  |
+| - modeAndMethods 																		  |
+| 		these are a collection of designs that specialize in one particular method and	  |
+|		mode. These designs are the smallest of the collection, and are often the most	  |
+|		efficient. 																		  |
+ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+ 
+ - Flow Logic
+|	The flow logic design lays out the cipher in its entirety, allowing the user to pass
+|data into the input and have it flow through all the required modules to produce a result.
+|No clock signal is needed. 
+|
+|	- benefits/disadvantages 
+|		_/	the design could allow encryption/decryption to occur in a single clock cycle
+|		_/	encrypting/decrypting messages with the different keys takes no longer than
+|			encrypting/decrypting with the same key
+|		X	as all the modules are being laid out, the design takes up a large space
+|		X	much of the circuitry does nothing for the majority of the flow time
+|	
+|	- hardware footprint for developed designs
+|		- unified
+|			-- IO: 24
+|			-- LUT: 99436 
+|			-- Reg: 531
+|			
+|		- methods
+|			- 32_64 
+|			   -- IO: 24 
+|			   -- LUT: 1560 
+|			   -- Reg: 97
+|
+|			- 48/72
+|				-- IO: 24 
+|				-- LUT: 2336 
+|				-- Reg: 121
+|
+|			- 48/96
+|				-- IO: 24 
+|				-- LUT: 2567 
+|				-- Reg: 145
+|				
+|			- 64/96
+|				-- IO: 24 
+|				-- LUT: 3377 
+|				-- Reg: 161
+|				
+|			- 64/128
+|				-- IO: 24 
+|				-- LUT: 4168 
+|				-- Reg: 193
+|				
+|			- 96/96
+|				-- IO: 24 
+|				-- LUT: 6338 
+|				-- Reg: 193
+|				
+|			- 96/144
+|				-- IO: 24 
+|				-- LUT: 6532 
+|				-- Reg: 241
+|				
+|			- 128/128
+|				-- IO: 24 
+|				-- LUT: 11004 
+|				-- Reg: 257
+|				
+|			- 128/192
+|				-- IO: 24 
+|				-- LUT: 11133 
+|				-- Reg: 321
+|				
+|			- 128/256
+|				-- IO: 24 
+|				-- LUT: 13759 
+|				-- Reg: 385
+
+ - Registered Logic
+|	The registered logic design expands upon the previous design, addressing the issue
+|of inactive modules. Here, every encryption and decryption module is separated out between
+|registers, which can store the encryption/decryption progress of a message. The key is
+|completely expanded at the very first stage, and this data is passed through to the 
+|registers as well. In this way, all parts of the circuit can be utilised.
+|	
+|	- benefits/disadvantages 
+|		_/	multiple messages can be encrypted/decrypted sequentially and almost 
+|			simultaneously allowing for a greater through-put of messages.
+|		X	this is the largest of the designs, as not only does it contain all the 
+|			circuitry of the previous design, but now there is a large amount of 
+|			registers for each stage.
+|		X	having the key be completely expanded at the first stage can cost a lot of 
+|			time, and the amount of individual register memory blocks required to store 
+|			this information for each stage of encryption/decryption, means the design 
+|			grows quite large.
+|				This design decision was made, as for decryption; the first decryptor 
+|			module requires the last expanded key, thus the key has to be expanded in its
+|			entirety before any work can begin. As the lead concept in this design was to
+|			improve flow-through in the system, the encryption mode has to run at the same
+|			speed as decryption. Thus, the initial key expansion is also done for 
+|			encryption.
+|				As you would expect, an encryption mode only version doesn't require such
+|			initial processing.
+|		_/	though the initial key expansion costs time; encrypting/decrypting batches of 
+|			messages with the same key is quite efficient. As no key expansion time has to
+|			be factored in; the system could be run at a higher clock rate, in addition to
+|			befitting from the near simultaneous encryption/decryption.
+|			
+|	- hardware footprint for developed designs
+|		unified
+|			-- IO: 24 
+|			-- LUT: 111581 
+|			-- Reg: 28978
+|			
+|		methods
+|			- 32_64
+|				-- IO: 24 
+|				-- LUT: 2835 
+|				-- Reg: 3234
+|
+|			- 48/72
+|				-- IO: 24 
+|				-- LUT: 4513 
+|				-- Reg: 5402
+|
+|			- 48/96
+|				-- IO: 24 
+|				-- LUT: 3641 
+|				-- Reg: 5426
+|				
+|			- 64/96
+|				-- IO: 24 
+|				-- LUT: 5721 
+|				-- Reg: 8354
+|				
+|			- 64/128
+|				-- IO: 24 
+|				-- LUT: 6394 
+|				-- Reg: 8770
+|				
+|			- 96/96
+|				-- IO: 24 
+|				-- LUT: 11567 
+|				-- Reg: 15362
+|				
+|			- 96/144
+|				-- IO: 24 
+|				-- LUT: 12976 
+|				-- Reg: 15896
+|				
+|			- 128/128
+|				-- IO: 24 
+|				-- LUT: 23129 
+|				-- Reg: 26626
+|				
+|			- 128/192
+|				-- IO: 24 
+|				-- LUT: 23266 
+|				-- Reg: 27238
+|				
+|			- 128/256
+|				-- IO: 24 
+|				-- LUT: 25770 
+|				-- Reg: 28290
+		
+ - The Simon Processor
+|	
+|
+|	- benefits/disadvantages 
+|
+|	- hardware footprint for developed designs
+|		unified
+|			-- IO: 24 
+|			-- LUT: 53099
+|			-- Reg: 1089
+|			
+|		methods
+|			- 32_64
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|			- 48/72
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|			- 48/96
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 64/96
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 64/128
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 96/96
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 96/144
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 128/128
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 128/192
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|				
+|			- 128/256
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		modeAndMethod
+|		    - 32/64 
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|  
+|		    - 48/72
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|   
+|		    - 48/96
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|  
+|		    - 64/96   
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		    - 64/128  
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		    - 96/96  
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+| 
+|		    - 96/144  
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		    - 128/128 
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		    - 128/192 
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
+|
+|		    - 128/256 
+|				-- IO: 24 
+|				-- LUT:  
+|				-- Reg: 
