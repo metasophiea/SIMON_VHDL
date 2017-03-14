@@ -5,18 +5,18 @@ functionality of the cipher, allowing a designer the ability to choose the level
 encryption complexity they want, or the range of encryption functions available.
 
  -- Subtypes -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-| - unified 																		  	  |
+| - unified 											  |
 |		these designs allow the system to encrypt or decrypt with any of the methods	  |
-| 																		  				  |
-| - methods 																		  	  |
+| 												  |						  				  |
+| - methods 											  |
 |		these are a collection of designs that specialize in one particular method, 	  |
-|		though allow encryption or decryption. These designs are much smaller than 		  |
-|		the unified	version 															  |
-| 																		  				  |
-| - modeAndMethods 																		  |
+|		though allow encryption or decryption. These designs are much smaller than 	  |
+|		the unified version 								  |
+| 												  |						  				  |
+| - modeAndMethods 										  |
 | 		these are a collection of designs that specialize in one particular method and	  |
 |		mode. These designs are the smallest of the collection, and are often the most	  |
-|		efficient. 																		  |
+|		efficient. 									  |
  -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
  
  - Flow Logic
