@@ -4,10 +4,10 @@
 	- message encryption _/
 	- message decryption _/
 	- layout
-		- basic
+		- basic _/
 			- benefits/disadvantages 
 			- hardware footprint for each type
-		- registered
+		- registered _/
 			- benefits/disadvantages 
 			- hardware footprint for each type
 		- processor
