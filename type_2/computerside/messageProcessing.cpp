@@ -16,8 +16,8 @@ std::string processMessage(bool mode, unsigned int method, std::string key, std:
 	}		
 	
 	if(!writeModeAndMethod(mode,method)){std::cout << "- error:processMessage: failed to write method and mode" << std::endl; return "process failure";}
-	if(!writeMessage(messageSegmentCount,message)){std::cout << "- error:processMessage: failed to write message" << std::endl; return "process failure";}
 	if(!writeKey(keySegmentCount,key)){std::cout << "- error:processMessage: failed to write key" << std::endl; return "process failure";}
+	if(!writeMessage(messageSegmentCount,message)){std::cout << "- error:processMessage: failed to write message" << std::endl; return "process failure";}
 
 	//clock in
 		if(!setClock(true)){  std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }

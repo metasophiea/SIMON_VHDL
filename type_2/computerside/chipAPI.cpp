@@ -1,6 +1,7 @@
 //control messages
     std::string readInputCommands[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10"};
     std::string modeMethodCommand = "40";
+    std::string emptyCommand = "ff";
     std::string writeInputCommands[] = {"41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50"};
     std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
 
@@ -80,12 +81,14 @@
         
         if(!mode){data += '0';}else{data += '1';}
         
-        return setInput(BINtoHEX(data));
+        if(!setInput(BINtoHEX(data))){std::cout << "- error:writeModeAndMethod: could not set control" << std::endl; return false;}
+        if(!setControl(emptyCommand)){std::cout << "- error:writeModeAndMethod: could not set control" << std::endl; return false;}
+        return true;
     }
 
     bool writeMessage(unsigned int segmentCount, std::string message){
         //pad message out
-        while(message.length()/4 < segmentCount){ message = "00" + message; }
+        while(message.length() < segmentCount){ message = "00" + message; }
         
         std::string temp;
         
@@ -97,12 +100,13 @@
             if(!setInput( temp )){std::cout << "- error:writeMessage: failed to set input pins" << std::endl; return false;};
         }
 
+        if(!setControl(emptyCommand)){std::cout << "- error:writeMessage: could not set control" << std::endl; return false;}
         return true;
     }
 
     bool writeKey(unsigned int segmentCount, std::string key){
         //pad key out
-        while(key.length()/4 < segmentCount){ key = "00" + key; }
+        while(key.length() < segmentCount){ key = "00" + key; }
         
         std::string temp;
         
@@ -114,6 +118,7 @@
             setInput( temp );		
         }
 		
+        if(!setControl(emptyCommand)){std::cout << "- error:writeKey: could not set control" << std::endl; return false;}
         return true;
     }
     std::string readMessage(unsigned int segmentCount){

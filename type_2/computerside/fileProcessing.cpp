@@ -33,9 +33,6 @@ bool processFile(bool mode, unsigned int method, std::string key, std::string fi
 		if(!writeMessage(messageSegmentCount,line)){std::cout << "- error:processMessage: failed to write message" << std::endl; return "process failure";}
 		if(!setClock(true)){  std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
 		if(!setClock(false)){ std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
-		
-		writeStringToFile(output,readMessage(messageSegmentCount));
-		writeStringToFile(output,"\n");
 
 		if(count > registerCount-1){
 			std::cout << "- writing out: " << count << std::endl;
@@ -47,25 +44,26 @@ bool processFile(bool mode, unsigned int method, std::string key, std::string fi
 		std::cout << "\t" << readMessage(messageSegmentCount) << std::endl;
 		std::cout << std::endl;
 		
-		count++; fileLength = count;
+		count++; 
 	}
+	fileLength = count;
 	
 	std::cout << "End of input, pushing the rest of the message through" << std::endl << std::endl;
-
 	
 	while(count < registerCount+fileLength){
+		if(!setClock(true)){  std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
+		if(!setClock(false)){ std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
+
 		if(count > registerCount-1){
 			std::cout << "- writing out: " << count << std::endl;
 			writeStringToFile(output,readMessage(messageSegmentCount));
 			writeStringToFile(output,"\n");
 		}
 		
-		if(!setClock(true)){  std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
-		if(!setClock(false)){ std::cout << "- error:processMessage: failed to write clock" << std::endl; return "process failure"; }
 		std::cout << count << "|\t" << readMessage(messageSegmentCount) << std::endl;
-		
 		count++;
 	}
 	
+	if(!shutDownPins()){std::cout << "- error:processMessage: failed to shut down pins" << std::endl; return "process failure";}
 	return true;
 }

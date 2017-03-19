@@ -16,7 +16,7 @@
     }
 
     bool setControl(std::string data){
-        std::string binData = HEXtoBIN(data); //std::cout << "control: " << data << std::endl;
+        std::string binData = HEXtoBIN(data);
         
         unsigned int values[] = {0,0,0,0,0,0,0,0};
         for(unsigned int a = 0; a < binData.length(); a++){
@@ -34,7 +34,7 @@
     }
 
     bool setInput(std::string data){
-        std::string binData = HEXtoBIN(data); //std::cout << "input: " << data << std::endl;
+        std::string binData = HEXtoBIN(data);
         
         unsigned int values[] = {0,0,0,0,0,0,0,0};
         for(unsigned int a = 0; a < binData.length(); a++){
@@ -57,7 +57,6 @@
             if( GPIO_read(outputPins[a]) == 0){ data += '0'; }else{ data += '1'; }
         }
 
-        //std::cout << "output: " << BINtoHEX(data) << std::endl;
         return BINtoHEX(data);
     }
 
