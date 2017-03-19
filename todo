@@ -1,6 +1,5 @@
-- test file encryptor/decryptor
-
 - write implementation paper
 - write report
 
 - reduce type_3 modeAndMethod reg size (by removing morphing_Z registers, to be replaced with updated keyExpander recieving original Z and process stage number)
+- fix up file encrypter (and computerside code in general)
