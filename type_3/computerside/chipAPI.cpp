@@ -1,6 +1,7 @@
 //control messages
     std::string readInputCommands[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10"};
     std::string modeCommand = "40";
+    std::string emptyCommand = "00";
     std::string writeInputCommands[] = {"41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50"};
     std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
 
@@ -15,7 +16,7 @@
     }
 
     bool setControl(std::string data){
-        std::string binData = HEXtoBIN(data); std::cout << "control: " << data << std::endl;
+        std::string binData = HEXtoBIN(data); //std::cout << "control: " << data << std::endl;
         
         unsigned int values[] = {0,0,0,0,0,0,0,0};
         for(unsigned int a = 0; a < binData.length(); a++){
@@ -33,7 +34,7 @@
     }
 
     bool setInput(std::string data){
-        std::string binData = HEXtoBIN(data); std::cout << "input: " << data << std::endl;
+        std::string binData = HEXtoBIN(data); //std::cout << "input: " << data << std::endl;
         
         unsigned int values[] = {0,0,0,0,0,0,0,0};
         for(unsigned int a = 0; a < binData.length(); a++){
@@ -56,12 +57,13 @@
             if( GPIO_read(outputPins[a]) == 0){ data += '0'; }else{ data += '1'; }
         }
 
-        std::cout << "output: " << BINtoHEX(data) << std::endl;
+        //std::cout << "output: " << BINtoHEX(data) << std::endl;
         return BINtoHEX(data);
     }
 
 //abstracted
     bool writeMode_clockAndLoad(bool mode){
+        if(!setControl(emptyCommand)){std::cout << "- error:writeMode_clockAndLoad: could not set control" << std::endl; return false;}
         if(!setControl(modeCommand)){std::cout << "- error:writeMode_clockAndLoad: could not set control" << std::endl; return false;}
 
         std::string data = "0010000";
