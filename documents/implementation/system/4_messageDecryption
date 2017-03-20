@@ -5,16 +5,16 @@ as the system's decrypted message.
 Messages come in two segments and in a variety of lengths, as defined by the method
 |	
 |	Method	|	message length	
-|		1 	|		32 
-|		2	|		48 
-|		3	|		48 
-|		4	|		64 
-|		5	|		64 
-|		6	|		96 
-|		7	|		96 
-|		8	|		128
-|		9	|		128
-|		10	|		128
+|	1 	|	32 
+|	2	|	48 
+|	3	|	48 
+|	4	|	64 
+|	5	|	64 
+|	6	|	96 
+|	7	|	96 
+|	8	|	128
+|	9	|	128
+|	10	|	128
 
 	It is worth noting that for each method, the length of each key segment and message
 segment is the same.
@@ -23,7 +23,7 @@ segment is the same.
 The received message is decrypted like so;
 
 	newMessageSegment = leftRotate( messageSegment 2 )once 
-						AND leftRotate( messageSegment 2 )eightTimes
+				AND leftRotate( messageSegment 2 )eightTimes
 	newMessageSegment = newMessageSegment XOR messageSegment 1
 	newMessageSegment = newMessageSegment XOR leftRotate( messageSegment 2 )twice
 	newMessageSegment = newMessageSegment XOR keySegment(keySegmentCount-1)
@@ -38,22 +38,22 @@ The produced message is now messageSegment 2 with newMessageSegment attached
 	
 1. right rotate message segment 2 once and eight times, then AND these two together
 	newMessageSegment	=	leftRotate( 1110100110111011 )once 
-							AND leftRotate( 1110100110111011 )eightTimes
-						=	1101001101110111 AND 1011101111101001
-						=	1001001101100001
+					AND leftRotate( 1110100110111011 )eightTimes
+				=	1101001101110111 AND 1011101111101001
+				=	1001001101100001
 	
 2. XOR newMessageSegment with message segment 1
 	newMessageSegment 	= 	1001001101100001 XOR 1100011010011011
-					 	= 	0101010111111010
+				= 	0101010111111010
 
 3. XOR newMessageSegment with a twice left rotated message segment 2
 	newMessageSegment 	= 	0101010111111010 XOR leftRotate( 1110100110111011 )twice 
-						=	0101010111111010 XOR 1010011011101111
-						=	1111001100010101
+				=	0101010111111010 XOR 1010011011101111
+				=	1111001100010101
 						
 4. XOR newMessageSegment with the last key segment (key segment (keySegmentCount-1))
 	newMessageSegment 	= 	1111001100010101 XOR 0000000100000000 
-						=	1111001000010101
+				=	1111001000010101
 	
 The message produced from the module is 	
 	1110100110111011 1111001000010101
