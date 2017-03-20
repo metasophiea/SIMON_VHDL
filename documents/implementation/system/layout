@@ -176,9 +176,20 @@ encryption complexity they want, or the range of encryption functions available.
 |				-- Reg: 28290
 		
  - The Simon Processor
-|	
+|	This design takes the concept of multi-staged encryption from the pervious design, and distils 
+|it down into a single repeatable process. Instead of having a set of encryption and decryption modules
+|for each stage; only one encryption and decryption module is implimented and are used repeatidly to
+|perform encryption/decryption. This means that the finished implimention can take up a much smaller 
+|hardware footprint than previous designs.
+|	Similar to the Registered Logic design, the provided key must be fully expanded before the any
+|encryption or decryption can begin; however this particular design contains a "modeAndMethods" subtype
+|for encryption only, which does not need such complete key expansion time and only requires a fraction
+|of the key expansion logic.
 |
 |	- benefits/disadvantages 
+|		_/	smallest hardware footprint
+|		X	only one message can be processed at a time
+|		X	complete key expansion time (for 'unified' and 'methods' subtypes)
 |
 |	- hardware footprint for developed designs
 |		unified
@@ -189,101 +200,101 @@ encryption complexity they want, or the range of encryption functions available.
 |		methods
 |			- 32_64
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 1686
+|				-- Reg: 280
 |
 |			- 48/72
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 2887
+|				-- Reg: 353
 |
 |			- 48/96
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 1846
+|				-- Reg: 401
 |				
 |			- 64/96
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 1727
+|				-- Reg: 464
 |				
 |			- 64/128
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 2385
+|				-- Reg: 531
 |				
 |			- 96/96
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 7500
+|				-- Reg: 562
 |				
 |			- 96/144
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 7884
+|				-- Reg: 658
 |				
 |			- 128/128
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 5647
+|				-- Reg: 773
 |				
 |			- 128/192
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 5776
+|				-- Reg: 903
 |				
 |			- 128/256
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 7302
+|				-- Reg: 1031
 |
 |		modeAndMethod
 |		    - 32/64 
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 123
+|				-- Reg: 317
 |  
 |		    - 48/72
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 152
+|				-- Reg: 381
 |   
 |		    - 48/96
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 181
+|				-- Reg: 429
 |  
 |		    - 64/96   
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 192
+|				-- Reg: 477
 |
 |		    - 64/128  
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 226
+|				-- Reg: 541
 |
 |		    - 96/96  
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 254
+|				-- Reg: 573
 | 
 |		    - 96/144  
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 283
+|				-- Reg: 669
 |
 |		    - 128/128 
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 324
+|				-- Reg: 733
 |
 |		    - 128/192 
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 369
+|				-- Reg: 861
 |
 |		    - 128/256 
 |				-- IO: 24 
-|				-- LUT:  
-|				-- Reg: 
+|				-- LUT: 444
+|				-- Reg: 989
