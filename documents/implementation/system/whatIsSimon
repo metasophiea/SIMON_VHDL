@@ -1,0 +1,21 @@
+  Simon, is a collection of ten block ciphers released to the public by the NSA in mid 
+2013. Overall each cipher is almost identical, with different key and message bit lengths
+diversifying each implementation. Simon is a balanced Feistel cipher, capable of 
+encrypting blocks of data from 32bits up to 128bits in a single execution.
+	The cipher was designed to fill a cryptographic gap in the market. Few encryption 
+methods have been designed to work in the relatively new field of “lightweight 
+cryptography”, an area concerning small, technically constrained devices. As the world 
+moves towards a more connected and computerised one; increasingly devices are being built 
+with networking capability. It is important therefore, that such devices should have some
+level of protection when connecting to each other, or to larger control machines. A 
+hacker should not be able to take control of the security in your house or the breaks of 
+your car, for example.
+
+  Simon, is a well tested encrypting algorithm with these constraints in mind. Designed
+to be realised in hardware - though perfectly functional in software - the designers 
+proclaim SIMON’s small hardware footprint, throughput and ability to be serialised at 
+various levels. Decryption of Simon encrypted data is a process very similar to encryption;
+in fact it is almost the very reverse of it, thus it is entirely possible to use much of 
+the encryption components for decryption.
+	Simon is also general use, giving developers the flexibility to integrate it into their
+designs; thus giving developers an easier step towards encryption of their designs.
