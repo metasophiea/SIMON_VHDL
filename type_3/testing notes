@@ -2,8 +2,8 @@ unified
     - size: -- IO: 24 -- LUT: 53099 -- Reg: 1089 -- BUFG: 2
     - successful simulated encryption? _/
     - successful simulated decryption? _/
-    - successful hardware encryption? 
-    - successful hardware decryption?  
+    - successful hardware encryption? X (design too large for development equipment)
+    - successful hardware decryption? X (design too large for development equipment)
 
 method
     - 32/64
