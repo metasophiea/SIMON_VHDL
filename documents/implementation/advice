@@ -12,7 +12,7 @@
 		Type 2 has a much larger footprint, but would allow the system to decrypt batches 
 	of messages faster (allowing for the initial key expansion processing time)
 	
-		In action, the satellite devices would encrypt any message they wanted to send 
+		In action; the satellite devices would encrypt any message they wanted to send 
 	to the central node, where it would be decrypted. For returned messages; the central
 	node would decrypt any message it wanted to send to a satellite, where the satellite 
 	can then encrypt it, and in effect decrypt the message.
