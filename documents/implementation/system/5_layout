@@ -39,9 +39,9 @@ encryption complexity they want, or the range of encryption functions available.
 |			
 |		- methods
 |			- 32_64 
-|			   -- IO: 24 
-|			   -- LUT: 1560 
-|			   -- Reg: 97
+|				-- IO: 24 
+|				-- LUT: 1560 
+|				-- Reg: 97
 |
 |			- 48/72
 |				-- IO: 24 
