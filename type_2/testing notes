@@ -54,7 +54,7 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? X
         - successful hardware decryption? X
-    though the synthesised design should theoretically fit, the software was unable to produce a design that could
+    though the synthesised design should theoretically fit, the software was unable to produce a design that would
         
     - 128/128
         - size -- IO: 24 -- LUT: 23129 -- Reg: 26626 -- BUFG: 1
