@@ -1,6 +1,9 @@
 - system
 	- what is simon _/
 	- key expander _/
+		- images
+			- block taking key and Z, returning Z and key going to next module and encryption/decryption module
+			- diagram of inner workings with 64 bit example
 	- message encryption _/
 	- message decryption _/
 	- layout
