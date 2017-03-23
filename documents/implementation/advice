@@ -22,7 +22,9 @@
 	Also using a fixed key for all devices, would allow the central node to both 'encrypt'
 	messages to send to satellite devices while decrypting received messages. 
 		A disadvantage of this design is that no two satellites could communicate with 
-	each other. 
+	each other. It is important in this situation, to mindful of how this fixed key is
+	created. Simply having a hardwired key in all devices is not very secure, so one should
+	investigate using time-dependent key generation.
 	
 - for mesh layout
 	
