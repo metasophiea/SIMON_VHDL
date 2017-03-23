@@ -22,10 +22,10 @@ segment is the same.
 - process -
 The received message is decrypted like so;
 
-	newMessageSegment = leftRotate( messageSegment 2 )once 
-				AND leftRotate( messageSegment 2 )eightTimes
-	newMessageSegment = newMessageSegment XOR messageSegment 1
-	newMessageSegment = newMessageSegment XOR leftRotate( messageSegment 2 )twice
+	newMessageSegment = leftRotate( messageSegment 1 )once 
+				AND leftRotate( messageSegment 1 )eightTimes
+	newMessageSegment = newMessageSegment XOR messageSegment 0
+	newMessageSegment = newMessageSegment XOR leftRotate( messageSegment 1 )twice
 	newMessageSegment = newMessageSegment XOR keySegment(keySegmentCount-1)
 
 The produced message is now messageSegment 2 with newMessageSegment attached
@@ -33,20 +33,21 @@ The produced message is now messageSegment 2 with newMessageSegment attached
 - example -
 	using method 1 for this example, our inputs will be:
 			
-	messageIn: 	1100011010011011 1110100110111011
-	keyIn: 		0001100100011000 0001000100010000 0000100100001000 0000000100000000 
+	messageIn (0 1): 	1100011010011011 1110100110111011
+	keyIn (0 1 2 3): 	0001100100011000 0001000100010000 0000100100001000 0000000100000000 
+	keySegmentCount:	4
 	
-1. right rotate message segment 2 once and eight times, then AND these two together
+1. right rotate message segment 1 once and eight times, then AND these two together
 	newMessageSegment	=	leftRotate( 1110100110111011 )once 
 					AND leftRotate( 1110100110111011 )eightTimes
 				=	1101001101110111 AND 1011101111101001
 				=	1001001101100001
 	
-2. XOR newMessageSegment with message segment 1
+2. XOR newMessageSegment with message segment 0
 	newMessageSegment 	= 	1001001101100001 XOR 1100011010011011
 				= 	0101010111111010
 
-3. XOR newMessageSegment with a twice left rotated message segment 2
+3. XOR newMessageSegment with a twice left rotated message segment 1
 	newMessageSegment 	= 	0101010111111010 XOR leftRotate( 1110100110111011 )twice 
 				=	0101010111111010 XOR 1010011011101111
 				=	1111001100010101
