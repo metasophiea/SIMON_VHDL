@@ -39,8 +39,8 @@ The initial 'Z' value to be used is also defined by the method
 
 	'Z' values are always 62 bits long, regardless of method. Only one bit of the 'Z'
 value is used in each key module, which is selected based on the module's position in 
-the key expansion process; first bit first, second bit second, etc. with the selection
-looping back to the start if more than 62 stages are used.
+the key expansion process; most left bit first, the bit to its right second, etc. with the 
+selection looping back to the start if more than 62 stages are used.
 	In this design; a module will always use the first bit, then modify the 'Z' value to
 put the first bit at the end, and pass this newly created 'Z' value to the subsequent 
 key expander.
@@ -63,7 +63,7 @@ received key attached
 			
 	keySegmentCount: 4
 	selected Z: 0
-	keyIn: 	0001100100011000 0001000100010000 0000100100001000 0000000100000000 
+	keyIn: 	0001100100011000 0001000100010000 0000100100001000 0000000100000000 (segments 0 1 2 3)
 	Z: 	11111010001001010110000111001101111101000100101011000011100110
 	
 1. triple right rotate segment 0
@@ -74,7 +74,7 @@ received key attached
 	newKey 	= 	0000001100100011 XOR 0000100100001000
 		=	0000101000101011
 	
-3. XOR newKey with a right-rotated version of itself
+3. XOR newKey with one-bit right-rotated version of itself
 	newKey 	= 	0000101000101011 XOR 1000010100010101
 		= 	1000111100111110
 	
