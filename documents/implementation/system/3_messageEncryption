@@ -33,8 +33,8 @@ The produced message is now newMessageSegment with messageSegment 1 attached
 - example -
 	using method 1 for this example, our inputs will be:
 			
-	messageIn: 	0110010101100101 0110100001110111 (0 1)
-	keyIn: 		0001100100011000 0001000100010000 0000100100001000 0000000100000000 (0 1 2 3)
+	messageIn (0 1): 	0110010101100101 0110100001110111 
+	keyIn (0 1 2 3): 	0001100100011000 0001000100010000 0000100100001000 0000000100000000
 	keySegmentCount: 4
 	
 1. right rotate message segment 0 once and eight times, then AND these two together
