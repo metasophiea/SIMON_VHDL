@@ -35,6 +35,7 @@ The produced message is now newMessageSegment with messageSegment 1 attached
 			
 	messageIn: 	0110010101100101 0110100001110111 (segments 0 1)
 	keyIn: 		0001100100011000 0001000100010000 0000100100001000 0000000100000000 (segments 0 1 2 3)
+	keySegmentCount: 4
 	
 1. right rotate message segment 0 once and eight times, then AND these two together
 	newMessageSegment 	= 	leftRotate( 0110010101100101 )once 
