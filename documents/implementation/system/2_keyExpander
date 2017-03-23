@@ -78,11 +78,11 @@ received key attached
 	newKey 	= 	0000101000101011 XOR 1000010100010101
 		= 	1000111100111110
 	
-4. XOR neyKey with keySegment (keySegmentCount-1), which here is segment 3
+4. XOR newKey with keySegment (keySegmentCount-1), which here is segment 3
 	newKey 	= 	1000111100111110 XOR 0000000100000000
 		= 	1000111000111110
 	
-5. XOR Z's first bit (most left) with neyKey's last bit (most right) 
+5. XOR Z's first bit (most left) with newKey's last bit (most right) 
 	newKey 	= 	1000111000111110
 	Z's first bit: 1
 		=	1000111000111110 XOR 0000000000000001
