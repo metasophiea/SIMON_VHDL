@@ -37,8 +37,8 @@ encryption complexity they want, or the range of encryption functions available.
 |			-- LUT: 99436 
 |			-- Reg: 531
 |			
-|		- methods
-|			- 32_64 
+|		- methods ( messageBitLength/keyBitLength )
+|			- 32/64 
 |				-- IO: 24 
 |				-- LUT: 1560 
 |				-- Reg: 97
@@ -124,8 +124,8 @@ encryption complexity they want, or the range of encryption functions available.
 |			-- LUT: 111581 
 |			-- Reg: 28978
 |			
-|		methods
-|			- 32_64
+|		methods ( messageBitLength/keyBitLength )
+|			- 32/64
 |				-- IO: 24 
 |				-- LUT: 2835 
 |				-- Reg: 3234
@@ -197,8 +197,8 @@ encryption complexity they want, or the range of encryption functions available.
 |			-- LUT: 53099
 |			-- Reg: 1089
 |			
-|		methods
-|			- 32_64
+|		methods ( messageBitLength/keyBitLength )
+|			- 32/64
 |				-- IO: 24 
 |				-- LUT: 1686
 |				-- Reg: 280
@@ -248,53 +248,53 @@ encryption complexity they want, or the range of encryption functions available.
 |				-- LUT: 7302
 |				-- Reg: 1031
 |
-|		modeAndMethod
-|		    - 32/64 
+|		modeAndMethod ( messageBitLength/keyBitLength )
+|			- 32/64 
 |				-- IO: 24 
 |				-- LUT: 123
 |				-- Reg: 317
 |  
-|		    - 48/72
+|			- 48/72
 |				-- IO: 24 
 |				-- LUT: 152
 |				-- Reg: 381
 |   
-|		    - 48/96
+|			- 48/96
 |				-- IO: 24 
 |				-- LUT: 181
 |				-- Reg: 429
 |  
-|		    - 64/96   
+|			- 64/96   
 |				-- IO: 24 
 |				-- LUT: 192
 |				-- Reg: 477
 |
-|		    - 64/128  
+|			- 64/128  
 |				-- IO: 24 
 |				-- LUT: 226
 |				-- Reg: 541
 |
-|		    - 96/96  
+|			- 96/96  
 |				-- IO: 24 
 |				-- LUT: 254
 |				-- Reg: 573
 | 
-|		    - 96/144  
+|			- 96/144  
 |				-- IO: 24 
 |				-- LUT: 283
 |				-- Reg: 669
 |
-|		    - 128/128 
+|			- 128/128 
 |				-- IO: 24 
 |				-- LUT: 324
 |				-- Reg: 733
 |
-|		    - 128/192 
+|			- 128/192 
 |				-- IO: 24 
 |				-- LUT: 369
 |				-- Reg: 861
 |
-|		    - 128/256 
+|			- 128/256 
 |				-- IO: 24 
 |				-- LUT: 444
 |				-- Reg: 989
