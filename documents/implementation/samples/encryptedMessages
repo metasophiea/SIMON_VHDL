@@ -1,4 +1,4 @@
-What follows are various test vectors for the message encryption module, using various key and message bit lengths of each method
+What follows are various test vectors for the message encryption module, using the key and message bit lengths of each method
 
 - 32/64
 	
