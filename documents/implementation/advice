@@ -2,8 +2,9 @@
 
 		It is my opinion, that for device network layouts consisting of many satellite 
 	devices and a central communication node; one should fit the satellite devices
-	with a simon encryption module of type 3 encryption only. Then use simon encryption 
-	module type 2 for the central node, running decryption only.
+	with a simon encryption module of type 3 (the simon processor) encryption only. Then 
+	use simon encryption module type 2 (registered logic) for the central node, running 
+	decryption only.
 		The encryption only version of type 3 has by far the smallest footprint of any 
 	of the designs, and in turn the lowest power consumption. Though one must accept a 
 	delay in the encryption time; I believe in this layout of many devices communicating
