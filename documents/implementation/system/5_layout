@@ -181,7 +181,7 @@ encryption complexity they want, or the range of encryption functions available.
 |for each stage; only one encryption and decryption module is implimented and are used repeatidly to
 |perform encryption/decryption. This means that the finished implimention can take up a much smaller 
 |hardware footprint than previous designs.
-|	Similar to the Registered Logic design, the provided key must be fully expanded before the any
+|	Similar to the Registered Logic design, the provided key must be fully expanded before any
 |encryption or decryption can begin; however this particular design contains a "modeAndMethods" subtype
 |for encryption only, which does not need such complete key expansion time and only requires a fraction
 |of the key expansion logic.
