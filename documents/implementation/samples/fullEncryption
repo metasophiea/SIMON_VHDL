@@ -1,4 +1,6 @@
-- 32_64
+Below, you will find test vectors for completely encrypted messages, using the key and message bit lengths of each method
+
+- 32/64
 	
 	key: 0000000000000000 message: 00000000 -> 5ae828ec
 	key: 1111111111111111 message: 11111111 -> dd897450
