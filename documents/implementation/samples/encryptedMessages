@@ -1,4 +1,6 @@
-- 32_64
+What follows are various test vectors for the message encryption module, using various key and message bit lengths of each method
+
+- 32/64
 	
 	key: 0000000000000000 message: 00000000 -> 00000000
 	key: 1111111111111111 message: 11111111 -> 44441111
