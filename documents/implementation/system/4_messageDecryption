@@ -28,7 +28,7 @@ The received message is decrypted like so;
 	newMessageSegment = newMessageSegment XOR leftRotate( messageSegment 1 )twice
 	newMessageSegment = newMessageSegment XOR keySegment(keySegmentCount-1)
 
-The produced message is now messageSegment 2 with newMessageSegment attached
+The produced message is now messageSegment 1 with newMessageSegment attached
 
 - example -
 	using method 1 for this example, our inputs will be:
