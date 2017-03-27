@@ -28,7 +28,7 @@ The received message is encrypted like so;
 	newMessageSegment = newMessageSegment XOR leftRotate( messageSegment 0 )twice
 	newMessageSegment = newMessageSegment XOR keySegment(keySegmentCount-1)
 
-The produced message is now newMessageSegment with messageSegment 1 attached
+The produced message is now newMessageSegment with messageSegment 0 attached
 	
 - example -
 	using method 1 for this example, our inputs will be:
