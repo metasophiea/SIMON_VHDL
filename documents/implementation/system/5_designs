@@ -1,8 +1,8 @@
-	For this paper, I have developed three different designs for the simon cipher; Flow 
-Basic, Registered Logic and the Simon Processor. Each type is split into sub groups; 
-unified, methods (and in type 3, modeAndMethods) These different subtypes split out the 
-functionality of the cipher, allowing a designer the ability to choose the level of 
-encryption complexity they want, or the range of encryption functions available.
+	For this paper, I have developed three different designs for the simon cipher; Basic 
+Flow, Registered Logic and the Simon Processor. Each type is split into sub groups; unified, 
+methods (and in type 3, modeAndMethods) These different subtypes split out the functionality 
+of the cipher, allowing a designer the ability to choose the level of encryption complexity
+they want, or the range of encryption functions available.
 
  -- Subtypes -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 | - unified 											  
