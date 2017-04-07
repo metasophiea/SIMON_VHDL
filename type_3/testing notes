@@ -12,6 +12,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      121mW
+            static:         102mW
+            dynamic:        19mW
+                signals:    9mW
+                logic:      8mW
+                IO:         3mW
 
     - 48/72
         - size: -- IO: 24 -- LUT: 2887 -- Reg: 353 -- BUFG: 1
@@ -19,6 +25,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      383mW
+            static:         104mW
+            dynamic:        278mW
+                signals:    121mW
+                logic:      158mW
+                IO:         4mW
 
     - 48/96
         - size: -- IO: 24 -- LUT: 1846 -- Reg: 401 -- BUFG: 1
@@ -26,6 +38,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      370mW
+            static:         104mW
+            dynamic:        266mW
+                signals:    116mW
+                logic:      146mW
+                IO:         5mW
 
     - 64/96
         - size: -- IO: 24 -- LUT: 1727 -- Reg: 464 -- BUFG: 1
@@ -33,6 +51,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      844mW
+            static:         109mW
+            dynamic:        735mW
+                signals:    338mW
+                logic:      393mW
+                IO:         4mW
 
     - 64/128
         - size: -- IO: 24 -- LUT: 2385 -- Reg: 531 -- BUFG: 1
@@ -40,6 +64,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      1361mW
+            static:         116mW
+            dynamic:        1245mW
+                signals:    555mW
+                logic:      686mW
+                IO:         5mW
  
     - 96/96
         - size: -- IO: 24 -- LUT: 7500 -- Reg: 562 -- BUFG: 1
@@ -81,6 +111,12 @@ modeAndMethod
         - size: -- IO: 24 -- LUT: 123 -- Reg: 317 -- BUFG: 1
         - successful simulated encryption? _/
         - successful hardware encryption? _/
+        - power usage:      113mW
+            static:         102mW
+            dynamic:        11mW
+                signals:    5mW
+                logic:      3mW
+                IO:         3mW
 
     - 48/72
         - size: -- IO: 24 -- LUT: 152 -- Reg: 381 -- BUFG: 1
