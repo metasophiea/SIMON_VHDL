@@ -12,12 +12,12 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
-        - power usage:      121mW
-            static:         102mW
-            dynamic:        19mW
-                signals:    9mW
-                logic:      8mW
-                IO:         3mW
+        - power usage:      124mW
+            static:         102mW (82%)
+            dynamic:        22mW (18%)
+                signals:    10mW (47%)
+                logic:      9mW (41%)
+                IO:         3mW (12%)
 
     - 48/72
         - size: -- IO: 24 -- LUT: 2887 -- Reg: 353 -- BUFG: 1
@@ -105,18 +105,24 @@ method
         - successful simulated decryption? _/
         - successful hardware encryption? _/
         - successful hardware decryption? _/
+        - power usage:      524mW
+            static:         106mW (20%)
+            dynamic:        418mW (80%)
+                signals:    205mW (49%)
+                logic:      208mW (50%)
+                IO:         6mW (1%)
 
 modeAndMethod
     - 32/64
         - size: -- IO: 24 -- LUT: 123 -- Reg: 317 -- BUFG: 1
         - successful simulated encryption? _/
         - successful hardware encryption? _/
-        - power usage:      113mW
-            static:         102mW
-            dynamic:        11mW
-                signals:    5mW
-                logic:      3mW
-                IO:         3mW
+        - power usage:      114mW
+            static:         102mW (89%)
+            dynamic:        12mW (11%)
+                signals:    6mW (47%)
+                logic:      3mW (25%)
+                IO:         3mW (28%)
 
     - 48/72
         - size: -- IO: 24 -- LUT: 152 -- Reg: 381 -- BUFG: 1
@@ -162,3 +168,9 @@ modeAndMethod
         - size: -- IO: 24 -- LUT: 444 -- Reg: 989 -- BUFG: 1
         - successful simulated encryption? _/
         - successful hardware encryption? _/
+        - power usage:      152mW
+            static:         102mW (67%)
+            dynamic:        50mW (33%)
+                signals:    31mW (62%)
+                logic:      13mW (25%)
+                IO:         6mW (13%)
