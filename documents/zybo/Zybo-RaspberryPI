@@ -21,16 +21,47 @@ Simon has <517 inputs and outputs, this packager reduces the interface to 24 pin
 
 Using three of the Zybo's High-speed Pmods ports, we can connect to 24 of the Raspberry PI's GPIO pins
 
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+
+Zybo
+     _________
+    |         |
+    |         |
+    |_e_d_c_b_|
+
 - connections
-    JB
+    B
         empty | empty | 5  | 4  | 3  | 2
         empty | empty | 9  | 8  | 7  | 6
-    JC
+    C
         empty | empty | 13 | 12 | 11 | 10
         empty | empty | 17 | 16 | 15 | 14
-    JD
+    D
         empty | empty | 21 | 20 | 19 | 18
         empty | empty | 25 | 24 | 23 | 22
+
+PI (connections viewed from output of PI (ribbon cable outputs flipped horizontally))
+ __________
+|       _  |    1    2
+|      | | |    3    4
+|      | | |    5    6
+|      | | |    7    8
+|      | | |    9    10
+|      |_| |    11   12
+|          |    13   14
+|__________|    15   16
+                17   18
+                19   20
+                21   22
+                23   24
+                25   26
+                27   28
+                29   30
+                31   32
+                33   34
+                35   36
+                37   38
+                39   40
 
 ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
@@ -46,3 +77,5 @@ echo 1 > /sys/class/gpio/gpio18/value
 echo 0 > /sys/class/gpio/gpio18/value
 
 head /sys/class/gpio/gpio19/value
+
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
