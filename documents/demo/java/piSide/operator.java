@@ -39,7 +39,8 @@ public class operator {
                 ProcessBuilder processBuilder = new ProcessBuilder("./a.out");
                 processBuilder.inheritIO();
                 processBuilder.directory(new File("../../c++/"));
-                processBuilder.start();
+                Process process = processBuilder.start();
+                process.waitFor();
             }
             catch(Exception e){System.out.println(e);}
 
@@ -67,12 +68,10 @@ public class operator {
                         try{
                             BufferedReader bufferedReader_output = new BufferedReader(new FileReader("../../files/output"));
                             BufferedWriter bufferedWriter_input = new BufferedWriter(new FileWriter("../../files/input"));
-
                             temp = bufferedReader_output.readLine();
                             while( temp != null ){ 
-                                bufferedWriter_input.write(temp); 
-                                temp = bufferedReader_output.readLine();
-                                if(temp != null){ bufferedWriter_input.newLine(); }
+                                bufferedWriter_input.write(temp);
+                                if((temp = bufferedReader_output.readLine()) != null){ bufferedWriter_input.newLine(); }
                             }
 
                             bufferedReader_output.close();
@@ -81,7 +80,6 @@ public class operator {
                     //clear output file
                         try{
                             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("../../files/output"));
-                            bufferedWriter.write("");
                             bufferedWriter.close();
                         }catch(Exception e){System.out.println(e);}  
                     //switch mode

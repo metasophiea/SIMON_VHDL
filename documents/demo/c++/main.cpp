@@ -35,6 +35,10 @@ int main(){
 
 	//check if there are no more lines
 		if( count <= nextLine ){ return 0; }
+	
+	//check if this line is empty
+		if( line.length() == 0){ return 0; }
+		//std::cout << "|" << line << "|" << line.length() << std::endl;
 
 	//gather control info
 		std::ifstream controlfile((controlFileAddress).c_str());
