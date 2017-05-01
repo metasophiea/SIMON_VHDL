@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdio.h> 
 #include <string>
+#include <algorithm>
 
 #include "./raspberryPI_api.cpp"
 #include "./utilityFunctions.cpp"
@@ -32,7 +33,7 @@ int main(){
 			++count;
 		}
 
-	//check if there are not more lines
+	//check if there are no more lines
 		if( count <= nextLine ){ return 0; }
 
 	//gather control info
@@ -42,7 +43,9 @@ int main(){
 		getline( controlfile,tempString ); if( tempString.compare("encrypt") ){ mode = true; }
 
 	//perform work
-		std::string returnedMessage = processMessage(mode,0,key,line);
+		//std::string returnedMessage = processMessage(mode,0,key,line);
+		std::rotate(line.begin(),line.begin()+1,line.end());
+		std::string returnedMessage = line;
 
 	//print returned message to output
 		if(nextLine != 0){ returnedMessage = "\n" + returnedMessage; }
