@@ -101,7 +101,7 @@ public class operator {
                                 key = newKey();
                                 mode = "encrypt";
                                 //reload package
-                                    outgoingDataPackage = new dataPackage("newInput",nextImage());
+                                    outgoingDataPackage = new dataPackage("newInput",nextImage(),key);
                             }
 
                             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("../../files/control"));
@@ -121,9 +121,11 @@ public class operator {
     }
 
     private String newKey(){
-
-        return "0000000000000000";
+        String key = "";
+        for(int a = 0; a < 16; a++){ key += generateRamdonHexDigit(); }
+        return key;
     }
+    private String generateRamdonHexDigit(){ return new String[]{"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}[new Random().nextInt(15)]; }
 
     static private ArrayList<String> nextImage(){
         currentImage++; if(currentImage >= imageFiles.length){currentImage = 0;}
