@@ -3,7 +3,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 import javax.swing.JPanel;
 
@@ -58,6 +58,18 @@ public class pixelCanvas extends JPanel {
                 pixelArray[y][x] = pixels[y][x];
             }
         }
+    }
+    public void importPixels(ArrayList<String> pixelList){
+        String[] pixels = new String[ pixelList.size() ]; pixelList.toArray(pixels);
+        int count = 0;
+
+        for(int y = 0; y < pixelArray.length; y++){
+            for(int x = 0; x < pixelArray[y].length; x++){
+                pixelArray[y][x] = pixels[count];
+                count++;
+            }
+        }
+
     }
     public void clearPixels(){ pixelArray = new String[pixelCount_y][pixelCount_x]; }
 }

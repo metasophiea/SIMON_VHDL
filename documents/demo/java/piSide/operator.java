@@ -7,11 +7,14 @@ public class operator {
     private Socket socket = null;
     private ObjectOutputStream outputStream = null; private ObjectInputStream inputStream = null;
     private boolean flag = false;
+    private static String[] imageFiles = new String[]{"mona.hex","staryNight.hex","nighthawks.hex","threeMusicians.hex","impressionSunrise.hex"};
+    private static int currentImage = imageFiles.length;
 
 	public static void main(String args[]){
 		System.out.println("Java Operator Started");
 		if(args.length == 2){
 			operator subOperator = new operator(args[0]); 
+            nextImage();
 			while(true){
 				subOperator.process();
 				try{Thread.sleep((long)(Float.parseFloat(args[1])*1000));}catch(InterruptedException e){}
@@ -64,6 +67,8 @@ public class operator {
             
             //if input and output files are the same length and flag is rasied; push output into input, clear output, switch mode, lower flag and send command to do switch. Otherwise send new pixel
                 if(inputFileLength == outputFileLength && flag){
+                    //load up package
+                        outgoingDataPackage = new dataPackage("switch");
                     //overwrite input file
                         try{
                             BufferedReader bufferedReader_output = new BufferedReader(new FileReader("../../files/output"));
@@ -82,14 +87,22 @@ public class operator {
                             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("../../files/output"));
                             bufferedWriter.close();
                         }catch(Exception e){System.out.println(e);}  
-                    //switch mode
+                    //switch mode (if going from decrypt to encrypt, swap image and key)
                         try{
                             BufferedReader bufferedReader = new BufferedReader(new FileReader("../../files/control"));
                             String key = bufferedReader.readLine();
                             String mode = bufferedReader.readLine();
                             bufferedReader.close();
 
-                            if(mode.equals("encrypt")){mode = "decrypt";}else{mode = "encrypt";}
+                            if(key == null){ key = newKey(); }
+                            if(mode == null){ mode = "decrypt"; }
+                            else if(mode.equals("encrypt")){mode = "decrypt";}
+                            else{
+                                key = newKey();
+                                mode = "encrypt";
+                                //reload package
+                                    outgoingDataPackage = new dataPackage("newInput",nextImage());
+                            }
 
                             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("../../files/control"));
                             bufferedWriter.write(key); bufferedWriter.newLine();
@@ -98,8 +111,6 @@ public class operator {
                         }catch(Exception e){System.out.println(e);}
                     //lower flag
                         flag = false;
-                    //load up command
-                        outgoingDataPackage = new dataPackage("switch");
                 }
             //if just input and output files are the same length, raise flag
                 else if( inputFileLength == outputFileLength ){ flag = true; outgoingDataPackage = new dataPackage("latestPixel",lastLine,outputFileLength); }
@@ -109,7 +120,35 @@ public class operator {
         this.sendData(outgoingDataPackage);
     }
 
-	private void sendData(Object o){ 
+    private String newKey(){
+
+        return "0000000000000000";
+    }
+
+    static private ArrayList<String> nextImage(){
+        currentImage++; if(currentImage >= imageFiles.length){currentImage = 0;}
+        ArrayList<String> newImage = new ArrayList<String>();
+
+        //copy data over, filling newImage as we go
+            try{
+                String temp = null;
+                BufferedReader bufferedReader_output = new BufferedReader(new FileReader("../../files/"+imageFiles[currentImage]));
+                BufferedWriter bufferedWriter_input = new BufferedWriter(new FileWriter("../../files/input"));
+                temp = bufferedReader_output.readLine();
+                while( temp != null ){
+                    newImage.add(temp);
+                    bufferedWriter_input.write(temp);
+                    if((temp = bufferedReader_output.readLine()) != null){ bufferedWriter_input.newLine(); }
+                }
+
+                bufferedReader_output.close();
+                bufferedWriter_input.close();
+            }catch(Exception e){System.out.println(e);}
+
+        return newImage;
+    }
+
+	private void sendData(Object o){
 		try{outputStream.writeObject(o); outputStream.flush();}
 		catch(Exception e){System.out.println("-- Error while sending data --");}
 	}

@@ -23,6 +23,11 @@ public class displayWindow extends JFrame{
         if(incomingData.getCommand().equals("latestPixel")){
             PC_output.updatePixel(incomingData.getPixelNumber(),incomingData.getPixel());
         }
+        else if(incomingData.getCommand().equals("newInput")){
+            PC_input.importPixels(incomingData.getInputPixels());
+            PC_output.clearPixels();
+            PC_input.redraw();
+        }
         else if(incomingData.getCommand().equals("switch")){
             PC_input.importPixels( PC_output.exportPixels() );
             PC_output.clearPixels();
