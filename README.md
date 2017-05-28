@@ -41,7 +41,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; anther one bit input connection is used. This is for the external clock, which controls the progress of the messages through the system. For every tick; a message progresses by one stage.
 
 <p align="center">
-    <img width="752" height="1280" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/registerLogic_layoutDiagram.png">
+    <img width="564" height="960" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/registerLogic_layoutDiagram.png">
 </p> 
 
 ### Advantages
@@ -55,9 +55,9 @@
 
 - having the key completely expanded at the first stage can cost a lot of time, and the amount of individual registers in the register blocks required to store this information for each stage of encryption/decryption, means that the design grows quite large.
 
-This design decision was made, as for decryption; the first decryptor module requires the last expanded key, thus the key must be expanded in its entirety before any work can begin. As the lead concept in this design was to improve flow-through in the system, the encryption mode has to run at the same speed as decryption. Thus, the initial key expansion is also done for encryption.
+    This design decision was made, as for decryption; the first decryptor module requires the last expanded key, thus the key must be expanded in its entirety before any work can begin. As the lead concept in this design was to improve flow-through in the system, the encryption mode has to run at the same speed as decryption. Thus, the initial key expansion is also done for encryption.
 
-As you would expect, an encryption mode only subtype wouldn’t  require such initial processing.
+    As you would expect, an encryption mode only subtype wouldn’t  require such initial processing.
 
 ## Type 3 – Crypto-Processor
 
