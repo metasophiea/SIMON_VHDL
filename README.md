@@ -4,8 +4,8 @@
 
 ## Contents
 - [Type 1 - Flow Logic](#type-1---flow-logic)
-- [Type 2 - Register Transfer Level](#type-2---register-transfer-level)
-- [Type 3 - Crypto-Processor](#type-3---crypto-processor)
+- [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
+- [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 
 ## Type 1 - Flow Logic
 
