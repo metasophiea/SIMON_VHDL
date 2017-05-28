@@ -64,6 +64,9 @@ This pattern is repeated over and over again a set number of times (defined in t
     <img width="433" height="517" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
 </p>
 
+As said before, the number of stages required is defined by the method;
+
+<div align="center">
 | Method        | Number of Stages |
 |:-------------:|:----------------:|
 | 1             | 32               |
@@ -76,7 +79,7 @@ This pattern is repeated over and over again a set number of times (defined in t
 | 8             | 68               |
 | 9             | 69               |
 | 10            | 72               |
-
+</div>
 
 ## Developed Designs
 
