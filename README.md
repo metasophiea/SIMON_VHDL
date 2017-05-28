@@ -54,8 +54,8 @@
 - this is the largest of the designs, as not only does it contain all the circuitry of the previous design, but now there is a block of pipeline registers for each stage.
 
 - having the key completely expanded at the first stage can cost a lot of time, and the amount of individual registers in the register blocks required to store this information for each stage of encryption/decryption, means that the design grows quite large.<br/>
-    This design decision was made, as for decryption; the first decryptor module requires the last expanded key, thus the key must be expanded in its entirety before any work can begin. As the lead concept in this design was to improve flow-through in the system, the encryption mode has to run at the same speed as decryption. Thus, the initial key expansion is also done for encryption.<br/>
-    As you would expect, an encryption mode only subtype wouldn’t  require such initial processing.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This design decision was made, as for decryption; the first decryptor module requires the last expanded key, thus the key must be expanded in its entirety before any work can begin. As the lead concept in this design was to improve flow-through in the system, the encryption mode has to run at the same speed as decryption. Thus, the initial key expansion is also done for encryption.<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you would expect, an encryption mode only subtype wouldn’t  require such initial processing.
 
 ## Type 3 – Crypto-Processor
 
