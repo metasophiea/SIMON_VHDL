@@ -22,6 +22,16 @@
     <img width="600" height="594" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/typeOne_unified_deciding.png">
 </p> 
 
+### Advantages
+
+- can allow encryption/decryption to occur in a single clock cycle, however this restricts the maximum clock frequency
+- encrypting/decrypting messages with the different keys takes no longer than encrypting/decrypting with the same key
+
+### Disadvantages
+
+- as all the modules are being laid out in their entirety, the design takes up a large space
+- much of the circuitry does nothing for the majority of the flow time
+
 ## Type 2 – Register Transfer Level
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Register Transfer Level design expands upon the previous design, addressing the issue of inactive modules. Here, every encryption and decryption module is separated out between registers, which can store the intermediate results of the encryption/decryption progress of a message. The key is completely expanded at the very first stage, and this data is passed through to the registers as well. In this way, all parts of the circuit can be utilised for processing different messages in a pipeline.
