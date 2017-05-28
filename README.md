@@ -38,7 +38,14 @@
     - modeAndMethod_encryptOnly
     - unified
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The documents folder contains the demo files and handy simon-cipher related information.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'demo' contains a complete set of java, c++ and VHDL files for use in demonstrating the design. One can load the VHDL design onto a development board, compile the c++ code on a Raspberry Pi (attached to the development board) and compile the Java programs on both the Pi and a display machine (networked together) The result is a pretty snazzy encryption program, which encrypts images, shows you the encrypted image, then decrypts it. You can see it in action here: [Simon Encryption Java/C++/VHDL Demonstration](https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'images' is just a folder of pictures used in this document<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The 'implementation' folder is basically a hosting area for a webPaper which can be found here: [webPaper.html](http://metasophiea.com/projects/simon/webPaper.html)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'zybo': The board I used to test my designs (and work with the Raspberry Pi) is the "Zybo Zynq-7000 ARM/FPGA Development Board", which I got on lend from my project supervisor. It's essentially a FPGA chip with alot of ports to work with (and a ARM processor, but I never used it) which I usually refer to just as "zybo" or "the development board".<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This folder contains a VHDL file used to connect the 24 pins of my designs to the 24 zybo pin ports. There is also a file with information about connecting the Raspberry Pi to the Zybo, and a "configuration" file used by the development software to impliment the design for this board.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain extra data needed to synthesize the design.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access considerably.
 
 ## Developed Designs
