@@ -54,11 +54,11 @@
 
 ## What is Simon
 
-Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
 
-For encryption; a segment of the key provided is given to an encryption circuit along with the provided message. The circuit uses this segment to encrypt the message, producing a new message of the same length. The provided key is also mutated by a key expander circuit, producing a new key. A segment from this new key is given to another message encryptor circuit along with the message produced by the previous message encryptor circuit, producing another message.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For encryption; a segment of the key provided is given to an encryption circuit along with the provided message. The circuit uses this segment to encrypt the message, producing a new message of the same length. The provided key is also mutated by a key expander circuit, producing a new key. A segment from this new key is given to another message encryptor circuit along with the message produced by the previous message encryptor circuit, producing another message.
 
-This pattern is repeated over and over again a set number of times (defined in this paper as ‘stages’) which is defined by the method, until the message encryption is complete. Decryption is a very similar process bar two differences; first the encryption circuit is swapped for a decryption circuit, and second; the first decryption circuit needs the last mutated key (the second needing the second last, etc.) in an action akin to pushing the encrypted message backwards through the system.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This pattern is repeated over and over again a set number of times (defined in this paper as ‘stages’) which is defined by the method, until the message encryption is complete. Decryption is a very similar process bar two differences; first the encryption circuit is swapped for a decryption circuit, and second; the first decryption circuit needs the last mutated key (the second needing the second last, etc.) in an action akin to pushing the encrypted message backwards through the system.
 
 <p align="center">
     <img width="433" height="517" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
@@ -78,63 +78,6 @@ As said before, the number of stages required is defined by the method;
 | 8             | 68               |
 | 9             | 69               |
 | 10            | 72               |
-
-Now let’s look at the circuits themselves.
-
-#### Key Expander
-
-The key expander module uses a provided key and a predefined 'Z' value as a seed to produce a new key to be used by an encryption or decryption module. The newly produced key is then used by further key expansion modules.
-
-A key can come in a variety of lengths and segments, as defined by the method;
-
-| Method | Key Length (bits) | Key Segments |
-|:------:|:-----------------:|:------------:|
-| 1      | 64                | 4            |
-| 2      | 72                | 3            |
-| 3      | 96                | 4            |
-| 4      | 96                | 3            |
-| 5      | 128               | 4            |
-| 6      | 96                | 2            |
-| 7      | 144               | 3            |
-| 8      | 128               | 2            |
-| 9      | 192               | 3            |
-| 10     | 256               | 4            |
-
-The initial 'Z' value to be used is also defined by the method
-
-| Method | Selected Z |
-|:------:|:----------:|
-| 1      | 0          |
-| 2      | 0          |
-| 3      | 1          |
-| 4      | 2          |
-| 5      | 3          |
-| 6      | 2          |
-| 7      | 3          |
-| 8      | 2          |
-| 9      | 3          |
-| 10     | 4          |
-
-|Z Types | Values                                                         |
-|:------:|:--------------------------------------------------------------:|
-|0       | 11111010001001010110000111001101111101000100101011000011100110 |
-|1       | 10001110111110010011000010110101000111011111001001100001011010 |
-|2       | 10101111011100000011010010011000101000010001111110010110110011 |
-|3       | 11011011101011000110010111100000010010001010011100110100001111 |
-|4       | 11010001111001101011011000100000010111000011001010010011101111 |
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Z' values are always 62 bits long, regardless of method. Only one bit of the 'Z' value is used in each key module, which is selected based on the stage in the key expansion process; most left bit first, the bit to its right second, etc. with the selection looping back to the start if more than 62 stages are used.
-
-The received key is expanded like so;
-
-```
-newKeySegment = rightRotate( keySegment(0) )threeTimes
-if(keySegments = 4)then -> newKeySegment = newKeySegment XOR ( keySegment(2) )
-newKeySegment = newKeySegment XOR rightRotate(newKeySegment)once
-newKeySegment = newKeySegment XOR keySegment(keySegments-1)
-newKeySegment = newKeySegment XOR (keySegmentLength-1 of 0's, with the selected Z bit)
-newKeySegment = newKeySegment XOR -4;
-```
 
 ## Developed Designs
 
