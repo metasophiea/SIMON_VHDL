@@ -211,15 +211,15 @@ Which can be arranged like so;
 
 As mentioned in the ‘Modularisation’ section, to communicate with the Simon cipher, one must use the APIs that the packaging architecture provided. As there were 24 connections available, they were neatly split into 3 groups of 8; the Input pins, Output pins and the Control pins.
 
-##### Input Pins
+##### _Input Pins_
 
 These connections are used solely for sending data to the system.
 
-##### Output Pins
+##### _Output Pins_
 
 These connections are used solely for receiving data from the system.
 
-##### Control Pins
+##### _Control Pins_
 
 These connections determine what the previous two groups referred to. For example; in the case of method 1, there are 64 bits in a key. Splitting that up into groups of eight; that’s eight groups. To access group 1 (the rightmost eight bits) one must send the hex code ‘0x51’ to the control pins. Now, the eight input pins are connected to group 1, to be edited as desired.
 
@@ -229,19 +229,19 @@ These connections determine what the previous two groups referred to. For exampl
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition to connecting to the input/output messages and key; one can connect to the ‘System Option Bits’. These options are roughly the same for each subtype, and mainly allow one to set which method or mode to use. See the sections ahead for descriptions and details of each.
 
-##### Design One
+##### _Design One_
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
 
 For this subtype; the rightmost bit controls whether the system is to encrypt or decrypt the message. The four bits to its left determine which method to use, while the rest go unused. For subtypes that had their method set; the connections for setting the method do nothing.
 
-##### Design Two
+##### _Design Two_
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
 
 For this subtype; the rightmost bit controls whether the system is to encrypt or decrypt the message. The four bits to its left determine which method to use while the rest go unused. For subtypes that had their method set; the connections for setting the method do nothing.
 
-##### Design Three
+##### _Design Three_
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | load | method(3) | method(2) | method(1) | method(0) | mode
 
