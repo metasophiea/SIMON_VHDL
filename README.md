@@ -182,7 +182,7 @@ Each design and each subtype have the same basic layout. VHDL allows for a modul
 Let’s take design one’s unified subtype as an example
 
 <p align="center">
-    <img width="525" height="226" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_1.png">
+    <img width="788" height="399" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_1.png">
 </p> 
 
 Which can be arranged like so;
