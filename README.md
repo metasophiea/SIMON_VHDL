@@ -50,7 +50,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This folder contains a VHDL file used to connect the 24 pins of my designs to the 24 zybo pin ports. There is also a file with information about connecting the Raspberry Pi to the Zybo, and a "configuration" file used by the development software to impliment the design for this board.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain extra data needed to synthesize the design.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access considerably.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access speed considerably.
 
 ## What is Simon
 
@@ -63,6 +63,20 @@ This pattern is repeated over and over again a set number of times (defined in t
 <p align="center">
     <img width="433" height="517" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
 </p>
+
+| Method        | Number of Stages |
+|:-------------:|:----------------:|
+| 1             | 32               |
+| 2             | 36               |
+| 3             | 36               |
+| 4             | 42               |
+| 5             | 44               |
+| 6             | 52               |
+| 7             | 54               |
+| 8             | 68               |
+| 9             | 69               |
+| 10            | 72               |
+
 
 ## Developed Designs
 
