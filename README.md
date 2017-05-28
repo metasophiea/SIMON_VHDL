@@ -66,3 +66,16 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like the previous two versions, for the unified subtype an additional 4-bit input determining the method is used. This information is stored by a register block for use with the encryptor/decryptor modules similar to before. This version also has a one bit input for the external clock, which controls the progress of the messages through the system. As before, for every tick; a message progresses by one stage.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Importantly; this version has a final single bit input for loading the register block. The main package for this system splits the input message, key and control data into two register blocks; one for the incoming message, and one for the currently processing message. When the load connection is activated, the first set of data is copied into the second. In this way; the internal processing can go unaffected while a new job is loaded in.
+
+<p align="center">
+    <img width="376" height="640" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/simonProcessor_layoutDiagram.png">
+</p> 
+
+### Advantages
+
+- smallest hardware footprint
+
+### Disadvantages
+
+- only one message can be processed at a time
+- complete key expansion time (for 'unified' and 'methods' subtypes)
