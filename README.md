@@ -87,6 +87,55 @@ The key expander module uses a provided key and a predefined 'Z' value as a seed
 
 A key can come in a variety of lengths and segments, as defined by the method;
 
+| Method | Key Length (bits) | Key Segments |
+|:------:|:-----------------:|:------------:|
+| 1      | 64                | 4            |
+| 2      | 72                | 3            |
+| 3      | 96                | 4            |
+| 4      | 96                | 3            |
+| 5      | 128               | 4            |
+| 6      | 96                | 2            |
+| 7      | 144               | 3            |
+| 8      | 128               | 2            |
+| 9      | 192               | 3            |
+| 10     | 256               | 4            |
+
+The initial 'Z' value to be used is also defined by the method
+
+| Method | Selected Z |
+|:------:|:----------:|
+| 1      | 0          |
+| 2      | 0          |
+| 3      | 1          |
+| 4      | 2          |
+| 5      | 3          |
+| 6      | 2          |
+| 7      | 3          |
+| 8      | 2          |
+| 9      | 3          |
+| 10     | 4          |
+
+|Z Types | Values                                                         |
+|:------:|:--------------------------------------------------------------:|
+|0       | 11111010001001010110000111001101111101000100101011000011100110 |
+|1       | 10001110111110010011000010110101000111011111001001100001011010 |
+|2       | 10101111011100000011010010011000101000010001111110010110110011 |
+|3       | 11011011101011000110010111100000010010001010011100110100001111 |
+|4       | 11010001111001101011011000100000010111000011001010010011101111 |
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Z' values are always 62 bits long, regardless of method. Only one bit of the 'Z' value is used in each key module, which is selected based on the stage in the key expansion process; most left bit first, the bit to its right second, etc. with the selection looping back to the start if more than 62 stages are used.
+
+The received key is expanded like so;
+
+```
+newKeySegment = rightRotate( keySegment(0) )threeTimes
+if(keySegments = 4)then -> newKeySegment = newKeySegment XOR ( keySegment(2) )
+newKeySegment = newKeySegment XOR rightRotate(newKeySegment)once
+newKeySegment = newKeySegment XOR keySegment(keySegments-1)
+newKeySegment = newKeySegment XOR (keySegmentLength-1 of 0's, with the selected Z bit)
+newKeySegment = newKeySegment XOR -4;
+```
+
 ## Developed Designs
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The three different designs are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
