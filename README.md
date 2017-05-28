@@ -10,7 +10,7 @@
     - [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 - [VHDL Code](#vhdl-code)
-- [C++ Code](#c++-code)
+- [C++ Code](#c-code)
 - [Other Things](#other-things)
 
 ## Folder Layout
@@ -54,7 +54,15 @@
 
 ## What is Simon
 
-coming soon..
+Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
+
+For encryption; a segment of the key provided is given to an encryption circuit along with the provided message. The circuit uses this segment to encrypt the message, producing a new message of the same length. The provided key is also mutated by a key expander circuit, producing a new key. A segment from this new key is given to another message encryptor circuit along with the message produced by the previous message encryptor circuit, producing another message.
+
+This pattern is repeated over and over again a set number of times (defined in this paper as ‘stages’) which is defined by the method, until the message encryption is complete. Decryption is a very similar process bar two differences; first the encryption circuit is swapped for a decryption circuit, and second; the first decryption circuit needs the last mutated key (the second needing the second last, etc.) in an action akin to pushing the encrypted message backwards through the system.
+
+<p align="center">
+    <img width="866" height="1034" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
+</p>
 
 ## Developed Designs
 
