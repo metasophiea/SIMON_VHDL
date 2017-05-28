@@ -1,0 +1,38 @@
+//fills input file with next image data, and returns same data in ArrayList<String>
+//taking the current image number and the list of available image file names
+    static private ArrayList<String> nextImage(int currentImage, String[] imageFiles){
+        currentImage++; if(currentImage >= imageFiles.length){currentImage = 0;}
+        ArrayList<String> newImage = new ArrayList<String>();
+
+        //copy data into input file, filling newImage as we go
+            try{
+                String temp = null;
+                BufferedReader bufferedReader_output = new BufferedReader(new FileReader("../../files/"+imageFiles[currentImage]));
+                BufferedWriter bufferedWriter_input = new BufferedWriter(new FileWriter("../../files/input"));
+                temp = bufferedReader_output.readLine();
+                while( temp != null ){
+                    newImage.add(temp);
+                    bufferedWriter_input.write(temp);
+                    if((temp = bufferedReader_output.readLine()) != null){ bufferedWriter_input.newLine(); }
+                }
+
+                bufferedReader_output.close();
+                bufferedWriter_input.close();
+            }catch(Exception e){System.out.println(e);}
+
+        return newImage;
+    }
+
+//for the random generation of new keys
+    private String newKey(){
+        String key = "";
+        for(int a = 0; a < 16; a++){ key += generateRamdonHexDigit(); }
+        return key;
+    }
+    private String generateRamdonHexDigit(){ return new String[]{"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}[new Random().nextInt(15)]; }
+
+//standard object sending function
+    private void sendData(Object o){
+        try{outputStream.writeObject(o); outputStream.flush();}
+        catch(Exception e){System.out.println("-- Error while sending data --");}
+    }
