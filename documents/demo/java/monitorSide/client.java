@@ -73,10 +73,6 @@ public class client{
             System.out.println("passing to screen");
             dispWin.update(incomingFilePackage);
 
-        //wait
-            System.out.println("waiting");
-            try{Thread.sleep(5000);}catch(InterruptedException e){}
-
         closeConnection();
     }
 

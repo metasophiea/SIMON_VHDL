@@ -69,7 +69,20 @@ public class pixelCanvas extends JPanel {
                 count++;
             }
         }
-
     }
+    public void slow_importPixels(ArrayList<String> pixelList, int delay){
+        String[] pixels = new String[ pixelList.size() ]; pixelList.toArray(pixels);
+        int count = 0;
+
+        for(int y = 0; y < pixelArray.length; y++){
+            for(int x = 0; x < pixelArray[y].length; x++){
+                pixelArray[y][x] = pixels[count];
+                count++;
+                try{Thread.sleep(delay);}catch(InterruptedException e){}
+                redraw();
+            }
+        }
+    }
+
     public void clearPixels(){ pixelArray = new String[pixelCount_y][pixelCount_x]; }
 }
