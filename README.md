@@ -3,11 +3,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
 ## Contents
-- [Type 1 - Flow Logic](#type-1---flow-logic)
-- [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
-- [Type 3 - Crypto-Processor](#type-3--crypto-processor)
+- [Developed Designs](#developed-designs)
+    - [Type 1 - Flow Logic](#type-1---flow-logic)
+    - [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
+    - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 
-## Type 1 - Flow Logic
+## Developed Designs
+### Type 1 - Flow Logic
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The flow logic design lays out the cipher in its entirety, allowing the user to pass data into the input and have it flow through all the required modules to produce a result. It is a pure combinational logic design, and as such no clock signal is needed. In this developed implementation, the encrypted and decrypted output is computed at the same time, with and additional ‘mode’ input determining which result to output.
 
@@ -27,17 +29,17 @@
     <img width="600" height="594" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/typeOne_unified_deciding.png">
 </p> 
 
-### Advantages
+#### Advantages
 
 - can allow encryption/decryption to occur in a single clock cycle, however this restricts the maximum clock frequency
 - encrypting/decrypting messages with the different keys takes no longer than encrypting/decrypting with the same key
 
-### Disadvantages
+#### Disadvantages
 
 - as all the modules are being laid out in their entirety, the design takes up a large space
 - much of the circuitry does nothing for the majority of the flow time
 
-## Type 2 – Register Transfer Level
+### Type 2 – Register Transfer Level
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Register Transfer Level design expands upon the previous design, addressing the issue of inactive modules. Here, every encryption and decryption module is separated out between registers, which can store the intermediate results of the encryption/decryption progress of a message. The key is completely expanded at the very first stage, and this data is passed through to the registers as well. In this way, all parts of the circuit can be utilised for processing different messages in a pipeline.
 
@@ -49,12 +51,12 @@
     <img width="376" height="640" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/registerLogic_layoutDiagram.png">
 </p> 
 
-### Advantages
+#### Advantages
 
 - multiple messages can be encrypted/decrypted in pipeline and almost simultaneously allowing for a greater throughput of messages.
 - though the initial key expansion costs time; encrypting/decrypting batches of messages with the same key is quite efficient. As no key expansion time has to be factored in; the system could be run at a higher clock rate, in addition to benefiting from the near simultaneous encryption/decryption.
 
-### Disadvantages
+#### Disadvantages
 
 - this is the largest of the designs, as not only does it contain all the circuitry of the previous design, but now there is a block of pipeline registers for each stage.
 
@@ -62,7 +64,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This design decision was made, as for decryption; the first decryptor module requires the last expanded key, thus the key must be expanded in its entirety before any work can begin. As the lead concept in this design was to improve flow-through in the system, the encryption mode has to run at the same speed as decryption. Thus, the initial key expansion is also done for encryption.<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you would expect, an encryption mode only subtype wouldn’t  require such initial processing.
 
-## Type 3 – Crypto-Processor
+### Type 3 – Crypto-Processor
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This design takes the concept of multi-staged encryption from the previous design, and distils it down into a single repeatable process. Instead of having a set of encryption and decryption modules for each stage; only one encryption and decryption module is implemented and are used repeatedly to perform encryption/decryption operations. This means that the finished implementation can take up a much smaller hardware footprint than previous designs.
 
@@ -76,11 +78,11 @@
     <img width="376" height="640" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/simonProcessor_layoutDiagram.png">
 </p> 
 
-### Advantages
+#### Advantages
 
 - smallest hardware footprint
 
-### Disadvantages
+#### Disadvantages
 
 - only one message can be processed at a time
 - complete key expansion time (for 'unified' and 'methods' subtypes)
