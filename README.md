@@ -61,7 +61,7 @@ For encryption; a segment of the key provided is given to an encryption circuit 
 This pattern is repeated over and over again a set number of times (defined in this paper as ‘stages’) which is defined by the method, until the message encryption is complete. Decryption is a very similar process bar two differences; first the encryption circuit is swapped for a decryption circuit, and second; the first decryption circuit needs the last mutated key (the second needing the second last, etc.) in an action akin to pushing the encrypted message backwards through the system.
 
 <p align="center">
-    <img width="866" height="1034" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
+    <img width="433" height="517" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/type1_ende.png">
 </p>
 
 ## Developed Designs
