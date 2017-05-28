@@ -3,7 +3,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
 ## Contents
-- [Type 1 - Flow Logic](#Type-1---Flow-Logic)
+- [Type-1---Flow-Logic](#Type-1---Flow-Logic)
 
 ## Type 1 - Flow Logic
 
