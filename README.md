@@ -8,6 +8,8 @@ For my final year project in college, I was asked to develop an implementation o
 
     Though not as optimised for through-put or size as the designs ahead; its simple layout and similarity to the basic model presented in the NSA’s paper servers as a good starting point for understanding the system.
 
+    
+
 - Type 2 – Register Transfer Level
 
     The Register Transfer Level design expands upon the previous design, addressing the issue of inactive modules. Here, every encryption and decryption module is separated out between registers, which can store the intermediate results of the encryption/decryption progress of a message. The key is completely expanded at the very first stage, and this data is passed through to the registers as well. In this way, all parts of the circuit can be utilised for processing different messages in a pipeline.
