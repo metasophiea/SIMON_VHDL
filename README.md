@@ -3,26 +3,38 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
 ## Contents
+- [Folder Layout](#folder-layout)
 - [Developed Designs](#developed-designs)
     - [Type 1 - Flow Logic](#type-1---flow-logic)
     - [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 
+## Folder Layout
+- documents
+
+    blah
+
+- type_1
+- type_2
+- type_3
+
+    Each of thesefolder contains the subtypes folders, along with testing notes and sometimes general notes. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.
+
+    In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access considerably.
+
 ## Developed Designs
 
-The three different are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
+The three different designs are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
 
 #### Subtypes
 - unified<br/>
-        These allow the system to encrypt or decrypt with any of the methods
+    These allow the system to encrypt or decrypt with any of the methods
 
 - methods<br/>
-        These are a collection that specialize in one particular method, though allow encryption or decryption. They are much smaller than the unified version
+    These are a collection that specialize in one particular method, though allow encryption or decryption. They are much smaller than the unified version
 
 - modeAndMethods<br/>
-        These are a collection that specializes in one particular method and mode. They are the smallest of the collections.
-
-Each folder contains the subtypes folders, along with testing notes and sometimes general notes. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.
+    These are a collection that specializes in one particular method and mode. They are the smallest of the collections.
 
 ### Type 1 - Flow Logic
 
