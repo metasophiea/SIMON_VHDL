@@ -81,6 +81,14 @@ As said before, the number of stages required is defined by the method;
 | 10            | 72               |
 </center>
 
+Now let’s look at the circuits themselves.
+
+#### Key Expander
+
+The key expander module uses a provided key and a predefined 'Z' value as a seed to produce a new key to be used by an encryption or decryption module. The newly produced key is then used by further key expansion modules.
+
+A key can come in a variety of lengths and segments, as defined by the method;
+
 ## Developed Designs
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The three different designs are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
