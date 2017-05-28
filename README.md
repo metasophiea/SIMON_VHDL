@@ -22,9 +22,9 @@ For my final year project in college, I was asked to develop an implementation o
         <img width="600" height="594" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/typeOne_unified_deciding.png">
     </p> 
 
-##Advantages
+## Advantages
 
-##Disadvantages
+## writingDisadvantages
 
 - Type 2 – Register Transfer Level
 
