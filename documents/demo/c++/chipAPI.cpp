@@ -5,7 +5,8 @@
     std::string writeKeyCommands[] = {"51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70"};
 
 //chip port control 
-    bool setControl(std::string data){
+    bool setControl_1(std::string data){
+        //this version makes sure to switch off the 'write' pin before making any changes to the rest of the pins, then only sets the 'write' pin when all is done
         GPIO_write( controlPins[1], 0 );
         std::string binData = HEXtoBIN(data);
         unsigned int values[] = {0,0,0,0,0,0,0,0};
@@ -25,6 +26,26 @@
 
         return true;
     }
+    bool setControl_2(std::string data){
+        //less safe version, yet somehow works better than setControl_1.. I suspect due to high switching speeds causing interference with my shoddy wiring
+        std::string binData = HEXtoBIN(data);
+        unsigned int values[] = {0,0,0,0,0,0,0,0};
+        for(unsigned int a = 0; a < binData.length(); a++){
+            if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
+        }
+
+        GPIO_write( controlPins[0], values[0] );
+        GPIO_write( controlPins[1], values[1] );
+        GPIO_write( controlPins[2], values[2] );
+        GPIO_write( controlPins[3], values[3] );
+        GPIO_write( controlPins[4], values[4] );
+        GPIO_write( controlPins[5], values[5] );
+        GPIO_write( controlPins[6], values[6] );
+        GPIO_write( controlPins[7], values[7] );
+
+        return true;
+    }
+    bool setControl(std::string data){ return setControl_2; }
 
     bool setInput(std::string data){	
         std::string binData = HEXtoBIN(data);
