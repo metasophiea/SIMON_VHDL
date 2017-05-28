@@ -200,7 +200,7 @@ Which can be arranged like so;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The final architecture file here is solely for simulation purposes. It uses the ‘packageToZybo’ architecture as a component, but produces no connections of its own. It instead utilises the simulation features of the language which allow one to test whether the architecture works properly. This file is removed before the architecture is sent to the development board.
 
 <p align="center">
-    <img width="387" height="212" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_3.png">
+    <img width="774" height="424" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_3.png">
 </p> 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This description is actually a little misleading, as in reality the Simon architecture uses ~72 instances of the keyExpander, messageEncryptor and messageDecryptor modules, but I’ve removed them here for aesthetic purposes.
