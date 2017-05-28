@@ -4,10 +4,14 @@
 
 ## Contents
 - [Folder Layout](#folder-layout)
+- [What is Simon](#what-is-simon)
 - [Developed Designs](#developed-designs)
     - [Type 1 - Flow Logic](#type-1---flow-logic)
     - [Type 2 - Register Transfer Level](#type-2--register-transfer-level)
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
+- [VHDL Code](#vhdl-code)
+- [C++ Code](#c++-code)
+- [Other Things](#other-things)
 
 ## Folder Layout
 
@@ -47,6 +51,10 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain extra data needed to synthesize the design.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access considerably.
+
+## What is Simon
+
+coming soon..
 
 ## Developed Designs
 
@@ -139,3 +147,15 @@
 
 - only one message can be processed at a time
 - complete key expansion time (for 'unified' and 'methods' subtypes)
+
+## VHDL Code
+
+coming soon..
+
+## C++ Code
+
+coming soon..
+
+## Other Things
+
+coming soon..
