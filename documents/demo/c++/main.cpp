@@ -1,5 +1,3 @@
-//compile with: g++ main.cpp -lwiringPi
-
 #include <iostream>
 #include <fstream>
 #include <stdio.h> 
@@ -7,8 +5,9 @@
 #include <algorithm>
 
 //select pin interfacing type
-	//#include "./raspberryPI_apiSYSFS.cpp"
-	#include "./raspberryPI_api_wiringPi.cpp"
+	//#include "./raspberryPI_apiSYSFS.cpp"													//accessing the pins using the linux file system
+	//#include "./raspberryPI_api_wiringPi.cpp" //compile with: g++ main.cpp -lwiringPi		//more directly accessing the pins using the wiringPi library, which is much much faster
+	#include "./raspberryPI_api_DRA.cpp"													//directly accessing the pins using the Direct register access, which is supposedly faster than wiringPi
 
 #include "./utilityFunctions.cpp"
 #include "./chipAPI.cpp"
