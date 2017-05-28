@@ -173,7 +173,79 @@ As said before, the number of stages required is defined by the method;
 
 ## VHDL Code
 
-coming soon..
+Initially using an open-source simulator ‘GHDL’ to develop design one, I transitioned into using the IDE ‘Vivado’, which had the capabilities to load the designs onto the development board.
+
+#### Modularisation
+
+Each design and each subtype have the same basic layout. VHDL allows for a modular design, and thus the designs can easily reuse modules from each other.
+
+Let’s take design one’s unified subtype as an example
+
+<p align="center">
+    <img width="525" height="226" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_1.png">
+</p> 
+
+Which can be arranged like so;
+
+<p align="center">
+    <img width="525" height="284" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_2.png">
+</p> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firstly, the ‘simon.vhd’ file is the main architecture file. It uses the keyExpander, messageEncryptor and messageDecryptor modules (which are stored in VHDL files of the same name) to perform the actual encryption/decryption of any message. This architecture unfortunately has 517 input/output connections and so needs to have this number reduced to a more reasonable one for connection with an external device.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is where ‘package.vhd’ comes in. The architecture here uses the Simon architecture as a component, and reduces the 517 connections down to 24. It is here that the ‘api’ file becomes useful. This file doesn’t contain any code; but instead a complete description of what signals need to be applied to the package architecture’s connections to access the various parts of the Simon module’s connections.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Following this, the package’s connections need to be connected to the development board’s real world connections, thus another design file is used with the package design as a component; to map the package architecture’s connections to the development board’s connections (Zybo being the short name for this board).
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The final architecture file here is solely for simulation purposes. It uses the ‘packageToZybo’ architecture as a component, but produces no connections of its own. It instead utilises the simulation features of the language which allow one to test whether the architecture works properly. This file is removed before the architecture is sent to the development board.
+
+<p align="center">
+    <img width="387" height="212" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_2.png">
+</p> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This description is actually a little misleading, as in reality the Simon architecture uses ~72 instances of the keyExpander, messageEncryptor and messageDecryptor modules, but I’ve removed them here for aesthetic purposes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some designs have additional architecture files. Design type two and three have a file named “completeKeyExpander.vhd”, which contains architecture that uses the keyExpander module to completely expand a key in one go. To aid the creation of subtypes other than ‘unified’, which have different methods hardcoded; a file called “constants.vhd” is used. For these implementations, all the architecture files use named constants to define how long connections should be, the size of register blocks or how many stages should be used. The values for these constants are defined in the “constants.vhd” file. Simply changing which batches of definitions are commented out adjusts the entire architecture of the system to the desired method. This was done to allow simultaneous development of each version, and so that the code repository could be much smaller overall.
+
+#### Hardware API
+
+As mentioned in the ‘Modularisation’ section, to communicate with the Simon cipher, one must use the APIs that the packaging architecture provided. As there were 24 connections available, they were neatly split into 3 groups of 8; the Input pins, Output pins and the Control pins.
+
+##### Input Pins
+
+These connections are used solely for sending data to the system.
+
+##### Output Pins
+
+These connections are used solely for receiving data from the system.
+
+##### Control Pins
+
+These connections determine what the previous two groups referred to. For example; in the case of method 1, there are 64 bits in a key. Splitting that up into groups of eight; that’s eight groups. To access group 1 (the rightmost eight bits) one must send the hex code ‘0x51’ to the control pins. Now, the eight input pins are connected to group 1, to be edited as desired.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Different codes access different parts of the key, as well as the input message. Sending the codes to access the different parts of the output message, those segments would be sent to the output pins. The codes for accessing this data are the same for all designs, subtypes and versions (though of course, for versions with smaller messages and keys; the higher access codes will return nothing)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For designs that require a clock input; the leftmost Control connection is used for connecting to an external clock (and as a result, only the right 7 bits are used for accessing the message and key segments)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition to connecting to the input/output messages and key; one can connect to the ‘System Option Bits’. These options are roughly the same for each subtype, and mainly allow one to set which method or mode to use. See the sections ahead for descriptions and details of each.
+
+##### Design One
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
+
+For this subtype; the rightmost bit controls whether the system is to encrypt or decrypt the message. The four bits to its left determine which method to use, while the rest go unused. For subtypes that had their method set; the connections for setting the method do nothing.
+
+##### Design Two
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | unused | method(3) | method(2) | method(1) | method(0) | mode
+
+For this subtype; the rightmost bit controls whether the system is to encrypt or decrypt the message. The four bits to its left determine which method to use while the rest go unused. For subtypes that had their method set; the connections for setting the method do nothing.
+
+##### Design Three
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused | unused | load | method(3) | method(2) | method(1) | method(0) | mode
+
+For this subtype; the rightmost bit controls whether the system is to encrypt or decrypt the message. The four bits to its left determine which method to use, while the bit to their left activates the load function and the rest go unused. For subtypes that had their method or/and mode set; the connections for setting the method/mode do nothing.
 
 ## C++ Code
 
