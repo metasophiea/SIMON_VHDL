@@ -13,16 +13,13 @@
 The three different are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
 
 ### Subtypes
-- unified
-
+- unified<br/>
     These allow the system to encrypt or decrypt with any of the methods
 
-- methods
+- methods<br/>
+    These are a collection that specialize in one particular method, though allow encryption or decryption. They are much smaller than the unified version
 
-These are a collection that specialize in one particular method, though allow encryption or decryption. They are much smaller than the unified version
-
-- modeAndMethods
-
+- modeAndMethods<br/>
     These are a collection that specializes in one particular method and mode. They are the smallest of the collections.
 
 Each folder contains the subtypes folders, along with testing notes and sometimes general notes. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.
