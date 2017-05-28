@@ -16,7 +16,6 @@
 //	static int GPIO_read(int pinNumber){/*std::cout << "reading pin: " << pinNumber << std::endl;*/ return 0;}
 //	bool GPIO_write(int pinNumber, int value){/*std::cout << "writing " << value << " to pin " << pinNumber << std::endl;*/ return true;}
 
-
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>

@@ -6,19 +6,22 @@
 
 //chip port control 
     bool setControl(std::string data){
+        GPIO_write( controlPins[1], 0 );
         std::string binData = HEXtoBIN(data);
-        
         unsigned int values[] = {0,0,0,0,0,0,0,0};
         for(unsigned int a = 0; a < binData.length(); a++){
             if(binData[a] == '0'){ values[a] = 0; }else{ values[a] = 1; }
         }
-        
-        for(unsigned int a = 0; a < (sizeof(controlPins)/sizeof(*controlPins)); a++){
-            if( !GPIO_write( controlPins[a], values[a] ) ){
-                std::cout << "- error:setControl: failed on pin: " << a << std::endl;
-                return false;
-            }
-        }
+
+        GPIO_write( controlPins[0], values[0] );
+        GPIO_write( controlPins[2], values[2] );
+        GPIO_write( controlPins[3], values[3] );
+        GPIO_write( controlPins[4], values[4] );
+        GPIO_write( controlPins[5], values[5] );
+        GPIO_write( controlPins[6], values[6] );
+        GPIO_write( controlPins[7], values[7] );
+
+        GPIO_write( controlPins[1], values[1] );
 
         return true;
     }

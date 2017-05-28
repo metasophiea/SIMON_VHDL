@@ -6,10 +6,9 @@
 #include <string>
 #include <algorithm>
 
-#include <wiringPi.h>
-
-//#include "./raspberryPI_api.cpp"
-#include "./raspberryPI_api_DRA.cpp"
+//select pin interfacing type
+	//#include "./raspberryPI_apiSYSFS.cpp"
+	#include "./raspberryPI_api_wiringPi.cpp"
 
 #include "./utilityFunctions.cpp"
 #include "./chipAPI.cpp"
