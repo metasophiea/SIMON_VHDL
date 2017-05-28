@@ -10,15 +10,35 @@
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 
 ## Folder Layout
-### documents
 
-    blah
+- documents
+    - demo
+        - c++
+        - files
+        - java
+            - monitorSide
+            - piSide
+        - vhdl
+    - images
+    - implementation
+        - samples
+        - system
+    - zybo
+- type_1
+    - computerside
+    - method
+    - unified
+- type_2
+    - computerside
+    - method
+    - unified
+- type_3
+    - computerside
+    - method
+    - modeAndMethod_encryptOnly
+    - unified
 
-### type_1
-### type_2
-### type_3
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of these folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain data needed to synthesize the design.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access considerably.
 
