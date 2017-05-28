@@ -8,12 +8,9 @@ For my final year project in college, I was asked to develop an implementation o
 
     Though not as optimised for through-put or size as the designs ahead; its simple layout and similarity to the basic model presented in the NSA’s paper servers as a good starting point for understanding the system.
 
-    ```
     <p align="center">
     <img width="300" height="460" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/flowLogic.png">
     </p>
-    ```
-
 
 - Type 2 – Register Transfer Level
 
