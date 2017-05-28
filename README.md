@@ -66,7 +66,7 @@ This pattern is repeated over and over again a set number of times (defined in t
 
 As said before, the number of stages required is defined by the method;
 
-<div align="center">
+<center>
 | Method        | Number of Stages |
 |:-------------:|:----------------:|
 | 1             | 32               |
@@ -79,7 +79,7 @@ As said before, the number of stages required is defined by the method;
 | 8             | 68               |
 | 9             | 69               |
 | 10            | 72               |
-</div>
+</center>
 
 ## Developed Designs
 
