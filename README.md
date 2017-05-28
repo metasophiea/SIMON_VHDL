@@ -9,7 +9,17 @@ For my final year project in college, I was asked to develop an implementation o
     Though not as optimised for through-put or size as the designs ahead; its simple layout and similarity to the basic model presented in the NSA’s paper servers as a good starting point for understanding the system.
 
     <p align="center">
-    <img width="300" height="460" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/flowLogic.png">
+        <img width="300" height="460" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/flowLogic.png">
+    </p>
+
+    The encryption and decryption modules are tied together, so for the unified subtype an additional 4-bit input determining the method is used. This method value is passed to each encryptor/decryptor module, wherein the module can determine whether to process the message or let it pass through. This is done because the unified subtype must have enough encryptor/decryptor modules for the largest possible required stage number - 72, but different methods need a different amount of stages. Thus giving the encryptor/decryptor modules the ability to decide whether they should perform work or not, automatically adjusts the number of stages.
+
+    Though more complicated than other subtypes, devices incorporating this “multi-method” design would be able to communicate with a device using any form of the cipher.
+
+    This decision-making ability is only useful in the unified subtype and is removed in the other subtypes, where the number of stages is hardwired in. Below is a diagram of the unified subtype encrypting and decrypting a message of method 1. You can notice how the encryption and decryption modules decide whether to process the message or allow it to pass through, dependent on their position in the system.
+
+    <p align="center">
+        <img width="600" height="594" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/typeOne_unified_deciding.png">
     </p>
 
 - Type 2 – Register Transfer Level
