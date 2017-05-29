@@ -21,7 +21,7 @@ Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ c
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 - [VHDL Code](#vhdl-code)
 - [C++ Code](#c-code)
-- [Links and Things](#links-and-things)
+- [Links to Things](#links-to-things)
 
 ## Folder Layout
 
@@ -298,7 +298,7 @@ The lead section, this code runs a console program with which a user can provide
 The code used in each computerside folder of each type, accesses the Raspberry Pi's pins through the Linux file system. Though safer to use this is quite slow. Within [./documents/demo/c++](documents/demo/c++) one can find files labled [raspberryPI_api_SYSFS.cpp](documents/demo/c++/raspberryPI_api_SYSFS.cpp), [raspberryPI_api_wiringPi.cpp](documents/demo/c++/raspberryPI_api_wiringPi.cpp) and [raspberryPI_api_DRA.cpp](documents/demo/c++/raspberryPI_api_DRA.cpp). Though all contain the same functions; each file accesses the Pi's pins differently, using the Linux file system as before, wiringPi by Gordon Henderson and Direct regiester access by Gert van Loo & Dom respectivly (with code taken from [http://elinux.org/RPi_GPIO_Code_Samples](http://elinux.org/RPi_GPIO_Code_Samples))<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second two files run much faster than the file system methods, and I recomend them for actual use, the the file system method is very handy for testing
 
-## Links and Things
+## Links to Things
 
 - YouTube demo video: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s
 - Simon web paper: http://metasophiea.com/projects/simon/webPaper.html
