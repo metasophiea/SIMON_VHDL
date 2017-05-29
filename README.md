@@ -6,6 +6,10 @@ For my final year project in college, I was asked to develop an implementation o
 
 I wrote 3 different versions of the same encryption circuit (with different properties) in VHDL (which is like a language for describing circuits), then there’s c++ code that you can compile on a Raspberry Pi which is wired up to the circuit testing board, which will use the circuit to encrypt or decrypt stuff.
 
+<p align="center">
+    <img width="640" height="360" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/theCircuit.jpeg">
+</p>
+
 Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ code (which you can see in action here: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
  
 
@@ -18,7 +22,7 @@ Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ c
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 - [VHDL Code](#vhdl-code)
 - [C++ Code](#c-code)
-- [Link and Things](#links-and-things)
+- [Links and Things](#links-and-things)
 
 ## Folder Layout
 
@@ -63,7 +67,7 @@ Each of the "type_x" folders contain the subtype folders, along with testing not
 
 ## What is Simon
 
-Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
+Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper, but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For encryption; a segment of the key provided is given to an encryption circuit along with the provided message. The circuit uses this segment to encrypt the message, producing a new message of the same length. The provided key is also mutated by a key expander circuit, producing a new key. A segment from this new key is given to another message encryptor circuit along with the message produced by the previous message encryptor circuit, producing another message.
 
