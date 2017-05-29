@@ -250,7 +250,43 @@ For this subtype; the rightmost bit controls whether the system is to encrypt or
 
 ## C++ Code
 
-coming soon..
+This code is used to communicate with the zybo device correctly, with the communication rules set out in the hardware API. It has all the test messages from the NSA paper preloaded for testing, and can send these to the system to gather an encrypted or decrypted result. The user then must decide whether the process has been a success or not. In addition, other messages can be entered into a console interface and sent to the system for further tests.
+Thanks to the similarity of the APIs, the C++ tester program is roughly the same for each design, subtype and version.  It’s split up into six sections;
+
+#### utilityFunctions
+
+This section consists solely of hexadecimal/binary conversion functions, in both directions.
+
+#### raspberryPI_api
+
+Here, you can find all the low-level functions that work with the Linux file system to set-up and work with the Raspberry Pi GPIO pins. Reducing the complexity down to a couple of simple “set pin x to y” and “read pin z” functions.
+
+#### chipAPI
+
+Located here, are the main functions for dealing with the system. Abstracting things further, this section uses the functions from above to create “setControl”, “setInput” and “readOutput” functions that can take/return strings of hexadecimal. Building on this, there are functions “writeModeAndMethod”, “writeKey” and “readMessage” which can send and receive entire messages and keys to the system.
+
+#### messageProcessing
+
+This section is more changeable between versions, depending on how interaction must be performed with the system (such as sending clock signals, etc.) Here is a single function, with which one can provide the mode, method, key and message, and receive the complete response message as a string. This function is the main manager of encryption; sending the key, message and options to the system, providing clock and load signals (if necessary) and reading the returned message back.
+
+#### fileProcessing	
+
+Similar to the section above, though a little more experimental; this section contains a function that takes mode, method, key and a file address. The function will then open said file, and encrypt or decrypt its contents, creating an output file in the same directory.
+This function is deemed experimental, as it isn’t as finished as other sections, and can only take files that have a certain data format. It exhibits however, that with a little work it is entirely possible to have a program that could take any file and encrypt it.
+
+#### main
+
+The lead section, this code runs a console program with which a user can provide the key and message they wish to encrypt or decrypt. It also contains all the test messages from the NSA paper. Below, is a screenshot of the console output of this testing on a unified subtype
+
+<p align="center">
+    <img width="670" height="445" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_3.png">
+</p> 
+
+### Alternative raspberryPI_api files
+
+
+
+consoleOut.png
 
 ## Other Things
 
