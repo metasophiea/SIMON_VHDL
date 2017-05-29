@@ -2,6 +2,13 @@
 
 For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
+tl;dr
+
+I wrote 3 different versions of the same encryption circuit (with different properties) in VHDL (which is like a language for describing circuits), then there’s c++ code that you can compile on a Raspberry Pi which is wired up to the circuit testing board, which will use the circuit to encrypt or decrypt stuff.
+
+Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ code (which you can see in action here: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
+ 
+
 ## Contents
 - [Folder Layout](#folder-layout)
 - [What is Simon](#what-is-simon)
@@ -286,7 +293,7 @@ The lead section, this code runs a console program with which a user can provide
 ### Alternative raspberryPI_api files
 
 The code used in each computerside folder of each type, accesses the Raspberry Pi's pins through the Linux file system. Though safer to use this is quite slow. Within [./documents/demo/c++](documents/demo/c++) one can find files labled [raspberryPI_api_SYSFS.cpp](documents/demo/c++/raspberryPI_api_SYSFS.cpp), [raspberryPI_api_wiringPi.cpp](documents/demo/c++/raspberryPI_api_wiringPi.cpp) and [raspberryPI_api_DRA.cpp](documents/demo/c++/raspberryPI_api_DRA.cpp). Though all contain the same functions; each file accesses the Pi's pins differently, using the Linux file system as before, wiringPi by Gordon Henderson and Direct regiester access by Gert van Loo & Dom respectivly (with code taken from [http://elinux.org/RPi_GPIO_Code_Samples](http://elinux.org/RPi_GPIO_Code_Samples))<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second two files run much faster than the ile system methods, and I recomend them for actual use, the the file system method is very handy for testing
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second two files run much faster than the file system methods, and I recomend them for actual use, the the file system method is very handy for testing
 
 ## Links and Things
 
