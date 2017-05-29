@@ -4,7 +4,7 @@ For my final year project in college, I was asked to develop an implementation o
 
 #### tl;dr
 
-I wrote 3 different versions of the same encryption circuit (with different properties) in VHDL (which is like a language for describing circuits), then there’s c++ code that you can compile on a Raspberry Pi which is wired up to the circuit testing board, which will use the circuit to encrypt or decrypt stuff.
+I wrote 3 different versions of the same encryption system (with different properties) in VHDL (which is like a language for describing circuits), then there’s c++ code that you can compile on a Raspberry Pi which is wired up to the circuit testing board, which will use the circuit to encrypt or decrypt stuff.
 
 <p align="center">
     <img width="640" height="360" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/theCircuit.jpeg">
