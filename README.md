@@ -11,7 +11,7 @@ For my final year project in college, I was asked to develop an implementation o
     - [Type 3 - Crypto-Processor](#type-3--crypto-processor)
 - [VHDL Code](#vhdl-code)
 - [C++ Code](#c-code)
-- [Other Things](#other-things)
+- [Link and Things](#links-and-things)
 
 ## Folder Layout
 
@@ -288,6 +288,7 @@ The lead section, this code runs a console program with which a user can provide
 The code used in each computerside folder of each type, accesses the Raspberry Pi's pins through the Linux file system. Though safer to use this is quite slow. Within ./documents/demo/c++ one can find files labled "raspberryPI_api_SYSFS.cpp", "raspberryPI_api_wiringPi.cpp" and "raspberryPI_api_DRA.cpp". Though all contain the same functions; each file accesses the Pi's pins differently, using the Linux file system as before, wiringPi by Gordon Henderson and Direct regiester access by Gert van Loo & Dom respectivly (with code taken from [http://elinux.org/RPi_GPIO_Code_Samples](http://elinux.org/RPi_GPIO_Code_Samples))<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The second two files run much faster than the ile system methods, and I recomend them for actual use, the the file system method is very handy for testing
 
-## Other Things
+## Links and Things
 
-coming soon..
+- YouTube demo video: (https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)[https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s]
+- Simon web paper: (http://metasophiea.com/projects/simon/webPaper.html)[http://metasophiea.com/projects/simon/webPaper.html]
