@@ -302,3 +302,4 @@ The code used in each computerside folder of each type, accesses the Raspberry P
 
 - YouTube demo video: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s
 - Simon web paper: http://metasophiea.com/projects/simon/webPaper.html
+- Project Report: documents/finalReport_20170529.pdf
