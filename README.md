@@ -2,7 +2,7 @@
 
 For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
-##### tl;dr
+#### tl;dr
 
 I wrote 3 different versions of the same encryption circuit (with different properties) in VHDL (which is like a language for describing circuits), then there’s c++ code that you can compile on a Raspberry Pi which is wired up to the circuit testing board, which will use the circuit to encrypt or decrypt stuff.
 
