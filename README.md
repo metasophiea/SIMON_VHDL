@@ -10,7 +10,7 @@ I wrote 3 different versions of the same encryption system (with different prope
     <img width="640" height="360" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/theCircuit.jpeg">
 </p>
 
-Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ code (which you can see in action here: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
+Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ code (which you can see in action here: https://www.youtube.com/watch?v=CTbJnPhZdKI)
  
 ## Contents
 - [Folder Layout](#folder-layout)
@@ -55,7 +55,7 @@ Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ c
         └── unified
 
 The documents folder contains the demo files and handy simon-cipher related information.
-- 'demo' contains a complete set of java, c++ and VHDL files for use in demonstrating the design. One can load the VHDL design onto a development board, compile the c++ code on a Raspberry Pi (attached to the development board) and compile the Java programs on both the Pi and a display machine (networked together) The result is a pretty snazzy encryption program, which encrypts images, shows you the encrypted image, then decrypts it. You can see it in action here: [Simon Encryption Java/C++/VHDL Demonstration](https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
+- 'demo' contains a complete set of java, c++ and VHDL files for use in demonstrating the design. One can load the VHDL design onto a development board, compile the c++ code on a Raspberry Pi (attached to the development board) and compile the Java programs on both the Pi and a display machine (networked together) The result is a pretty snazzy encryption program, which encrypts images, shows you the encrypted image, then decrypts it. You can see it in action here: [Simon Encryption Java/C++/VHDL Demonstration](https://www.youtube.com/watch?v=CTbJnPhZdKI)
 - 'images' is just a folder of pictures used in this document
 - The 'implementation' folder is basically a hosting area for a webPaper which can be found here: [webPaper.html](http://metasophiea.com/projects/simon/webPaper.html) which talks about the cipher, how the components of the cipher work, the designs I developed and some ideas of how to use the cipher, along with a large array of process samples to help others test their designs of the cipher (something I would have liked)
 - 'zybo': The board I used to test my designs (and work with the Raspberry Pi) is the "Zybo Zynq-7000 ARM/FPGA Development Board", which I got on lend from my project supervisor. It's essentially a FPGA chip with alot of ports to work with (and a ARM processor, but I never used it) which I usually refer to just as "zybo" or "the development board".
@@ -300,6 +300,6 @@ The code used in each computerside folder of each type, accesses the Raspberry P
 
 ## Links to Things
 
-- YouTube demo video: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s
+- YouTube demo video: https://www.youtube.com/watch?v=CTbJnPhZdKI
 - Simon web paper: http://metasophiea.com/projects/simon/webPaper.html
 - Project Report: [documents/finalReport_20170529.pdf](documents/finalReport_20170529.pdf)
