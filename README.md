@@ -280,14 +280,14 @@ This function is deemed experimental, as it isn’t as finished as other section
 The lead section, this code runs a console program with which a user can provide the key and message they wish to encrypt or decrypt. It also contains all the test messages from the NSA paper. Below, is a screenshot of the console output of this testing on a unified subtype
 
 <p align="center">
-    <img width="670" height="445" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/VHDLimplementation_3.png">
+    <img width="670" height="445" src="https://raw.githubusercontent.com/metasophiea/SIMON_VHDL/master/documents/images/consoleOut.png">
 </p> 
 
 ### Alternative raspberryPI_api files
 
 
 
-consoleOut.png
+
 
 ## Other Things
 
