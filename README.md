@@ -12,7 +12,6 @@ I wrote 3 different versions of the same encryption circuit (with different prop
 
 Also there’s lots of testing notes, and a snazzy Java demo that uses the c++ code (which you can see in action here: https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
  
-
 ## Contents
 - [Folder Layout](#folder-layout)
 - [What is Simon](#what-is-simon)
