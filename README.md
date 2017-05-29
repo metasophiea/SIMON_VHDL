@@ -15,32 +15,33 @@
 
 ## Folder Layout
 
-- documents
-    - demo
-        - c++
-        - files
-        - java
-            - monitorSide
-            - piSide
-        - vhdl
-    - images
-    - implementation
-        - samples
-        - system
-    - zybo
-- type_1
-    - computerside
-    - method
-    - unified
-- type_2
-    - computerside
-    - method
-    - unified
-- type_3
-    - computerside
-    - method
-    - modeAndMethod_encryptOnly
-    - unified
+.
+├── documents
+│   ├── demo
+│   │   ├── c++
+│   │   ├── files
+│   │   ├── java
+│   │   │   ├── monitorSide
+│   │   │   └── piSide
+│   │   └── vhdl
+│   ├── images
+│   ├── implementation
+│   │   ├── samples
+│   │   └── system
+│   └── zybo
+├── type_1
+│   ├── computerside
+│   ├── method
+│   └── unified
+├── type_2
+│   ├── computerside
+│   ├── method
+│   └── unified
+└── type_3
+    ├── computerside
+    ├── method
+    ├── modeAndMethod_encryptOnly
+    └── unified
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The documents folder contains the demo files and handy simon-cipher related information.
 - 'demo' contains a complete set of java, c++ and VHDL files for use in demonstrating the design. One can load the VHDL design onto a development board, compile the c++ code on a Raspberry Pi (attached to the development board) and compile the Java programs on both the Pi and a display machine (networked together) The result is a pretty snazzy encryption program, which encrypts images, shows you the encrypted image, then decrypts it. You can see it in action here: [Simon Encryption Java/C++/VHDL Demonstration](https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
