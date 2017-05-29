@@ -1,6 +1,6 @@
 # SIMON_VHDL
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
+For my final year project in college, I was asked to develop an implementation of the SIMON block ciphers in VHDL, and review my design’s performance regarding logical efficiency and hardware usage. This repo was used in the development of this project. Here one can find the three VHDL designs I created, sorted into types 1, 2 and 3
 
 ## Contents
 - [Folder Layout](#folder-layout)
@@ -44,19 +44,19 @@
         ├── modeAndMethod_encryptOnly
         └── unified
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The documents folder contains the demo files and handy simon-cipher related information.
+The documents folder contains the demo files and handy simon-cipher related information.
 - 'demo' contains a complete set of java, c++ and VHDL files for use in demonstrating the design. One can load the VHDL design onto a development board, compile the c++ code on a Raspberry Pi (attached to the development board) and compile the Java programs on both the Pi and a display machine (networked together) The result is a pretty snazzy encryption program, which encrypts images, shows you the encrypted image, then decrypts it. You can see it in action here: [Simon Encryption Java/C++/VHDL Demonstration](https://www.youtube.com/watch?v=CTbJnPhZdKI&t=8s)
 - 'images' is just a folder of pictures used in this document
 - The 'implementation' folder is basically a hosting area for a webPaper which can be found here: [webPaper.html](http://metasophiea.com/projects/simon/webPaper.html) which talks about the cipher, how the components of the cipher work, the designs I developed and some ideas of how to use the cipher, along with a large array of process samples to help others test their designs of the cipher (something I would have liked)
 - 'zybo': The board I used to test my designs (and work with the Raspberry Pi) is the "Zybo Zynq-7000 ARM/FPGA Development Board", which I got on lend from my project supervisor. It's essentially a FPGA chip with alot of ports to work with (and a ARM processor, but I never used it) which I usually refer to just as "zybo" or "the development board".
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This folder contains a VHDL file used to connect the 24 pins of my designs to the 24 zybo pin ports. There is also a file with information about connecting the Raspberry Pi to the Zybo, and a "configuration" file used by the development software to impliment the design for this board.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain extra data needed to synthesize the design.<br/>
+Each of the "type_x" folders contain the subtype folders, along with testing notes and sometimes general notes. The subtype folers contain the actual VHDL code, which is explained later in this document. The 'testing notes' files contain information on the designs generated from the VHDL code, in regards to architecture size, estimated power usage, etc. The 'notes' files contain extra data needed to synthesize the design.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition; each folder contains a 'computerside' folder, which contains c++ code writting for the Raspberry Pi. This code can be used to interface with the design, to encrypt messages, etc. This code is somewhat slowing, as it uses the Linux file-system to access the pins. Other pin access method files are available in the demo section of the documents folder, which increases pin access speed considerably.
 
 ## What is Simon
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
+Simon is a balanced Feistel cipher, capable of encrypting blocks of data from 32bits up to 128bits in a single execution. In its most basic form, Simon is a collection of three different circuits; a key expander, a message encryptor and a message decryptor, referred to in this report as ‘modules‘. These circuits vary a little in response to the message and key bit lengths defined in the NSA’s paper [1], but operation is mainly the same for all. There are 10 different message and key bit lengths, defined in this paper as ‘methods’.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For encryption; a segment of the key provided is given to an encryption circuit along with the provided message. The circuit uses this segment to encrypt the message, producing a new message of the same length. The provided key is also mutated by a key expander circuit, producing a new key. A segment from this new key is given to another message encryptor circuit along with the message produced by the previous message encryptor circuit, producing another message.
 
@@ -83,7 +83,7 @@ As said before, the number of stages required is defined by the method;
 
 ## Developed Designs
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The three different designs are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
+The three different designs are; Flow Logic, Register Transfer Level and the Crypto-Processor. Each design is split into subtypes; unified, methods (and in design three, modeAndMethods) These different subtypes split out the functionality of the cipher, allowing a designer the ability to choose the level of encryption complexity they want, or the range of encryption functions available.
 
 #### Subtypes
 - unified<br/>
@@ -97,7 +97,7 @@ As said before, the number of stages required is defined by the method;
 
 ### Type 1 - Flow Logic
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The flow logic design lays out the cipher in its entirety, allowing the user to pass data into the input and have it flow through all the required modules to produce a result. It is a pure combinational logic design, and as such no clock signal is needed. In this developed implementation, the encrypted and decrypted output is computed at the same time, with and additional ‘mode’ input determining which result to output.
+The flow logic design lays out the cipher in its entirety, allowing the user to pass data into the input and have it flow through all the required modules to produce a result. It is a pure combinational logic design, and as such no clock signal is needed. In this developed implementation, the encrypted and decrypted output is computed at the same time, with and additional ‘mode’ input determining which result to output.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Though not as optimised for through-put or size as the designs ahead; its simple layout and similarity to the basic model presented in the NSA’s paper servers as a good starting point for understanding the system.
 
@@ -127,7 +127,7 @@ As said before, the number of stages required is defined by the method;
 
 ### Type 2 – Register Transfer Level
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Register Transfer Level design expands upon the previous design, addressing the issue of inactive modules. Here, every encryption and decryption module is separated out between registers, which can store the intermediate results of the encryption/decryption progress of a message. The key is completely expanded at the very first stage, and this data is passed through to the registers as well. In this way, all parts of the circuit can be utilised for processing different messages in a pipeline.
+The Register Transfer Level design expands upon the previous design, addressing the issue of inactive modules. Here, every encryption and decryption module is separated out between registers, which can store the intermediate results of the encryption/decryption progress of a message. The key is completely expanded at the very first stage, and this data is passed through to the registers as well. In this way, all parts of the circuit can be utilised for processing different messages in a pipeline.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Similar to the previous design, the unified subtype has a 4-bit input determining the method to be used. This information is also stored by each register block and passes through the system alongside the message. This data is given to each encryptor/decryptor module as before.
 
@@ -152,7 +152,7 @@ As said before, the number of stages required is defined by the method;
 
 ### Type 3 – Crypto-Processor
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This design takes the concept of multi-staged encryption from the previous design, and distils it down into a single repeatable process. Instead of having a set of encryption and decryption modules for each stage; only one encryption and decryption module is implemented and are used repeatedly to perform encryption/decryption operations. This means that the finished implementation can take up a much smaller hardware footprint than previous designs.
+This design takes the concept of multi-staged encryption from the previous design, and distils it down into a single repeatable process. Instead of having a set of encryption and decryption modules for each stage; only one encryption and decryption module is implemented and are used repeatedly to perform encryption/decryption operations. This means that the finished implementation can take up a much smaller hardware footprint than previous designs.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Similar to the Register Transfer Level design, the provided key must be fully expanded before any encryption or decryption can begin; however this particular design contains a "modeAndMethods" subtype for encryption only, which does not need such complete key expansion time and thus only requires a fraction of the key expansion logic and registers.
 
